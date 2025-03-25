@@ -37,6 +37,8 @@ export default class Shader {
         this.shaderCode = shaderCode
 
         this.preloaded = true
+
+        return this
     }
 
     /**
