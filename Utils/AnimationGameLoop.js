@@ -42,10 +42,10 @@ export default class AnimationGameLoop {
     }
 
     stop() {
+        window.cancelAnimationFrame(this.animationId)
+
         this.animationId = -1
         this.startTime = -1
-
-        window.cancelAnimationFrame(this.animationId)
 
         this.events.dispatchEvent(AnimationGameLoop.ON_STOP, this)
 
