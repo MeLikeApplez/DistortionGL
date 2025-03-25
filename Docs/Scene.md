@@ -21,6 +21,8 @@
         * [new module.exports(camera)](#new_module_Scene--module.exports_new)
         * [.add(...sceneObjects)](#module_Scene--module.exports+add)
         * [._loadObjectMaterials(gl)](#module_Scene--module.exports+_loadObjectMaterials)
+        * [.load(renderer)](#module_Scene--module.exports+load)
+        * [.destroy(renderer)](#module_Scene--module.exports+destroy)
         * [.render(gl)](#module_Scene--module.exports+render)
 
 <a name="exp_module_Scene--module.exports"></a>
@@ -52,6 +54,24 @@
 | Param | Type |
 | --- | --- |
 | gl | <code>WebGL2RenderingContext</code> | 
+
+<a name="module_Scene--module.exports+load"></a>
+
+#### module.exports.load(renderer)
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_Scene--module.exports)  
+
+| Param | Type |
+| --- | --- |
+| renderer | <code>Renderer</code> | 
+
+<a name="module_Scene--module.exports+destroy"></a>
+
+#### module.exports.destroy(renderer)
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_Scene--module.exports)  
+
+| Param | Type |
+| --- | --- |
+| renderer | <code>Renderer</code> | 
 
 <a name="module_Scene--module.exports+render"></a>
 
