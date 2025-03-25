@@ -25,6 +25,8 @@ export default class Renderer {
         this.gl = canvasElement.getContext('webgl2', glOptions)
 
         this.devicePixelRatio = 1
+
+        this.loadScene(scene)
     }
 
     /**
@@ -37,6 +39,16 @@ export default class Renderer {
 
         this.canvasElement.width = width * devicePixelRatio
         this.canvasElement.height = height * devicePixelRatio
+    }
+
+    /**
+     * @param {Scene} scene 
+     */
+    loadScene(scene) {
+        this.scene.destroy(this)
+    
+        this.scene = scene
+        this.scene.load(this)
     }
 
     clear() {
@@ -53,6 +65,7 @@ export default class Renderer {
         }
 
         this.clear()
+        this.gl.viewport(0, 0, this.canvasElement.width, this.canvasElement.height)
 
         this.scene.render(this.gl)
     }

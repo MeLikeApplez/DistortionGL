@@ -1,5 +1,6 @@
 import Camera from '../Camera/Camera'
 import GameObject from '../Core/GameObject'
+import Renderer from '../Renderer'
 
 /**
  * @typedef {Object} _Scene
@@ -24,7 +25,6 @@ export default class Scene {
         this.objects = []
 
         this.enabled = true
-
         this._hasLoadedObjectMaterials = false
     }
 
@@ -63,7 +63,23 @@ export default class Scene {
     }
 
     /**
+     * @param {Renderer} renderer 
+     */
+    load(renderer) {
+        // Write scene code here
+    }
+
+    /**
+     * @param {Renderer} renderer 
+     */
+    destroy(renderer) {
+        // Write scene code here
+    }
+
+    /**
      * @param {WebGL2RenderingContext} gl 
      */
-    render(gl) {}
+    render(gl) {
+        // Write scene code here
+    }
 }
