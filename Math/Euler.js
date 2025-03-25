@@ -1,11 +1,23 @@
 import Matrix4 from "./Matrix4"
 import Quaternion from "./Quaternion"
 
+/**
+ * @typedef {Object} Euler
+ * @property {number} x
+ * @property {number} y
+ * @property {number} z
+ * @property {string} order
+ */
+
+/**
+ * @type {Euler}
+ * @module Euler
+ */
 export default class Euler {
     /**
-     * @param {Number} x 
-     * @param {Number} y 
-     * @param {Number} z 
+     * @param {number} x 
+     * @param {number} y 
+     * @param {number} z 
      */
     constructor(x=0, y=0, z=0) {
         this.x = x
@@ -15,10 +27,10 @@ export default class Euler {
     }
 
     /**
-     * @param {Number} x 
-     * @param {Number} y 
-     * @param {Number} z 
-     * @param {string | *} order 
+     * @param {number} x 
+     * @param {number} y 
+     * @param {number} z 
+     * @param {string=} order 
      */
     set(x, y, z, order) {
         this.x = x

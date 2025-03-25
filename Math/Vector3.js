@@ -1,6 +1,9 @@
 import Euler from "./Euler"
 import Quaternion from "./Quaternion"
 
+/**
+ * @module Vector3
+ */
 export default class Vector3 {
     constructor(x=0, y=0, z=0) {
         this.x = x

@@ -1,3 +1,7 @@
+
+/**
+ * @module Matrix3
+ */
 export default class Matrix3 extends Float32Array {
     constructor(n11=1, n12=0, n13=0, n21=0, n22=1, n23=0, n31=0, n32=0, n33=1) {
         super([

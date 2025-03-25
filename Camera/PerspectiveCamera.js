@@ -3,7 +3,7 @@ import Matrix4 from '../Math/Matrix4.js'
 import Vector3 from '../Math/Vector3.js'
 
 /**
- * @typedef {Object} _PerspectiveCamera
+ * @typedef {Object} PerspectiveCamera
  * @property {number} fov
  * @property {number} aspect
  * @property {number} near
@@ -11,7 +11,8 @@ import Vector3 from '../Math/Vector3.js'
  */
 
 /**
- * @type {_PerspectiveCamera}
+ * @type {PerspectiveCamera}
+ * @module PerspectiveCamera
  */
 export default class PerspectiveCamera extends Camera {
     /**
@@ -75,10 +76,13 @@ export default class PerspectiveCamera extends Camera {
     }
 
     /**
-     * @param {WebGL2RenderingContext} gl 
-     * @param {WebGLProgram} program 
-     */
-    render(gl, program) {
+    * @param {WebGL2RenderingContext} gl 
+    * @param {WebGLProgram} program 
+    * @param {WebGLUniformLocation} uniformPositionLocation
+    * @param {WebGLUniformLocation} uniformProjectionMatrixLocation  
+    */
+   render(gl, program, uniformPositionLocation, uniformProjectionMatrixLocation) {
+       super.render(gl, program, uniformPositionLocation, uniformProjectionMatrixLocation)
 
-    }
+   }
 }

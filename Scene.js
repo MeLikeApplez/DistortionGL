@@ -1,16 +1,27 @@
+import Camera from './Camera/Camera'
+import GameObject from './Core/GameObject'
+
 /**
- * @typedef {Object} _Scene
+ * @typedef {Object} Scene
+ * @property {Camera} camera 
+ * @property {Array<GameObject>} objects
  */
 
 /**
- * @type {_Scene}
+ * @type {Scene}
+ * @module Scene
  */
 export default class Scene {
-    constructor(canvasElement) {
-        this.canvasElement = canvasElement
+    /**
+     * @param {Camera} camera 
+     */
+    constructor(camera) {
+        this.camera = camera
 
         this.objects = []
     }
 
-    add() {}
+    add(...objects) {
+        return this.objects.push(...objects)
+    }
 }

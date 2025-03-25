@@ -1,3 +1,7 @@
+
+/**
+ * @module Vector4
+ */
 export default class Vector4 {
     constructor(x=0, y=0, z=0, w=0) {
         this.x = x

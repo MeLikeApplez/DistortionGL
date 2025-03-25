@@ -1,3 +1,14 @@
+/**
+ * @typedef {Object} Color
+ * @property {function(number, number, number): Color} setRgb
+ * @property {function(number): Color} setHex
+ */
+
+/**
+ * @type {Color}
+ * @extends Uint8Array
+ * @module Color
+ */
 export default class Color extends Uint8Array {
     constructor(r=0, g=0, b=0) {
         super([r, g, b])

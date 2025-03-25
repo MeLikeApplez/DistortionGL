@@ -2,13 +2,14 @@ import Matrix4 from '../Math/Matrix4.js'
 import Vector3 from '../Math/Vector3.js'
 
 /**
- * @typedef {Object} _Camera
+ * @typedef {Object} Camera
  * @property {Vector3} position
  * @property {Matrix4} projectionMatrix
  */
 
 /**
- * @type {_Camera}
+ * @type {Camera}
+ * @module Camera
  */
 export default class Camera {
     constructor() {
@@ -22,6 +23,11 @@ export default class Camera {
     /**
      * @param {WebGL2RenderingContext} gl 
      * @param {WebGLProgram} program 
+     * @param {WebGLUniformLocation} uniformPositionLocation
+     * @param {WebGLUniformLocation} uniformProjectionMatrixLocation  
      */
-    render(gl, program) {}
+    render(gl, program, uniformPositionLocation, uniformProjectionMatrixLocation) {
+        gl.uniform3f(uniformPositionLocation, this.position.x, this.position.y, this.position.z)
+        gl.uniformMatrix4fv(uniformProjectionMatrixLocation, false, this.projectionMatrix)
+    }
 }

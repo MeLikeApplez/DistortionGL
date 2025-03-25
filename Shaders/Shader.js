@@ -1,12 +1,13 @@
 /**
- * @typedef {Object} ShaderType
+ * @typedef {Object} Shader
  * @property {WebGLProgram | null} program
  * @property {boolean} ready
  * @property {Error | null} error
  */
 
 /**
- * @type {ShaderType}
+ * @type {Shader}
+ * @module Shader
  */
 export default class Shader {
     /**
@@ -32,7 +33,7 @@ export default class Shader {
      * @param {WebGL2RenderingContext} gl 
      * @param {string} vertexCode 
      * @param {string} shaderCode 
-     * @returns {[WebGLProgram | null, Error | null]}
+     * @returns {Array<WebGLProgram | null, Error | null>}
      */
     compileSourceCode(gl, vertexCode, shaderCode) {
         // setup and compile glsl vertex shader
@@ -76,7 +77,7 @@ export default class Shader {
      * @param {WebGL2RenderingContext} gl 
      * @param {string} vertexCode 
      * @param {string} shaderCode 
-     * @returns {[WebGLProgram | null, Error | null]}
+     * @returns {Array<WebGLProgram | null, Error | null>}
      */
     loadSourceCode(gl, vertexCode, shaderCode) {
         const [ program, error ] = this.compileSourceCode(gl, vertexCode, shaderCode)
@@ -92,7 +93,7 @@ export default class Shader {
      * @param {WebGL2RenderingContext} gl 
      * @param {string} [vertexSrc=] 
      * @param {string} [shaderSrc=] 
-     * @returns {[WebGLProgram | null, Error | null]}
+     * @returns {Array<WebGLProgram | null, Error | null>}
      */
     async load(gl, vertexSrc, shaderSrc) {
         if(!(gl instanceof WebGL2RenderingContext)) {

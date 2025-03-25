@@ -1,6 +1,9 @@
 import Euler from "./Euler"
 import Vector3 from "./Vector3"
 
+/**
+ * @module Quaternion
+ */
 export default class Quaternion {
     /**
      * @param {Number} x 
