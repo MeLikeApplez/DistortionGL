@@ -52,7 +52,7 @@ export default class Renderer {
             const sceneObject = this.scene.objects[i]
 
             if(sceneObject.shader.ready) continue
-            if(sceneObject.shader.preloaded) throw Error('Shader for GameObject is not preloaded! Preload the source code using ".preloadSourceCode(<vertex code>, <fragment code>)"!')
+            if(!sceneObject.shader.preloaded) throw Error('Shader for GameObject is not preloaded! Preload the source code using ".preloadSourceCode(<vertex code>, <fragment code>)"!')
 
             const [ program, error ] = sceneObject.shader.loadSourceCode(this.gl)
         
