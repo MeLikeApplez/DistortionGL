@@ -62,6 +62,8 @@ export default class Renderer {
                 throw error
             }
         }
+
+        this.ready = true
     }
 
     render() {
