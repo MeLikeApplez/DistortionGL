@@ -1,4 +1,4 @@
-import { Events } from '../Core/Events.js'
+import Events from '../Core/Events.js'
 import Vector2 from '../Math/Vector2.js'
 /**
  * @typedef {Object} _Pointer

@@ -2,5 +2,5 @@
  * @enum {number}
  */
 export const GameObjectType = {
-    None: -1
+    None: 100
 }

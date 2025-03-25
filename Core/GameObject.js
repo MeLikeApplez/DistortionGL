@@ -1,12 +1,12 @@
 import { generateUUID } from '../Math/MathUtils.js'
 import { GameObjectType } from './Constants.js'
-import Shader from '../Shaders/Shader.js'
+import Material from '../Materials/Material.js'
 
 /**
  * @typedef {Object} _GameObject
  * @property {string} uuid
  * @property {GameObjectType} type
- * @property {Shader} shader
+ * @property {Material} material
  */
 
 /**
@@ -15,13 +15,13 @@ import Shader from '../Shaders/Shader.js'
  */
 export default class GameObject {
     /**
-     * @param {shader} shader 
+     * @param {Material} material 
      */
-    constructor(shader) {
+    constructor(material) {
         this.uuid = generateUUID()
         this.type = GameObjectType.None
     
-        this.shader = shader
+        this.material = material
     }
 
     /**

@@ -6,7 +6,7 @@
  * @property {Events} events
  */
 
-import { Events } from "../Core/Events"
+import Events from "../Core/Events"
 
 /**
  * @type {_Keyboard}

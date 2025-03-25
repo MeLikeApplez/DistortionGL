@@ -83,6 +83,6 @@ export default class PerspectiveCamera extends Camera {
     */
    render(gl, program, uniformPositionLocation, uniformProjectionMatrixLocation) {
        super.render(gl, program, uniformPositionLocation, uniformProjectionMatrixLocation)
-
+       // Write camera render code here
    }
 }

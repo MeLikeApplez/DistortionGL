@@ -120,8 +120,8 @@ export default class Shader {
         }
 
         let [ vertexRespone, shaderResponse ] = await Promise.all([
-            fetch(this.vertexSrc),
-            fetch(this.shaderSrc)
+            fetch(vertexSrc),
+            fetch(shaderSrc)
         ])
         
         if(!vertexRespone.ok) {

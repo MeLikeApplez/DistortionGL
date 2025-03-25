@@ -8,7 +8,7 @@ import { generateUUID } from "../Math/MathUtils.js"
  * @type {_Events}
  * @module Events
  */
-export class Events extends Map {
+export default class Events extends Map {
     constructor() {
         super()
     }

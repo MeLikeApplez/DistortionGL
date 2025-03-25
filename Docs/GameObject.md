@@ -18,7 +18,7 @@
 
 * [GameObject](#module_GameObject) : [<code>\_GameObject</code>](#_GameObject)
     * [module.exports](#exp_module_GameObject--module.exports) ⏏
-        * [new module.exports(shader)](#new_module_GameObject--module.exports_new)
+        * [new module.exports(material)](#new_module_GameObject--module.exports_new)
         * [.render(gl)](#module_GameObject--module.exports+render)
 
 <a name="exp_module_GameObject--module.exports"></a>
@@ -27,11 +27,11 @@
 **Kind**: Exported class  
 <a name="new_module_GameObject--module.exports_new"></a>
 
-#### new module.exports(shader)
+#### new module.exports(material)
 
 | Param | Type |
 | --- | --- |
-| shader | <code>shader</code> | 
+| material | <code>Material</code> | 
 
 <a name="module_GameObject--module.exports+render"></a>
 
@@ -52,5 +52,5 @@
 | --- | --- |
 | uuid | <code>string</code> | 
 | type | <code>GameObjectType</code> | 
-| shader | <code>Shader</code> | 
+| material | <code>Material</code> | 
 

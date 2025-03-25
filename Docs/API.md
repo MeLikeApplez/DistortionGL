@@ -17,6 +17,9 @@
 
 > [GameObject](GameObject.md) 
 
+## Material Reference 
+> [Material](Material.md) 
+
 ## Color Reference 
 > [Color](Color.md) 
 
@@ -36,8 +39,12 @@
 
 > [Vector4](Vector4.md) 
 
+## Scene Reference 
+> [Scene](Scene.md) 
+
 ## Shader Reference 
 > [Shader](Shader.md) 
 
-> [ShaderList](ShaderList.md) 
+## AnimationGameLoop Reference 
+> [AnimationGameLoop](AnimationGameLoop.md) 
 
