@@ -1,11 +1,11 @@
 /**
- * @typedef {Object} Color
- * @property {function(number, number, number): Color} setRgb
- * @property {function(number): Color} setHex
+ * @typedef {Object} _Color
+ * @property {function(number, number, number): _Color} setRgb
+ * @property {function(number): _Color} setHex
  */
 
 /**
- * @type {Color}
+ * @type {_Color}
  * @extends Uint8Array
  * @module Color
  */

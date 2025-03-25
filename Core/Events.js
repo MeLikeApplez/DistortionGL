@@ -1,11 +1,11 @@
 import { generateUUID } from "../Math/MathUtils.js"
 
 /**
- * @typedef {Map} Events
+ * @typedef {Map} _Events
  */
 
 /**
- * @type {Events}
+ * @type {_Events}
  * @module Events
  */
 export class Events extends Map {

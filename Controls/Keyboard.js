@@ -1,5 +1,5 @@
 /**
- * @typedef {Object} Keyboard
+ * @typedef {Object} _Keyboard
  * @property {HTMLElement | null} element
  * @property {Set} keys
  * @property {boolean} lowerCase
@@ -9,10 +9,13 @@
 import { Events } from "../Core/Events"
 
 /**
- * @type {Keyboard}
+ * @type {_Keyboard}
  * @module Keyboard
  */
 export default class Keyboard {
+    static ONKEYDOWN_EVENT = 'onkeydown'
+    static ONKEYUP_EVENT = 'onkeydown'
+    
     /**
      * @param {HTMLElement} element 
      * @param {boolean} [lowerCase=false] 
@@ -25,8 +28,8 @@ export default class Keyboard {
 
         this.events = new Events()
 
-        this.events.createEvent('onkeydown')
-        this.events.createEvent('onkeyup')
+        this.events.createEvent(Keyboard.ONKEYDOWN_EVENT)
+        this.events.createEvent(Keyboard.ONKEYUP_EVENT)
     
         if(element) this.load(element)
     }
@@ -57,7 +60,7 @@ export default class Keyboard {
 
             this.keys.add(key)
         
-            this.events.dispatchEvent('onkeydown', this)
+            this.events.dispatchEvent(Keyboard.ONKEYDOWN_EVENT, this)
         }
 
         window.onkeyup = event => {
@@ -67,7 +70,7 @@ export default class Keyboard {
         
             this.keys.delete(key)
         
-            this.events.dispatchEvent('onkeyup', this)
+            this.events.dispatchEvent(Keyboard.ONKEYUP_EVENT, this)
         }
 
         return true

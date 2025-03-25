@@ -1,22 +1,22 @@
 ## Modules
 
 <dl>
-<dt><a href="#module_Euler">Euler</a> : <code><a href="#Euler">Euler</a></code></dt>
+<dt><a href="#module_Euler">Euler</a> : <code><a href="#_Euler">_Euler</a></code></dt>
 <dd></dd>
 </dl>
 
 ## Typedefs
 
 <dl>
-<dt><a href="#Euler">Euler</a> : <code>Object</code></dt>
+<dt><a href="#_Euler">_Euler</a> : <code>Object</code></dt>
 <dd></dd>
 </dl>
 
 <a name="module_Euler"></a>
 
-## Euler : [<code>Euler</code>](#Euler)
+## Euler : [<code>\_Euler</code>](#_Euler)
 
-* [Euler](#module_Euler) : [<code>Euler</code>](#Euler)
+* [Euler](#module_Euler) : [<code>\_Euler</code>](#_Euler)
     * [module.exports](#exp_module_Euler--module.exports) ⏏
         * [new module.exports(x, y, z)](#new_module_Euler--module.exports_new)
         * [.set(x, y, z, [order])](#module_Euler--module.exports+set)
@@ -85,11 +85,11 @@
 
 | Param | Type |
 | --- | --- |
-| euler | [<code>Euler</code>](#Euler) | 
+| euler | <code>Euler</code> | 
 
-<a name="Euler"></a>
+<a name="_Euler"></a>
 
-## Euler : <code>Object</code>
+## \_Euler : <code>Object</code>
 **Kind**: global typedef  
 **Properties**
 

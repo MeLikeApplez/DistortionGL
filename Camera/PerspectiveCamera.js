@@ -3,7 +3,7 @@ import Matrix4 from '../Math/Matrix4.js'
 import Vector3 from '../Math/Vector3.js'
 
 /**
- * @typedef {Object} PerspectiveCamera
+ * @typedef {Object} _PerspectiveCamera
  * @property {number} fov
  * @property {number} aspect
  * @property {number} near
@@ -11,7 +11,7 @@ import Vector3 from '../Math/Vector3.js'
  */
 
 /**
- * @type {PerspectiveCamera}
+ * @type {_PerspectiveCamera}
  * @module PerspectiveCamera
  */
 export default class PerspectiveCamera extends Camera {

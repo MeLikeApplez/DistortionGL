@@ -2,13 +2,13 @@ import Matrix4 from '../Math/Matrix4.js'
 import Vector3 from '../Math/Vector3.js'
 
 /**
- * @typedef {Object} Camera
+ * @typedef {Object} _Camera
  * @property {Vector3} position
  * @property {Matrix4} projectionMatrix
  */
 
 /**
- * @type {Camera}
+ * @type {_Camera}
  * @module Camera
  */
 export default class Camera {

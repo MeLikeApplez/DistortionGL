@@ -1,22 +1,22 @@
 ## Modules
 
 <dl>
-<dt><a href="#module_PerspectiveCamera">PerspectiveCamera</a> : <code><a href="#PerspectiveCamera">PerspectiveCamera</a></code></dt>
+<dt><a href="#module_PerspectiveCamera">PerspectiveCamera</a> : <code><a href="#_PerspectiveCamera">_PerspectiveCamera</a></code></dt>
 <dd></dd>
 </dl>
 
 ## Typedefs
 
 <dl>
-<dt><a href="#PerspectiveCamera">PerspectiveCamera</a> : <code>Object</code></dt>
+<dt><a href="#_PerspectiveCamera">_PerspectiveCamera</a> : <code>Object</code></dt>
 <dd></dd>
 </dl>
 
 <a name="module_PerspectiveCamera"></a>
 
-## PerspectiveCamera : [<code>PerspectiveCamera</code>](#PerspectiveCamera)
+## PerspectiveCamera : [<code>\_PerspectiveCamera</code>](#_PerspectiveCamera)
 
-* [PerspectiveCamera](#module_PerspectiveCamera) : [<code>PerspectiveCamera</code>](#PerspectiveCamera)
+* [PerspectiveCamera](#module_PerspectiveCamera) : [<code>\_PerspectiveCamera</code>](#_PerspectiveCamera)
     * [module.exports](#exp_module_PerspectiveCamera--module.exports) ⏏
         * [new module.exports(fov, aspect, near, far)](#new_module_PerspectiveCamera--module.exports_new)
         * [.lookAt(target, up)](#module_PerspectiveCamera--module.exports+lookAt)
@@ -59,9 +59,9 @@
 | uniformPositionLocation | <code>WebGLUniformLocation</code> | 
 | uniformProjectionMatrixLocation | <code>WebGLUniformLocation</code> | 
 
-<a name="PerspectiveCamera"></a>
+<a name="_PerspectiveCamera"></a>
 
-## PerspectiveCamera : <code>Object</code>
+## \_PerspectiveCamera : <code>Object</code>
 **Kind**: global typedef  
 **Properties**
 

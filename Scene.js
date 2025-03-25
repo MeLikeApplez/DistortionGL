@@ -2,13 +2,13 @@ import Camera from './Camera/Camera'
 import GameObject from './Core/GameObject'
 
 /**
- * @typedef {Object} Scene
+ * @typedef {Object} _Scene
  * @property {Camera} camera 
  * @property {Array<GameObject>} objects
  */
 
 /**
- * @type {Scene}
+ * @type {_Scene}
  * @module Scene
  */
 export default class Scene {

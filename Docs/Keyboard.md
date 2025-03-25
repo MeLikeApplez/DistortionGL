@@ -1,22 +1,22 @@
 ## Modules
 
 <dl>
-<dt><a href="#module_Keyboard">Keyboard</a> : <code><a href="#Keyboard">Keyboard</a></code></dt>
+<dt><a href="#module_Keyboard">Keyboard</a> : <code><a href="#_Keyboard">_Keyboard</a></code></dt>
 <dd></dd>
 </dl>
 
 ## Typedefs
 
 <dl>
-<dt><a href="#Keyboard">Keyboard</a> : <code>Object</code></dt>
+<dt><a href="#_Keyboard">_Keyboard</a> : <code>Object</code></dt>
 <dd></dd>
 </dl>
 
 <a name="module_Keyboard"></a>
 
-## Keyboard : [<code>Keyboard</code>](#Keyboard)
+## Keyboard : [<code>\_Keyboard</code>](#_Keyboard)
 
-* [Keyboard](#module_Keyboard) : [<code>Keyboard</code>](#Keyboard)
+* [Keyboard](#module_Keyboard) : [<code>\_Keyboard</code>](#_Keyboard)
     * [module.exports](#exp_module_Keyboard--module.exports) ⏏
         * [new module.exports(element, [lowerCase])](#new_module_Keyboard--module.exports_new)
         * [.load(element)](#module_Keyboard--module.exports+load)
@@ -43,9 +43,9 @@
 | --- | --- |
 | element | <code>HTMLElement</code> | 
 
-<a name="Keyboard"></a>
+<a name="_Keyboard"></a>
 
-## Keyboard : <code>Object</code>
+## \_Keyboard : <code>Object</code>
 **Kind**: global typedef  
 **Properties**
 

@@ -1,23 +1,23 @@
 ## Modules
 
 <dl>
-<dt><a href="#module_Color">Color</a> : <code><a href="#Color">Color</a></code></dt>
+<dt><a href="#module_Color">Color</a> : <code><a href="#_Color">_Color</a></code></dt>
 <dd></dd>
 </dl>
 
 ## Typedefs
 
 <dl>
-<dt><a href="#Color">Color</a> : <code>Object</code></dt>
+<dt><a href="#_Color">_Color</a> : <code>Object</code></dt>
 <dd></dd>
 </dl>
 
 <a name="module_Color"></a>
 
-## Color : [<code>Color</code>](#Color)
+## Color : [<code>\_Color</code>](#_Color)
 **Extends**: <code>Uint8Array</code>  
 
-* [Color](#module_Color) : [<code>Color</code>](#Color)
+* [Color](#module_Color) : [<code>\_Color</code>](#_Color)
     * [.setRgb(r, g, b)](#module_Color+setRgb)
     * [.setHex(hex)](#module_Color+setHex)
 
@@ -41,9 +41,9 @@
 | --- | --- | --- |
 | hex | <code>number</code> | <code>0</code> | 
 
-<a name="Color"></a>
+<a name="_Color"></a>
 
-## Color : <code>Object</code>
+## \_Color : <code>Object</code>
 **Kind**: global typedef  
 **Properties**
 

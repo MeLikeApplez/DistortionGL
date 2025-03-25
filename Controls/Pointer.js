@@ -1,7 +1,7 @@
 import { Events } from '../Core/Events.js'
 import Vector2 from '../Math/Vector2.js'
 /**
- * @typedef {Object} Pointer
+ * @typedef {Object} _Pointer
  * @property {HTMLElement} element
  * @property {Vector2} position
  * @property {Vector2} down
@@ -15,10 +15,14 @@ import Vector2 from '../Math/Vector2.js'
  */
 
 /**
- * @type {Pointer}
+ * @type {_Pointer}
  * @module Pointer
  */
 export default class Pointer {
+    static ONPOINTERDOWN_EVENT = 'onpointerdown'
+    static ONPOINTERMOVE_EVENT = 'onpointermove'
+    static ONPOINTERUP_EVENT = 'onpointerup'
+
     /**
      * @param {HTMLElement} element 
      * @param {number} [devicePixelRatio=1] 
@@ -39,9 +43,9 @@ export default class Pointer {
 
         this.events = new Events()
 
-        this.events.createEvent('onpointerdown')
-        this.events.createEvent('onpointermove')
-        this.events.createEvent('onpointerup')
+        this.events.createEvent(Pointer.ONPOINTERDOWN_EVENT)
+        this.events.createEvent(Pointer.ONPOINTERMOVE_EVENT)
+        this.events.createEvent(Pointer.ONPOINTERUP_EVENT)
 
         if(element) this.load(element)
     }
@@ -87,7 +91,7 @@ export default class Pointer {
                 this.down.copy(this.position)
             }
 
-            this.events.dispatchEvent('onpointerdown', this)
+            this.events.dispatchEvent(Pointer.ONPOINTERDOWN_EVENT, this)
         }
 
         element.onpointermove = event => {
@@ -105,7 +109,7 @@ export default class Pointer {
                 )
             }
         
-            this.events.dispatchEvent('onpointermove', this)
+            this.events.dispatchEvent(Pointer.ONPOINTERMOVE_EVENT, this)
         }
 
         element.onpointerup = event => {
@@ -119,7 +123,7 @@ export default class Pointer {
                 this.drag.set(0, 0)
             }
         
-            this.events.dispatchEvent('onpointerup', this)
+            this.events.dispatchEvent(Pointer.ONPOINTERUP_EVENT, this)
         }
 
         return true

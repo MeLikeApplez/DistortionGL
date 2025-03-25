@@ -1,37 +1,56 @@
 ## Modules
 
 <dl>
-<dt><a href="#module_GameObject">GameObject</a> : <code><a href="#GameObject">GameObject</a></code></dt>
+<dt><a href="#module_GameObject">GameObject</a> : <code><a href="#_GameObject">_GameObject</a></code></dt>
 <dd></dd>
 </dl>
 
 ## Typedefs
 
 <dl>
-<dt><a href="#GameObject">GameObject</a> : <code>Object</code></dt>
+<dt><a href="#_GameObject">_GameObject</a> : <code>Object</code></dt>
 <dd></dd>
 </dl>
 
 <a name="module_GameObject"></a>
 
-## GameObject : [<code>GameObject</code>](#GameObject)
-<a name="module_GameObject+render"></a>
+## GameObject : [<code>\_GameObject</code>](#_GameObject)
 
-### gameObject.render(gl, program)
-**Kind**: instance method of [<code>GameObject</code>](#module_GameObject)  
+* [GameObject](#module_GameObject) : [<code>\_GameObject</code>](#_GameObject)
+    * [module.exports](#exp_module_GameObject--module.exports) ⏏
+        * [new module.exports(shader)](#new_module_GameObject--module.exports_new)
+        * [.render(gl)](#module_GameObject--module.exports+render)
+
+<a name="exp_module_GameObject--module.exports"></a>
+
+### module.exports ⏏
+**Kind**: Exported class  
+<a name="new_module_GameObject--module.exports_new"></a>
+
+#### new module.exports(shader)
+
+| Param | Type |
+| --- | --- |
+| shader | <code>shader</code> | 
+
+<a name="module_GameObject--module.exports+render"></a>
+
+#### module.exports.render(gl)
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_GameObject--module.exports)  
 
 | Param | Type |
 | --- | --- |
 | gl | <code>WebGL2RenderingContext</code> | 
-| program | <code>WebGLProgram</code> | 
 
-<a name="GameObject"></a>
+<a name="_GameObject"></a>
 
-## GameObject : <code>Object</code>
+## \_GameObject : <code>Object</code>
 **Kind**: global typedef  
 **Properties**
 
 | Name | Type |
 | --- | --- |
 | uuid | <code>string</code> | 
+| type | <code>GameObjectType</code> | 
+| shader | <code>Shader</code> | 
 

@@ -1,15 +1,16 @@
 import Scene from "./Scene.js"
 
 /**
- * @typedef {Object} Renderer
+ * @typedef {Object} _Renderer
  * @property {Scene} scene
  * @property {HTMLCanvasElement} canvasElement
  * @property {WebGL2RenderingContext} gl
  * @property {number} devicePixelRatio
+ * @property {boolean} ready
  */
 
 /**
- * @type {Renderer}
+ * @type {_Renderer}
  * @module Renderer
  */
 export default class Renderer {
@@ -25,6 +26,8 @@ export default class Renderer {
         this.gl = canvasElement.getContext('webgl2', glOptions)
 
         this.devicePixelRatio = 1
+
+        this.ready = false
     }
 
     /**
@@ -44,5 +47,32 @@ export default class Renderer {
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT)
     }
 
-    render() {}
+    load() {
+        for(let i = 0; i < this.scene.objects.length; i++) {
+            const sceneObject = this.scene.objects[i]
+
+            if(sceneObject.shader.ready) continue
+            if(sceneObject.shader.preloaded) throw Error('Shader for GameObject is not preloaded! Preload the source code using ".preloadSourceCode(<vertex code>, <fragment code>)"!')
+
+            const [ program, error ] = sceneObject.shader.loadSourceCode(this.gl)
+        
+            if(error) {
+                console.error('Failed to load Shader Code!')
+
+                throw error
+            }
+        }
+    }
+
+    render() {
+        if(!this.ready) throw Error('Renderer is not ready! Call .load()!')
+
+        this.clear()
+
+        for(let i = 0; i < this.scene.objects.length; i++) {
+            const sceneObject = this.scene.objects[i]
+
+            sceneObject.render(this.gl)
+        }
+    }
 }

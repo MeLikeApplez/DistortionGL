@@ -1,5 +1,7 @@
 /**
  * @typedef {Object} Shader
+ * @property {string | null} vertexCode
+ * @property {string | null} shaderCode
  * @property {WebGLProgram | null} program
  * @property {boolean} ready
  * @property {Error | null} error
@@ -12,21 +14,29 @@
 export default class Shader {
     /**
      * @param {string} name 
-     * @param {WebGL2RenderingContext=} gl 
-     * @param {string=} vertexCode 
-     * @param {string=} shaderCode 
      */
-    constructor(name, gl, vertexCode, shaderCode) {
+    constructor(name) {
         this.name = name || 'Shader'
+
+        this.vertexCode = null
+        this.shaderCode = null
 
         this.program = null
 
+        this.preloaded = false
         this.ready = false
         this.error = null
+    }
 
-        if(gl && vertexCode && shaderCode) {
-            this.loadSourceCode(gl, vertexCode, shaderCode)
-        }
+    /**
+     * @param {string} vertexCode 
+     * @param {string} shaderCode 
+     */
+    preloadSourceCode(vertexCode, shaderCode) {
+        this.vertexCode = vertexCode
+        this.shaderCode = shaderCode
+
+        this.preloaded = true
     }
 
     /**
@@ -75,11 +85,16 @@ export default class Shader {
 
     /**
      * @param {WebGL2RenderingContext} gl 
-     * @param {string} vertexCode 
-     * @param {string} shaderCode 
+     * @param {string=} vertexCode 
+     * @param {string=} shaderCode 
      * @returns {Array<WebGLProgram | null, Error | null>}
      */
     loadSourceCode(gl, vertexCode, shaderCode) {
+        if(this.preloaded && !vertexCode && !shaderCode) {
+            vertexCode = this.vertexCode
+            shaderCode = this.shaderCode
+        }
+
         const [ program, error ] = this.compileSourceCode(gl, vertexCode, shaderCode)
         
         this.program = error ? null : program

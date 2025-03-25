@@ -2,7 +2,7 @@ import Camera from './Camera.js'
 import Vector2 from '../Math/Vector2.js'
 
 /**
- * @typedef {Object} Camera2D
+ * @typedef {Object} _Camera2D
  * @property {Vector2} zoom
  * @property {Vector2} resolution
  * @property {number} minZoom
@@ -11,7 +11,7 @@ import Vector2 from '../Math/Vector2.js'
  */
 
 /**
- * @type {Camera2D}
+ * @type {_Camera2D}
  * @module Camera2D
  */
 export default class Camera2D extends Camera {

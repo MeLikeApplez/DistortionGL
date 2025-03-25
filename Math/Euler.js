@@ -2,7 +2,7 @@ import Matrix4 from "./Matrix4"
 import Quaternion from "./Quaternion"
 
 /**
- * @typedef {Object} Euler
+ * @typedef {Object} _Euler
  * @property {number} x
  * @property {number} y
  * @property {number} z
@@ -10,7 +10,7 @@ import Quaternion from "./Quaternion"
  */
 
 /**
- * @type {Euler}
+ * @type {_Euler}
  * @module Euler
  */
 export default class Euler {
