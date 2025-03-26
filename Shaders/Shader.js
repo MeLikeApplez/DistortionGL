@@ -2,8 +2,8 @@
  * @typedef {Object} Shader
  * @property {string | null} vertexCode
  * @property {string | null} shaderCode
- * @property {Object.<string, number>} uniforms
- * @property {Object.<string, WebGLUniformLocation | null>} attributes
+ * @property {Object.<string, number>} attributes
+ * @property {Object.<string, WebGLUniformLocation | null>} uniforms
  * @property {WebGLProgram | null} program
  * @property {boolean} ready
  * @property {Error | null} error
@@ -48,6 +48,8 @@ export default class Shader {
 
         for(let i = 0; i < shaders.length; i++) {
             const shader = shaders[i]
+
+            if(shader.ready) continue
 
             shader.loadSourceCode(gl)
 

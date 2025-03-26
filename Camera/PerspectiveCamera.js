@@ -78,8 +78,8 @@ export default class PerspectiveCamera extends Camera {
     /**
     * @param {WebGL2RenderingContext} gl 
     * @param {WebGLProgram} program 
-    * @param {WebGLUniformLocation} uniformPositionLocation
-    * @param {WebGLUniformLocation} uniformProjectionMatrixLocation  
+    * @param {WebGLUniformLocation | null} uniformPositionLocation
+    * @param {WebGLUniformLocation | null} uniformProjectionMatrixLocation  
     */
    render(gl, program, uniformPositionLocation, uniformProjectionMatrixLocation) {
        super.render(gl, program, uniformPositionLocation, uniformProjectionMatrixLocation)

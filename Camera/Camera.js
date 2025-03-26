@@ -23,8 +23,8 @@ export default class Camera {
     /**
      * @param {WebGL2RenderingContext} gl 
      * @param {WebGLProgram} program 
-     * @param {WebGLUniformLocation} uniformPositionLocation
-     * @param {WebGLUniformLocation} uniformProjectionMatrixLocation  
+     * @param {WebGLUniformLocation | null} uniformPositionLocation
+     * @param {WebGLUniformLocation | null} uniformProjectionMatrixLocation  
      */
     render(gl, program, uniformPositionLocation, uniformProjectionMatrixLocation) {
         gl.useProgram(program)
