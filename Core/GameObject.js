@@ -6,7 +6,7 @@ import Material from '../Materials/Material.js'
  * @typedef {Object} _GameObject
  * @property {string} uuid
  * @property {GameObjectType} type
- * @property {Material} material
+ * @property {Material | null} material
  */
 
 /**
@@ -15,9 +15,9 @@ import Material from '../Materials/Material.js'
  */
 export default class GameObject {
     /**
-     * @param {Material} material 
+     * @param {Material | null} material 
      */
-    constructor(material) {
+    constructor(material=null) {
         this.uuid = generateUUID()
         this.type = GameObjectType.None
     

@@ -45,7 +45,7 @@ export default class Renderer {
      * @param {Scene} scene 
      */
     loadScene(scene) {
-        this.scene.destroy(this)
+        this.scene.unload(this)
     
         this.scene = scene
         this.scene.load(this)
@@ -58,11 +58,6 @@ export default class Renderer {
 
     render() {
         if(!this.scene.enabled) return
-        if(!this.scene._hasLoadedObjectMaterials) {
-            this.scene._loadObjectMaterials(this.gl)
-
-            return;
-        }
 
         this.clear()
         this.gl.viewport(0, 0, this.canvasElement.width, this.canvasElement.height)

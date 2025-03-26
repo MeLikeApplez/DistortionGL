@@ -27,6 +27,8 @@ export default class Camera {
      * @param {WebGLUniformLocation} uniformProjectionMatrixLocation  
      */
     render(gl, program, uniformPositionLocation, uniformProjectionMatrixLocation) {
+        gl.useProgram(program)
+
         gl.uniform3f(uniformPositionLocation, this.position.x, this.position.y, this.position.z)
         gl.uniformMatrix4fv(uniformProjectionMatrixLocation, false, this.projectionMatrix)
     }

@@ -1,13 +1,14 @@
 import Camera from '../Camera/Camera'
 import GameObject from '../Core/GameObject'
 import Renderer from '../Renderer'
+import Shader from '../Shaders/Shader'
 
 /**
  * @typedef {Object} _Scene
  * @property {Camera} camera 
  * @property {Array<GameObject>} objects
+ * @property {Object.<string, Shader>} shaders
  * @property {boolean} enabled
- * @property {boolean} _hasLoadedObjectMaterials
  */
 
 /**
@@ -23,9 +24,9 @@ export default class Scene {
         this.camera = camera
 
         this.objects = []
+        this.shaders = {}
 
         this.enabled = true
-        this._hasLoadedObjectMaterials = false
     }
 
     /**
@@ -40,29 +41,6 @@ export default class Scene {
     }
 
     /**
-     * @param {WebGL2RenderingContext} gl 
-     */
-    _loadObjectMaterials(gl) {
-        for(let i = 0; i < this.objects.length; i++) {
-            const sceneObject = this.objects[i]
-
-            if(!sceneObject.material.ready) {
-                sceneObject.material.loadSourceCode(gl)
-            }
-
-            if(sceneObject.material.error) {
-                this._hasLoadedObjectMaterials = false
-
-                console.error(`Failed to load material shader! Material: "${sceneObject.material.name}"`)
-
-                throw sceneObject.material.error
-            }
-        }
-    
-        this._hasLoadedObjectMaterials = true
-    }
-
-    /**
      * @param {Renderer} renderer 
      */
     load(renderer) {
@@ -72,7 +50,7 @@ export default class Scene {
     /**
      * @param {Renderer} renderer 
      */
-    destroy(renderer) {
+    unload(renderer) {
         // Write scene code here
     }
 

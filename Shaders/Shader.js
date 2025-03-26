@@ -2,6 +2,8 @@
  * @typedef {Object} Shader
  * @property {string | null} vertexCode
  * @property {string | null} shaderCode
+ * @property {Object.<string, number>} uniforms
+ * @property {Object.<string, WebGLUniformLocation | null>} attributes
  * @property {WebGLProgram | null} program
  * @property {boolean} ready
  * @property {Error | null} error
@@ -21,6 +23,9 @@ export default class Shader {
         this.vertexCode = null
         this.shaderCode = null
 
+        this.uniforms = {}
+        this.attributes = {}
+
         this.program = null
 
         this.preloaded = false
@@ -31,6 +36,7 @@ export default class Shader {
     /**
      * @param {string} vertexCode 
      * @param {string} shaderCode 
+     * @returns {Shader}
      */
     preloadSourceCode(vertexCode, shaderCode) {
         this.vertexCode = vertexCode
@@ -80,6 +86,19 @@ export default class Shader {
             const compileError = gl.getProgramInfoLog(program)
 
             return [null, new  Error(`[Link Shader]: "${compileError}"`)]
+        }
+
+        for(const key in this.uniforms) {
+            const uniformLocation = gl.getUniformLocation(program, key)
+            
+            this.uniforms[key] = uniformLocation
+        }
+
+        
+        for(const key in this.attributes) {
+            const attributeLocation = gl.getAttribLocation(program, key)
+            
+            this.attributes[key] = attributeLocation
         }
 
         return [program, null]
