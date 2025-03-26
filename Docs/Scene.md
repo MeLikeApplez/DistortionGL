@@ -20,9 +20,8 @@
     * [module.exports](#exp_module_Scene--module.exports) ⏏
         * [new module.exports(camera)](#new_module_Scene--module.exports_new)
         * [.add(...sceneObjects)](#module_Scene--module.exports+add)
-        * [._loadObjectMaterials(gl)](#module_Scene--module.exports+_loadObjectMaterials)
         * [.load(renderer)](#module_Scene--module.exports+load)
-        * [.destroy(renderer)](#module_Scene--module.exports+destroy)
+        * [.unload(renderer)](#module_Scene--module.exports+unload)
         * [.render(gl)](#module_Scene--module.exports+render)
 
 <a name="exp_module_Scene--module.exports"></a>
@@ -46,15 +45,6 @@
 | --- | --- |
 | ...sceneObjects | <code>GameObject</code> | 
 
-<a name="module_Scene--module.exports+_loadObjectMaterials"></a>
-
-#### module.exports.\_loadObjectMaterials(gl)
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_Scene--module.exports)  
-
-| Param | Type |
-| --- | --- |
-| gl | <code>WebGL2RenderingContext</code> | 
-
 <a name="module_Scene--module.exports+load"></a>
 
 #### module.exports.load(renderer)
@@ -64,9 +54,9 @@
 | --- | --- |
 | renderer | <code>Renderer</code> | 
 
-<a name="module_Scene--module.exports+destroy"></a>
+<a name="module_Scene--module.exports+unload"></a>
 
-#### module.exports.destroy(renderer)
+#### module.exports.unload(renderer)
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_Scene--module.exports)  
 
 | Param | Type |
@@ -92,6 +82,6 @@
 | --- | --- |
 | camera | <code>Camera</code> | 
 | objects | <code>Array.&lt;GameObject&gt;</code> | 
+| shaders | <code>Object.&lt;string, Shader&gt;</code> | 
 | enabled | <code>boolean</code> | 
-| _hasLoadedObjectMaterials | <code>boolean</code> | 
 

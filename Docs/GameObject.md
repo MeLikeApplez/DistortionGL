@@ -29,9 +29,9 @@
 
 #### new module.exports(material)
 
-| Param | Type |
-| --- | --- |
-| material | <code>Material</code> | 
+| Param | Type | Default |
+| --- | --- | --- |
+| material | <code>Material</code> \| <code>null</code> | <code></code> | 
 
 <a name="module_GameObject--module.exports+render"></a>
 
@@ -52,5 +52,5 @@
 | --- | --- |
 | uuid | <code>string</code> | 
 | type | <code>GameObjectType</code> | 
-| material | <code>Material</code> | 
+| material | <code>Material</code> \| <code>null</code> | 
 
