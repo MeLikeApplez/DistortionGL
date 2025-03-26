@@ -34,6 +34,38 @@ export default class Shader {
     }
 
     /**
+     * @param {WebGL2RenderingContext} gl 
+     * @param {Array<Shader>} shaders 
+     * @param {boolean} throwError 
+     * @returns {{ shaders: Array<Shader>, success: boolean, error: Error | null }}  
+     */
+    static loadAllPreloadedShaders(gl, shaders, throwError=false) {
+        const result = {
+            shaders: shaders,
+            success: false,
+            error: null
+        }
+
+        for(let i = 0; i < shaders.length; i++) {
+            const shader = shaders[i]
+
+            shader.loadSourceCode(gl)
+
+            if(shader.error && throwError) throw shader.error
+            if(shader.error) {
+                result.success = false
+                result.error = shader.error
+                
+                return result
+            }
+        }
+
+        result.success = true
+
+        return result
+    }
+
+    /**
      * @param {string} vertexCode 
      * @param {string} shaderCode 
      * @returns {Shader}
