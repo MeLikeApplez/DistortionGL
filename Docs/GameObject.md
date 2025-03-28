@@ -19,6 +19,7 @@
 * [GameObject](#module_GameObject) : [<code>\_GameObject</code>](#_GameObject)
     * [module.exports](#exp_module_GameObject--module.exports) ⏏
         * [new module.exports(material)](#new_module_GameObject--module.exports_new)
+        * [.update(gl)](#module_GameObject--module.exports+update)
         * [.render(gl)](#module_GameObject--module.exports+render)
 
 <a name="exp_module_GameObject--module.exports"></a>
@@ -32,6 +33,15 @@
 | Param | Type | Default |
 | --- | --- | --- |
 | material | <code>Material</code> \| <code>null</code> | <code></code> | 
+
+<a name="module_GameObject--module.exports+update"></a>
+
+#### module.exports.update(gl)
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_GameObject--module.exports)  
+
+| Param | Type |
+| --- | --- |
+| gl | <code>WebGL2RenderingContext</code> | 
 
 <a name="module_GameObject--module.exports+render"></a>
 

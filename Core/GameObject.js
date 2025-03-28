@@ -27,5 +27,10 @@ export default class GameObject {
     /**
      * @param {WebGL2RenderingContext} gl 
      */
+    update(gl) {}
+
+    /**
+     * @param {WebGL2RenderingContext} gl 
+     */
     render(gl) {}
 }

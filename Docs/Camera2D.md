@@ -24,8 +24,8 @@
 | --- | --- |
 | gl | <code>WebGL2RenderingContext</code> | 
 | program | <code>WebGLProgram</code> | 
-| uniformPositionLocation | <code>WebGLUniformLocation</code> | 
-| uniformProjectionMatrixLocation | <code>WebGLUniformLocation</code> | 
+| uniformPositionLocation | <code>WebGLUniformLocation</code> \| <code>null</code> | 
+| uniformProjectionMatrixLocation | <code>WebGLUniformLocation</code> \| <code>null</code> | 
 
 <a name="_Camera2D"></a>
 

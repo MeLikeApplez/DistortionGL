@@ -103,8 +103,8 @@
 | --- | --- |
 | vertexCode | <code>string</code> \| <code>null</code> | 
 | shaderCode | <code>string</code> \| <code>null</code> | 
-| uniforms | <code>Object.&lt;string, number&gt;</code> | 
-| attributes | <code>Object.&lt;string, (WebGLUniformLocation\|null)&gt;</code> | 
+| attributes | <code>Object.&lt;string, number&gt;</code> | 
+| uniforms | <code>Object.&lt;string, (WebGLUniformLocation\|null)&gt;</code> | 
 | program | <code>WebGLProgram</code> \| <code>null</code> | 
 | ready | <code>boolean</code> | 
 | error | <code>Error</code> \| <code>null</code> | 
