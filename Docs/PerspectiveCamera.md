@@ -20,7 +20,7 @@
     * [module.exports](#exp_module_PerspectiveCamera--module.exports) ⏏
         * [new module.exports(fov, aspect, near, far)](#new_module_PerspectiveCamera--module.exports_new)
         * [.lookAt(target, up)](#module_PerspectiveCamera--module.exports+lookAt)
-        * [.render(gl, program, uniformPositionLocation, uniformProjectionMatrixLocation)](#module_PerspectiveCamera--module.exports+render)
+        * [.render(gl, program, uniformPositionLocation, uniformProjectionMatrixLocation, uniformRotationLocation)](#module_PerspectiveCamera--module.exports+render)
 
 <a name="exp_module_PerspectiveCamera--module.exports"></a>
 
@@ -42,14 +42,14 @@
 #### module.exports.lookAt(target, up)
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_PerspectiveCamera--module.exports)  
 
-| Param | Type |
-| --- | --- |
-| target | <code>Vector3</code> | 
-| up | <code>Vector3</code> | 
+| Param | Type | Default |
+| --- | --- | --- |
+| target | <code>Vector3</code> |  | 
+| up | <code>Vector3</code> | <code></code> | 
 
 <a name="module_PerspectiveCamera--module.exports+render"></a>
 
-#### module.exports.render(gl, program, uniformPositionLocation, uniformProjectionMatrixLocation)
+#### module.exports.render(gl, program, uniformPositionLocation, uniformProjectionMatrixLocation, uniformRotationLocation)
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_PerspectiveCamera--module.exports)  
 
 | Param | Type |
@@ -58,6 +58,7 @@
 | program | <code>WebGLProgram</code> | 
 | uniformPositionLocation | <code>WebGLUniformLocation</code> \| <code>null</code> | 
 | uniformProjectionMatrixLocation | <code>WebGLUniformLocation</code> \| <code>null</code> | 
+| uniformRotationLocation | <code>WebGLUniformLocation</code> \| <code>null</code> | 
 
 <a name="_PerspectiveCamera"></a>
 
@@ -71,4 +72,5 @@
 | aspect | <code>number</code> | 
 | near | <code>number</code> | 
 | far | <code>number</code> | 
+| target | <code>Vector3</code> | 
 

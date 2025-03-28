@@ -39,25 +39,35 @@ export default class Scene {
             this.objects.push(sceneObject)
         }
     }
-
     /**
-     * @param {Renderer} renderer 
+     * @param {Renderer} renderer
+     * @param {...*} any  
      */
-    load(renderer) {
+    dispose(renderer, ...any) {
         // Write scene code here
     }
 
     /**
-     * @param {Renderer} renderer 
+     * @param {Renderer} renderer
+     * @param {...*} any  
      */
-    unload(renderer) {
+    load(renderer, ...any) {
         // Write scene code here
     }
 
     /**
-     * @param {WebGL2RenderingContext} gl 
+     * @param {Renderer} renderer
+     * @param {...*} any  
      */
-    render(gl) {
+    unload(renderer, ...any) {
+        // Write scene code here
+    }
+
+    /**
+     * @param {WebGL2RenderingContext} gl
+     * @param {...*} any  
+     */
+    render(gl, ...any) {
         // Write scene code here
     }
 }

@@ -8,6 +8,7 @@ import Vector3 from '../Math/Vector3.js'
  * @property {number} aspect
  * @property {number} near
  * @property {number} far
+ * @property {Vector3} target
  */
 
 /**
@@ -30,6 +31,7 @@ export default class PerspectiveCamera extends Camera {
         this.far = far
     
         this.rotationMatrix = new Matrix4()
+        this.target = new Vector3(0, 0, 0)
         
         this.updateProjectionMatrix()
     }
@@ -38,7 +40,7 @@ export default class PerspectiveCamera extends Camera {
      * @param {Vector3} target 
      * @param {Vector3?} up 
      */
-    lookAt(target, up) {
+    lookAt(target, up=null) {
         if(!up) up = new Vector3(0, 1, 0)
         
         const zAxis = this.position.clone().subtract(target).normalize()
@@ -80,9 +82,12 @@ export default class PerspectiveCamera extends Camera {
     * @param {WebGLProgram} program 
     * @param {WebGLUniformLocation | null} uniformPositionLocation
     * @param {WebGLUniformLocation | null} uniformProjectionMatrixLocation  
+    * @param {WebGLUniformLocation | null} uniformRotationLocation
     */
-   render(gl, program, uniformPositionLocation, uniformProjectionMatrixLocation) {
-       super.render(gl, program, uniformPositionLocation, uniformProjectionMatrixLocation)
+   render(gl, program, uniformPositionLocation, uniformProjectionMatrixLocation, uniformRotationLocation) {
        // Write camera render code here
-   }
+       gl.uniform3f(uniformPositionLocation, this.position.x, this.position.y, this.position.z)
+       gl.uniformMatrix4fv(uniformProjectionMatrixLocation, false, this.projectionMatrix)
+       gl.uniformMatrix4fv(uniformRotationLocation, false, this.rotationMatrix)
+    }
 }

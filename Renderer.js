@@ -2,7 +2,7 @@ import Scene from "./Scenes/Scene.js"
 
 /**
  * @typedef {Object} _Renderer
- * @property {Scene} scene
+ * @property {Scene | null} scene
  * @property {HTMLCanvasElement} canvasElement
  * @property {WebGL2RenderingContext} gl
  * @property {number} devicePixelRatio
@@ -14,19 +14,16 @@ import Scene from "./Scenes/Scene.js"
  */
 export default class Renderer {
     /**
-     * @param {Scene} scene
      * @param {HTMLCanvasElement} canvasElement 
      * @param {WebGLContextAttributes} [glOptions={}] 
      */
-    constructor(scene, canvasElement, glOptions={}) {
-        this.scene = scene
+    constructor(canvasElement, glOptions={}) {
+        this.scene = null
 
         this.canvasElement = canvasElement
         this.gl = canvasElement.getContext('webgl2', glOptions)
 
         this.devicePixelRatio = 1
-
-        this.loadScene(scene)
     }
 
     /**
@@ -45,7 +42,7 @@ export default class Renderer {
      * @param {Scene} scene 
      */
     loadScene(scene) {
-        this.scene.unload(this)
+        if(this.scene !== null) this.scene.unload(this)
     
         this.scene = scene
         this.scene.load(this)
@@ -57,7 +54,7 @@ export default class Renderer {
     }
 
     render() {
-        if(!this.scene.enabled) return
+        if(this.scene === null || !this.scene.enabled) return
 
         this.clear()
         this.gl.viewport(0, 0, this.canvasElement.width, this.canvasElement.height)

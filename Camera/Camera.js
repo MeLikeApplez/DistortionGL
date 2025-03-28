@@ -1,9 +1,11 @@
+import Euler from '../Math/Euler.js'
 import Matrix4 from '../Math/Matrix4.js'
 import Vector3 from '../Math/Vector3.js'
 
 /**
  * @typedef {Object} _Camera
  * @property {Vector3} position
+ * @property {Euler} rotation
  * @property {Matrix4} projectionMatrix
  */
 
@@ -14,6 +16,7 @@ import Vector3 from '../Math/Vector3.js'
 export default class Camera {
     constructor() {
         this.position = new Vector3(0, 0, 0)
+        this.rotation = new Euler()
 
         this.projectionMatrix = new Matrix4()
     }
@@ -23,13 +26,7 @@ export default class Camera {
     /**
      * @param {WebGL2RenderingContext} gl 
      * @param {WebGLProgram} program 
-     * @param {WebGLUniformLocation | null} uniformPositionLocation
-     * @param {WebGLUniformLocation | null} uniformProjectionMatrixLocation  
+     * @param {...*} any 
      */
-    render(gl, program, uniformPositionLocation, uniformProjectionMatrixLocation) {
-        gl.useProgram(program)
-
-        gl.uniform3f(uniformPositionLocation, this.position.x, this.position.y, this.position.z)
-        gl.uniformMatrix4fv(uniformProjectionMatrixLocation, false, this.projectionMatrix)
-    }
+    render(gl, program, ...any) {}
 }

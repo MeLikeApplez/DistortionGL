@@ -19,8 +19,9 @@
 * [GameObject](#module_GameObject) : [<code>\_GameObject</code>](#_GameObject)
     * [module.exports](#exp_module_GameObject--module.exports) ⏏
         * [new module.exports(material)](#new_module_GameObject--module.exports_new)
-        * [.update(gl)](#module_GameObject--module.exports+update)
-        * [.render(gl)](#module_GameObject--module.exports+render)
+        * [.dispose(gl, ...any)](#module_GameObject--module.exports+dispose)
+        * [.update(gl, ...any)](#module_GameObject--module.exports+update)
+        * [.render(gl, ...any)](#module_GameObject--module.exports+render)
 
 <a name="exp_module_GameObject--module.exports"></a>
 
@@ -34,23 +35,35 @@
 | --- | --- | --- |
 | material | <code>Material</code> \| <code>null</code> | <code></code> | 
 
-<a name="module_GameObject--module.exports+update"></a>
+<a name="module_GameObject--module.exports+dispose"></a>
 
-#### module.exports.update(gl)
+#### module.exports.dispose(gl, ...any)
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_GameObject--module.exports)  
 
 | Param | Type |
 | --- | --- |
 | gl | <code>WebGL2RenderingContext</code> | 
+| ...any | <code>\*</code> | 
+
+<a name="module_GameObject--module.exports+update"></a>
+
+#### module.exports.update(gl, ...any)
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_GameObject--module.exports)  
+
+| Param | Type |
+| --- | --- |
+| gl | <code>WebGL2RenderingContext</code> | 
+| ...any | <code>\*</code> | 
 
 <a name="module_GameObject--module.exports+render"></a>
 
-#### module.exports.render(gl)
+#### module.exports.render(gl, ...any)
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_GameObject--module.exports)  
 
 | Param | Type |
 | --- | --- |
 | gl | <code>WebGL2RenderingContext</code> | 
+| ...any | <code>\*</code> | 
 
 <a name="_GameObject"></a>
 

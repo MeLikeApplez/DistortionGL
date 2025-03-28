@@ -38,7 +38,8 @@ export default class Camera2D extends Camera {
      * @param {WebGLUniformLocation | null} uniformProjectionMatrixLocation  
      */
     render(gl, program, uniformPositionLocation, uniformProjectionMatrixLocation) {
-        super.render(gl, program, uniformPositionLocation, uniformProjectionMatrixLocation)
         // Write camera render code here
+        gl.uniform3f(uniformPositionLocation, this.position.x, this.position.y, this.position.z)
+        gl.uniformMatrix4fv(uniformProjectionMatrixLocation, false, this.projectionMatrix)
     }
 }

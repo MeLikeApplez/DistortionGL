@@ -20,9 +20,10 @@
     * [module.exports](#exp_module_Scene--module.exports) ⏏
         * [new module.exports(camera)](#new_module_Scene--module.exports_new)
         * [.add(...sceneObjects)](#module_Scene--module.exports+add)
-        * [.load(renderer)](#module_Scene--module.exports+load)
-        * [.unload(renderer)](#module_Scene--module.exports+unload)
-        * [.render(gl)](#module_Scene--module.exports+render)
+        * [.dispose(renderer, ...any)](#module_Scene--module.exports+dispose)
+        * [.load(renderer, ...any)](#module_Scene--module.exports+load)
+        * [.unload(renderer, ...any)](#module_Scene--module.exports+unload)
+        * [.render(gl, ...any)](#module_Scene--module.exports+render)
 
 <a name="exp_module_Scene--module.exports"></a>
 
@@ -45,32 +46,45 @@
 | --- | --- |
 | ...sceneObjects | <code>GameObject</code> | 
 
-<a name="module_Scene--module.exports+load"></a>
+<a name="module_Scene--module.exports+dispose"></a>
 
-#### module.exports.load(renderer)
+#### module.exports.dispose(renderer, ...any)
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_Scene--module.exports)  
 
 | Param | Type |
 | --- | --- |
 | renderer | <code>Renderer</code> | 
+| ...any | <code>\*</code> | 
+
+<a name="module_Scene--module.exports+load"></a>
+
+#### module.exports.load(renderer, ...any)
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_Scene--module.exports)  
+
+| Param | Type |
+| --- | --- |
+| renderer | <code>Renderer</code> | 
+| ...any | <code>\*</code> | 
 
 <a name="module_Scene--module.exports+unload"></a>
 
-#### module.exports.unload(renderer)
+#### module.exports.unload(renderer, ...any)
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_Scene--module.exports)  
 
 | Param | Type |
 | --- | --- |
 | renderer | <code>Renderer</code> | 
+| ...any | <code>\*</code> | 
 
 <a name="module_Scene--module.exports+render"></a>
 
-#### module.exports.render(gl)
+#### module.exports.render(gl, ...any)
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_Scene--module.exports)  
 
 | Param | Type |
 | --- | --- |
 | gl | <code>WebGL2RenderingContext</code> | 
+| ...any | <code>\*</code> | 
 
 <a name="_Scene"></a>
 

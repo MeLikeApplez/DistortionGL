@@ -17,15 +17,14 @@
 ## Camera : [<code>\_Camera</code>](#_Camera)
 <a name="module_Camera+render"></a>
 
-### camera.render(gl, program, uniformPositionLocation, uniformProjectionMatrixLocation)
+### camera.render(gl, program, ...any)
 **Kind**: instance method of [<code>Camera</code>](#module_Camera)  
 
 | Param | Type |
 | --- | --- |
 | gl | <code>WebGL2RenderingContext</code> | 
 | program | <code>WebGLProgram</code> | 
-| uniformPositionLocation | <code>WebGLUniformLocation</code> \| <code>null</code> | 
-| uniformProjectionMatrixLocation | <code>WebGLUniformLocation</code> \| <code>null</code> | 
+| ...any | <code>\*</code> | 
 
 <a name="_Camera"></a>
 
@@ -36,5 +35,6 @@
 | Name | Type |
 | --- | --- |
 | position | <code>Vector3</code> | 
+| rotation | <code>Euler</code> | 
 | projectionMatrix | <code>Matrix4</code> | 
 
