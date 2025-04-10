@@ -1,41 +1,42 @@
 import { generateUUID } from "../Math/MathUtils.js"
 
 /**
- * @typedef {Map} _Events
+ * @typedef {object} _Events
  */
 
 /**
+ * @template EventNameList
  * @type {_Events}
  * @module Events
  */
-export default class Events extends Map {
+export default class Events {
     constructor() {
-        super()
+        this._listeners = new Map()
     }
-
+    
     /**
-     * @param {string} eventName 
+     * @param {EventNameKey} eventName 
      */
-    createEvent(eventName) {
-        this.set(eventName, [])
+    createEventDispatch(eventName) {
+        this._listeners.set(eventName, [])
     
         return this
     }
 
     /**
-     * @param {string} eventName 
+     * @param {EventNameList} eventName 
      */
-    removeEvent(eventName) {
-        this.delete(eventName)
+    removeEventDispatch(eventName) {
+        this._listeners.delete(eventName)
     }
 
     /**
-     * @param {string} eventName 
-     * @param {...*} data 
+     * @param {EventNameList} eventName 
+     * @param {any} data 
      * @returns {boolean}
      */
-    dispatchEvent(eventName, ...data) {
-        const group = this.get(eventName)
+    dispatchEvent(eventName, data) {
+        const group = this._listeners.get(eventName)
 
         if(!group) return false
 
@@ -49,12 +50,12 @@ export default class Events extends Map {
     }
 
     /**
-     * @param {string} eventName 
+     * @param {EventNameList} eventName 
      * @param {Function} callback
      * @returns {string | Error}
      */
-    listen(eventName, callback) {
-        const group = this.get(eventName)
+    addEventListener(eventName, callback) {
+        const group = this._listeners.get(eventName)
 
         if(!group) return new Error(`Unable to find event eventName: "${eventName}"`)
         if(typeof callback !== 'function') return new Error('Callback function is required!')
@@ -62,15 +63,17 @@ export default class Events extends Map {
         const uuid = generateUUID()
         
         group.push({ uuid, callback })
+
+        return uuid
     }
 
     /**
-     * @param {string} eventName 
+     * @param {EventNameList} eventName 
      * @param {string} uuid 
      * @returns {true | Error}
      */
-    unlisten(eventName, uuid) {
-        const group = this.get(eventName)
+    removeEventListener(eventName, uuid) {
+        const group = this._listeners.get(eventName)
 
         if(!group) return new Error(`Unable to find event eventName: "${eventName}"`)
         const index = group.findIndex(v => v.uuid === uuid)

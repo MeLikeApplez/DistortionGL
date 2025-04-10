@@ -8,7 +8,7 @@
 ## Typedefs
 
 <dl>
-<dt><a href="#_Events">_Events</a> : <code>Map</code></dt>
+<dt><a href="#_Events">_Events</a> : <code>object</code></dt>
 <dd></dd>
 </dl>
 
@@ -17,61 +17,61 @@
 ## Events : [<code>\_Events</code>](#_Events)
 
 * [Events](#module_Events) : [<code>\_Events</code>](#_Events)
-    * [.createEvent(eventName)](#module_Events+createEvent)
-    * [.removeEvent(eventName)](#module_Events+removeEvent)
-    * [.dispatchEvent(eventName, ...data)](#module_Events+dispatchEvent) ⇒ <code>boolean</code>
-    * [.listen(eventName, callback)](#module_Events+listen) ⇒ <code>string</code> \| <code>Error</code>
-    * [.unlisten(eventName, uuid)](#module_Events+unlisten) ⇒ <code>true</code> \| <code>Error</code>
+    * [.createEventDispatch(eventName)](#module_Events+createEventDispatch)
+    * [.removeEventDispatch(eventName)](#module_Events+removeEventDispatch)
+    * [.dispatchEvent(eventName, data)](#module_Events+dispatchEvent) ⇒ <code>boolean</code>
+    * [.addEventListener(eventName, callback)](#module_Events+addEventListener) ⇒ <code>string</code> \| <code>Error</code>
+    * [.removeEventListener(eventName, uuid)](#module_Events+removeEventListener) ⇒ <code>true</code> \| <code>Error</code>
 
-<a name="module_Events+createEvent"></a>
+<a name="module_Events+createEventDispatch"></a>
 
-### events.createEvent(eventName)
+### events.createEventDispatch(eventName)
 **Kind**: instance method of [<code>Events</code>](#module_Events)  
 
 | Param | Type |
 | --- | --- |
-| eventName | <code>string</code> | 
+| eventName | <code>EventNameKey</code> | 
 
-<a name="module_Events+removeEvent"></a>
+<a name="module_Events+removeEventDispatch"></a>
 
-### events.removeEvent(eventName)
+### events.removeEventDispatch(eventName)
 **Kind**: instance method of [<code>Events</code>](#module_Events)  
 
 | Param | Type |
 | --- | --- |
-| eventName | <code>string</code> | 
+| eventName | <code>EventNameList</code> | 
 
 <a name="module_Events+dispatchEvent"></a>
 
-### events.dispatchEvent(eventName, ...data) ⇒ <code>boolean</code>
+### events.dispatchEvent(eventName, data) ⇒ <code>boolean</code>
 **Kind**: instance method of [<code>Events</code>](#module_Events)  
 
 | Param | Type |
 | --- | --- |
-| eventName | <code>string</code> | 
-| ...data | <code>\*</code> | 
+| eventName | <code>EventNameList</code> | 
+| data | <code>any</code> | 
 
-<a name="module_Events+listen"></a>
+<a name="module_Events+addEventListener"></a>
 
-### events.listen(eventName, callback) ⇒ <code>string</code> \| <code>Error</code>
+### events.addEventListener(eventName, callback) ⇒ <code>string</code> \| <code>Error</code>
 **Kind**: instance method of [<code>Events</code>](#module_Events)  
 
 | Param | Type |
 | --- | --- |
-| eventName | <code>string</code> | 
+| eventName | <code>EventNameList</code> | 
 | callback | <code>function</code> | 
 
-<a name="module_Events+unlisten"></a>
+<a name="module_Events+removeEventListener"></a>
 
-### events.unlisten(eventName, uuid) ⇒ <code>true</code> \| <code>Error</code>
+### events.removeEventListener(eventName, uuid) ⇒ <code>true</code> \| <code>Error</code>
 **Kind**: instance method of [<code>Events</code>](#module_Events)  
 
 | Param | Type |
 | --- | --- |
-| eventName | <code>string</code> | 
+| eventName | <code>EventNameList</code> | 
 | uuid | <code>string</code> | 
 
 <a name="_Events"></a>
 
-## \_Events : <code>Map</code>
+## \_Events : <code>object</code>
 **Kind**: global typedef  

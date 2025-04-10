@@ -8,6 +8,8 @@
 ## Typedefs
 
 <dl>
+<dt><a href="#PointerEvents">PointerEvents</a> : <code>&#x27;onpointerdown&#x27;</code> | <code>&#x27;onpointermove&#x27;</code> | <code>&#x27;onpointerup&#x27;</code></dt>
+<dd></dd>
 <dt><a href="#_Pointer">_Pointer</a> : <code>Object</code></dt>
 <dd></dd>
 </dl>
@@ -43,6 +45,10 @@
 | --- | --- |
 | element | <code>HTMLElement</code> | 
 
+<a name="PointerEvents"></a>
+
+## PointerEvents : <code>&#x27;onpointerdown&#x27;</code> \| <code>&#x27;onpointermove&#x27;</code> \| <code>&#x27;onpointerup&#x27;</code>
+**Kind**: global typedef  
 <a name="_Pointer"></a>
 
 ## \_Pointer : <code>Object</code>
@@ -60,5 +66,5 @@
 | isPointerDown | <code>boolean</code> | 
 | isPointerUp | <code>boolean</code> | 
 | devicePixelRatio | <code>number</code> | 
-| events | <code>Events</code> | 
+| events | [<code>Events.&lt;PointerEvents&gt;</code>](#PointerEvents) | 
 

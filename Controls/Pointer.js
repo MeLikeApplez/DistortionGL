@@ -1,5 +1,10 @@
 import Events from '../Core/Events.js'
 import Vector2 from '../Math/Vector2.js'
+
+/**
+ * @typedef {'onpointerdown' | 'onpointermove' | 'onpointerup'} PointerEvents
+ */
+
 /**
  * @typedef {Object} _Pointer
  * @property {HTMLElement} element
@@ -11,7 +16,7 @@ import Vector2 from '../Math/Vector2.js'
  * @property {boolean} isPointerDown
  * @property {boolean} isPointerUp
  * @property {number} devicePixelRatio
- * @property {Events} events
+ * @property {Events<PointerEvents>} events
  */
 
 /**
@@ -19,10 +24,6 @@ import Vector2 from '../Math/Vector2.js'
  * @module Pointer
  */
 export default class Pointer {
-    static ONPOINTERDOWN_EVENT = 'onpointerdown'
-    static ONPOINTERMOVE_EVENT = 'onpointermove'
-    static ONPOINTERUP_EVENT = 'onpointerup'
-
     /**
      * @param {HTMLElement} element 
      * @param {number} [devicePixelRatio=1] 
@@ -43,9 +44,9 @@ export default class Pointer {
 
         this.events = new Events()
 
-        this.events.createEvent(Pointer.ONPOINTERDOWN_EVENT)
-        this.events.createEvent(Pointer.ONPOINTERMOVE_EVENT)
-        this.events.createEvent(Pointer.ONPOINTERUP_EVENT)
+        this.events.createEventDispatch('onpointerdown')
+        this.events.createEventDispatch('onpointermove')
+        this.events.createEventDispatch('onpointerup')
 
         if(element) this.load(element)
     }
@@ -91,7 +92,7 @@ export default class Pointer {
                 this.down.copy(this.position)
             }
 
-            this.events.dispatchEvent(Pointer.ONPOINTERDOWN_EVENT, this)
+            this.events.dispatchEvent('onpointerdown', this)
         }
 
         element.onpointermove = event => {
@@ -109,7 +110,7 @@ export default class Pointer {
                 )
             }
         
-            this.events.dispatchEvent(Pointer.ONPOINTERMOVE_EVENT, this)
+            this.events.dispatchEvent('onpointermove', this)
         }
 
         element.onpointerup = event => {
@@ -123,7 +124,7 @@ export default class Pointer {
                 this.drag.set(0, 0)
             }
         
-            this.events.dispatchEvent(Pointer.ONPOINTERUP_EVENT, this)
+            this.events.dispatchEvent('onpointerup', this)
         }
 
         return true

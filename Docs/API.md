@@ -39,6 +39,13 @@
 
 > [Vector4](Vector4.md) 
 
+## Canvas2D Reference 
+> [Canvas2D](Canvas2D.md) 
+
+> [Renderer](Renderer.md) 
+
+> [WebGL2](WebGL2.md) 
+
 ## Scene Reference 
 > [Scene](Scene.md) 
 

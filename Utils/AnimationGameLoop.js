@@ -1,8 +1,12 @@
 import Events from "../Core/Events"
 
 /**
+ * @typedef {'onstart' | 'onupdate' | 'onstop'} AnimationGameLoopEvents
+ */
+
+/**
  * @typedef {Object} _AnimationGameLoop
- * @property {Events} events
+ * @property {Events<AnimationGameLoopEvents>} events
  * @property {number} animationId
  * @property {number} startTime
  * @property {number} fps
@@ -14,10 +18,6 @@ import Events from "../Core/Events"
  * @module AnimationGameLoop
  */
 export default class AnimationGameLoop {
-    static ON_START = 'onstart'
-    static ON_UPDATE = 'onupdate'
-    static ON_STOP = 'onstop'
-
     constructor() {
         this.events = new Events()
 
@@ -27,16 +27,16 @@ export default class AnimationGameLoop {
         this.fps = 0
         this.deltaTime = 0
 
-        this.events.createEvent(AnimationGameLoop.ON_START)
-        this.events.createEvent(AnimationGameLoop.ON_UPDATE)
-        this.events.createEvent(AnimationGameLoop.ON_STOP)
+        this.events.createEventDispatch('onstart')
+        this.events.createEventDispatch('onupdate')
+        this.events.createEventDispatch('onstop')
     }
 
     start() {
         this.startTime = -1
         this.animationId = window.requestAnimationFrame(this.update.bind(this))
 
-        this.events.dispatchEvent(AnimationGameLoop.ON_START, this)
+        this.events.dispatchEvent('onstart', this)
 
         return this.animationId
     }
@@ -47,7 +47,7 @@ export default class AnimationGameLoop {
         this.animationId = -1
         this.startTime = -1
 
-        this.events.dispatchEvent(AnimationGameLoop.ON_STOP, this)
+        this.events.dispatchEvent('onupdate', this)
 
         return this.animationId
     }
@@ -66,6 +66,6 @@ export default class AnimationGameLoop {
 
         this.startTime = time
 
-        this.events.dispatchEvent(AnimationGameLoop.ON_UPDATE, this)
+        this.events.dispatchEvent('onstop', this)
     }
 }
