@@ -43,7 +43,7 @@ export default class Events {
         for(let i = 0; i < group.length; i++) {
             const listener = group[i]
             
-            listener.callback(...data)
+            listener.callback(data)
         }
 
         return true

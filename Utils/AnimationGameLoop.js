@@ -47,7 +47,7 @@ export default class AnimationGameLoop {
         this.animationId = -1
         this.startTime = -1
 
-        this.events.dispatchEvent('onupdate', this)
+        this.events.dispatchEvent('onstop', this)
 
         return this.animationId
     }
@@ -66,6 +66,6 @@ export default class AnimationGameLoop {
 
         this.startTime = time
 
-        this.events.dispatchEvent('onstop', this)
+        this.events.dispatchEvent('onupdate', this)
     }
 }
