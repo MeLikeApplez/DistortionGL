@@ -37,4 +37,6 @@
 | position | <code>Vector3</code> | 
 | rotation | <code>Euler</code> | 
 | projectionMatrix | <code>Matrix4</code> | 
+| autoUpdate | <code>boolean</code> | 
+| needsUpdate | <code>boolean</code> | 
 

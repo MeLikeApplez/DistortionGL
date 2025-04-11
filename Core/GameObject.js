@@ -11,6 +11,8 @@ import Euler from '../Math/Euler.js'
  * @property {Material | null} material
  * @property {Vector3} position
  * @property {Euler} rotation
+ * @property {boolean} autoUpdate
+ * @property {boolean} needsUpdate
  */
 
 /**
@@ -29,6 +31,9 @@ export default class GameObject {
     
         this.position = new Vector3(0, 0, 0)
         this.rotation = new Euler()
+    
+        this.autoUpdate = false
+        this.needsUpdate = false
     }
 
     /**

@@ -7,6 +7,8 @@ import Vector3 from '../Math/Vector3.js'
  * @property {Vector3} position
  * @property {Euler} rotation
  * @property {Matrix4} projectionMatrix
+ * @property {boolean} autoUpdate
+ * @property {boolean} needsUpdate
  */
 
 /**
@@ -19,6 +21,9 @@ export default class Camera {
         this.rotation = new Euler()
 
         this.projectionMatrix = new Matrix4()
+
+        this.autoUpdate = false
+        this.needsUpdate = false
     }
 
     updateProjectionMatrix() {}

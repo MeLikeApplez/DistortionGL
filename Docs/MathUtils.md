@@ -38,3 +38,13 @@
 | b | <code>number</code> | 
 | t | <code>number</code> | 
 
+<a name="module_lerp.extendArray"></a>
+
+### lerp.extendArray(array, size) ⇒ <code>Array</code> \| <code>ArrayBuffer</code>
+**Kind**: static method of [<code>lerp</code>](#module_lerp)  
+
+| Param | Type |
+| --- | --- |
+| array | <code>Array</code> \| <code>ArrayBuffer</code> | 
+| size | <code>number</code> | 
+

@@ -78,4 +78,6 @@
 | material | <code>Material</code> \| <code>null</code> | 
 | position | <code>Vector3</code> | 
 | rotation | <code>Euler</code> | 
+| autoUpdate | <code>boolean</code> | 
+| needsUpdate | <code>boolean</code> | 
 
