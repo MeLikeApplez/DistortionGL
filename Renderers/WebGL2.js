@@ -1,4 +1,4 @@
-import Renderer from "./Renderer.js"
+import Renderer from '../Renderers/Renderer'
 
 /**
  * @typedef {Object} _WebGL2Renderer
@@ -31,6 +31,6 @@ export default class WebGL2Renderer extends Renderer {
         this.clear()
         this.gl.viewport(0, 0, this.canvasElement.width, this.canvasElement.height)
 
-        this.scene.render(this.gl)
+        this.scene.render(this)
     }
 }

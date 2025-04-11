@@ -1,4 +1,4 @@
-import Renderer from "./Renderer";
+import Renderer from '../Renderers/Renderer'
 
 /**
  * @typedef {Object} _WebGL2Renderer
@@ -25,5 +25,6 @@ export default class Canvas2DRenderer extends Renderer {
 
         this.context2D.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height)
 
+        this.scene.render(this)
     }
 }

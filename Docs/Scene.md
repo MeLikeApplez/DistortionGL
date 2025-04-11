@@ -23,7 +23,7 @@
         * [.dispose(renderer, ...any)](#module_Scene--module.exports+dispose)
         * [.load(renderer, ...any)](#module_Scene--module.exports+load)
         * [.unload(renderer, ...any)](#module_Scene--module.exports+unload)
-        * [.render(gl, ...any)](#module_Scene--module.exports+render)
+        * [.render(renderer, ...any)](#module_Scene--module.exports+render)
 
 <a name="exp_module_Scene--module.exports"></a>
 
@@ -78,12 +78,12 @@
 
 <a name="module_Scene--module.exports+render"></a>
 
-#### module.exports.render(gl, ...any)
+#### module.exports.render(renderer, ...any)
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_Scene--module.exports)  
 
 | Param | Type |
 | --- | --- |
-| gl | <code>WebGL2RenderingContext</code> | 
+| renderer | <code>Renderer</code> | 
 | ...any | <code>\*</code> | 
 
 <a name="_Scene"></a>

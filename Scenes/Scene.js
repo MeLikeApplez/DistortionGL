@@ -1,6 +1,6 @@
 import Camera from '../Camera/Camera'
 import GameObject from '../Core/GameObject'
-import Renderer from '../Renderer'
+import Renderer from '../Renderers/Renderer'
 import Shader from '../Shaders/Shader'
 
 /**
@@ -64,10 +64,10 @@ export default class Scene {
     }
 
     /**
-     * @param {WebGL2RenderingContext} gl
+     * @param {Renderer} renderer
      * @param {...*} any  
      */
-    render(gl, ...any) {
+    render(renderer, ...any) {
         // Write scene code here
     }
 }
