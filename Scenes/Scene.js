@@ -6,7 +6,6 @@ import Shader from '../Shaders/Shader'
 /**
  * @typedef {Object} _Scene
  * @property {Camera} camera 
- * @property {Array<GameObject>} objects
  * @property {Object.<string, Shader>} shaders
  * @property {boolean} enabled
  */
@@ -23,22 +22,11 @@ export default class Scene {
     constructor(camera) {
         this.camera = camera
 
-        this.objects = []
         this.shaders = {}
 
         this.enabled = true
     }
 
-    /**
-     * @param  {...GameObject} sceneObjects 
-     */
-    add(...sceneObjects) {
-        for(let i = 0; i < sceneObjects.length; i++) {
-            const sceneObject = sceneObjects[i]
-
-            this.objects.push(sceneObject)
-        }
-    }
     /**
      * @param {Renderer} renderer
      * @param {...*} any  
