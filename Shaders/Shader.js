@@ -2,8 +2,6 @@
  * @typedef {Object} Shader
  * @property {string | null} vertexCode
  * @property {string | null} shaderCode
- * @property {Object.<string, number>} attributes
- * @property {Object.<string, WebGLUniformLocation | null>} uniforms
  * @property {WebGLProgram | null} program
  * @property {boolean} ready
  * @property {Error | null} error
@@ -11,6 +9,8 @@
 
 /**
  * @type {Shader}
+ * @template {Record<string, WebGLUniformLocation | null>} Uniforms
+ * @template {Record<string, number>} Attributes
  * @module Shader
  */
 export default class Shader {
@@ -23,7 +23,14 @@ export default class Shader {
         this.vertexCode = null
         this.shaderCode = null
 
+        /**
+         * @type {Uniforms}
+         */
         this.uniforms = {}
+
+        /**
+         * @type {Attributes}
+         */
         this.attributes = {}
 
         this.program = null
@@ -165,7 +172,7 @@ export default class Shader {
      * @param {string} [shaderSrc=] 
      * @returns {Array<WebGLProgram | null, Error | null>}
      */
-    async load(gl, vertexSrc, shaderSrc) {
+    async fetch(gl, vertexSrc, shaderSrc) {
         if(!(gl instanceof WebGL2RenderingContext)) {
             this.ready = false
          
