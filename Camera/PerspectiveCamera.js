@@ -38,11 +38,9 @@ export default class PerspectiveCamera extends Camera {
 
     /**
      * @param {Vector3} target 
-     * @param {Vector3?} up 
+     * @param {Vector3=} up 
      */
-    lookAt(target, up=null) {
-        if(!up) up = new Vector3(0, 1, 0)
-        
+    lookAt(target, up=new Vector3(0, 1, 0)) {
         const zAxis = this.position.clone().subtract(target).normalize()
         const xAxis = up.cross(zAxis).normalize()
         const yAxis = zAxis.cross(xAxis).normalize()
@@ -73,6 +71,8 @@ export default class PerspectiveCamera extends Camera {
             0, 0, (this.near + this.far) * rangeInv, -1,
             0, 0, this.near * this.far * rangeInv * 2, 0
         )
+
+        this.rotationMatrix.makeRotationFromEuler(this.rotation)
 
         return this
     }

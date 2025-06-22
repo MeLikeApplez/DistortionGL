@@ -13,6 +13,7 @@ export default class Material {
         this.name = name
 
         // Work in progress
+        console.warn('Currently not implemented!')
     }
 
 }

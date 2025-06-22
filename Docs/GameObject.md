@@ -17,48 +17,34 @@
 ## GameObject : [<code>\_GameObject</code>](#_GameObject)
 
 * [GameObject](#module_GameObject) : [<code>\_GameObject</code>](#_GameObject)
-    * [module.exports](#exp_module_GameObject--module.exports) ⏏
-        * [new module.exports(material)](#new_module_GameObject--module.exports_new)
-        * [.dispose(gl, ...any)](#module_GameObject--module.exports+dispose)
-        * [.update(gl, ...any)](#module_GameObject--module.exports+update)
-        * [.render(gl, ...any)](#module_GameObject--module.exports+render)
+    * [.dispose(gl, ...any)](#module_GameObject+dispose)
+    * [.update(gl, ...any)](#module_GameObject+update)
+    * [.render(gl, ...any)](#module_GameObject+render)
 
-<a name="exp_module_GameObject--module.exports"></a>
+<a name="module_GameObject+dispose"></a>
 
-### module.exports ⏏
-**Kind**: Exported class  
-<a name="new_module_GameObject--module.exports_new"></a>
-
-#### new module.exports(material)
-
-| Param | Type | Default |
-| --- | --- | --- |
-| material | <code>Material</code> \| <code>null</code> | <code></code> | 
-
-<a name="module_GameObject--module.exports+dispose"></a>
-
-#### module.exports.dispose(gl, ...any)
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_GameObject--module.exports)  
+### gameObject.dispose(gl, ...any)
+**Kind**: instance method of [<code>GameObject</code>](#module_GameObject)  
 
 | Param | Type |
 | --- | --- |
 | gl | <code>WebGL2RenderingContext</code> | 
 | ...any | <code>\*</code> | 
 
-<a name="module_GameObject--module.exports+update"></a>
+<a name="module_GameObject+update"></a>
 
-#### module.exports.update(gl, ...any)
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_GameObject--module.exports)  
+### gameObject.update(gl, ...any)
+**Kind**: instance method of [<code>GameObject</code>](#module_GameObject)  
 
 | Param | Type |
 | --- | --- |
 | gl | <code>WebGL2RenderingContext</code> | 
 | ...any | <code>\*</code> | 
 
-<a name="module_GameObject--module.exports+render"></a>
+<a name="module_GameObject+render"></a>
 
-#### module.exports.render(gl, ...any)
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_GameObject--module.exports)  
+### gameObject.render(gl, ...any)
+**Kind**: instance method of [<code>GameObject</code>](#module_GameObject)  
 
 | Param | Type |
 | --- | --- |

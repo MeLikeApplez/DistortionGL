@@ -12,6 +12,13 @@ import Renderer from '../Renderers/Renderer'
 export default class WebGL2Renderer extends Renderer {
     /**
      * @param {HTMLCanvasElement} canvasElement 
+     */
+    static isAvailable(canvasElement) {
+        return !!canvasElement.getContext('webgl2')
+    }
+
+    /**
+     * @param {HTMLCanvasElement} canvasElement 
      * @param {WebGLContextAttributes} [glOptions={}] 
      */
     constructor(canvasElement, glOptions={}) {

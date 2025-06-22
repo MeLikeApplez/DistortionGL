@@ -42,13 +42,9 @@ export function generateUUID() {
 }
 
 /**
- * @typedef {Array | Int8Array | Uint8Array | Uint8ClampedArray | Int16Array | Uint16Array | Int32Array | Uint32Array | Float16Array | Float32Array | Float64Array | BigInt64Array | BigUint64Array} TypedArray
- */
-
-/**
- * @param {TypedArray} array 
+ * @param {ArrayLike<number>} array 
  * @param {number} size 
- * @return {TypedArray}
+ * @return {ArrayLike<number>}
  */
 export function extendArray(array, size) {
     const ArrayConstructor = array.constructor

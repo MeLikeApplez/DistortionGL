@@ -8,6 +8,8 @@
 ## Keyboard Reference 
 > [Keyboard](Keyboard.md) 
 
+> [OrbitControls](OrbitControls.md) 
+
 > [Pointer](Pointer.md) 
 
 ## Constants Reference 
@@ -52,6 +54,6 @@
 ## Shader Reference 
 > [Shader](Shader.md) 
 
-## AnimationGameLoop Reference 
-> [AnimationGameLoop](AnimationGameLoop.md) 
+## Clock Reference 
+> [Clock](Clock.md) 
 

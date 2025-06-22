@@ -23,9 +23,9 @@
             * [.uniforms](#module_Shader--module.exports+uniforms) : <code>Uniforms</code>
             * [.attributes](#module_Shader--module.exports+attributes) : <code>Attributes</code>
             * [.preloadSourceCode(vertexCode, shaderCode)](#module_Shader--module.exports+preloadSourceCode) ⇒ [<code>Shader</code>](#Shader)
-            * [.compileSourceCode(gl, vertexCode, shaderCode)](#module_Shader--module.exports+compileSourceCode) ⇒ <code>Array.&lt;(WebGLProgram\|null), (Error\|null)&gt;</code>
-            * [.loadSourceCode(gl, [vertexCode], [shaderCode])](#module_Shader--module.exports+loadSourceCode) ⇒ <code>Array.&lt;(WebGLProgram\|null), (Error\|null)&gt;</code>
-            * [.fetch(gl, [vertexSrc&#x3D;], [shaderSrc&#x3D;])](#module_Shader--module.exports+fetch) ⇒ <code>Array.&lt;(WebGLProgram\|null), (Error\|null)&gt;</code>
+            * [.compileSourceCode(gl, vertexCode, shaderCode)](#module_Shader--module.exports+compileSourceCode) ⇒ <code>Array.&lt;WebGLProgram, null&gt;</code> \| <code>Array.&lt;null, Error&gt;</code>
+            * [.loadSourceCode(gl, [vertexCode], [shaderCode])](#module_Shader--module.exports+loadSourceCode) ⇒ <code>Array.&lt;WebGLProgram, null&gt;</code> \| <code>Array.&lt;null, Error&gt;</code>
+            * [.fetch(gl, [vertexSrc&#x3D;], [shaderSrc&#x3D;])](#module_Shader--module.exports+fetch) ⇒ <code>Array.&lt;WebGLProgram, null&gt;</code> \| <code>Array.&lt;null, Error&gt;</code>
         * _static_
             * [.loadAllPreloadedShaders(gl, shaders, throwError)](#module_Shader--module.exports.loadAllPreloadedShaders) ⇒ <code>Object</code>
 
@@ -61,7 +61,7 @@
 
 <a name="module_Shader--module.exports+compileSourceCode"></a>
 
-#### module.exports.compileSourceCode(gl, vertexCode, shaderCode) ⇒ <code>Array.&lt;(WebGLProgram\|null), (Error\|null)&gt;</code>
+#### module.exports.compileSourceCode(gl, vertexCode, shaderCode) ⇒ <code>Array.&lt;WebGLProgram, null&gt;</code> \| <code>Array.&lt;null, Error&gt;</code>
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_Shader--module.exports)  
 
 | Param | Type |
@@ -72,7 +72,7 @@
 
 <a name="module_Shader--module.exports+loadSourceCode"></a>
 
-#### module.exports.loadSourceCode(gl, [vertexCode], [shaderCode]) ⇒ <code>Array.&lt;(WebGLProgram\|null), (Error\|null)&gt;</code>
+#### module.exports.loadSourceCode(gl, [vertexCode], [shaderCode]) ⇒ <code>Array.&lt;WebGLProgram, null&gt;</code> \| <code>Array.&lt;null, Error&gt;</code>
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_Shader--module.exports)  
 
 | Param | Type |
@@ -83,7 +83,7 @@
 
 <a name="module_Shader--module.exports+fetch"></a>
 
-#### module.exports.fetch(gl, [vertexSrc&#x3D;], [shaderSrc&#x3D;]) ⇒ <code>Array.&lt;(WebGLProgram\|null), (Error\|null)&gt;</code>
+#### module.exports.fetch(gl, [vertexSrc&#x3D;], [shaderSrc&#x3D;]) ⇒ <code>Array.&lt;WebGLProgram, null&gt;</code> \| <code>Array.&lt;null, Error&gt;</code>
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_Shader--module.exports)  
 
 | Param | Type |

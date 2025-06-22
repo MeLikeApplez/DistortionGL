@@ -14,6 +14,13 @@ export default class Canvas2DRenderer extends Renderer {
     /**
      * @param {HTMLCanvasElement} canvasElement 
      */
+    static isAvailable(canvasElement) {
+        return !!canvasElement.getContext('2d')
+    }
+
+    /**
+     * @param {HTMLCanvasElement} canvasElement 
+     */
     constructor(canvasElement) {
         super(canvasElement)
 

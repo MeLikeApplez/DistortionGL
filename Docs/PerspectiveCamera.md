@@ -19,7 +19,7 @@
 * [PerspectiveCamera](#module_PerspectiveCamera) : [<code>\_PerspectiveCamera</code>](#_PerspectiveCamera)
     * [module.exports](#exp_module_PerspectiveCamera--module.exports) ⏏
         * [new module.exports(fov, aspect, near, far)](#new_module_PerspectiveCamera--module.exports_new)
-        * [.lookAt(target, up)](#module_PerspectiveCamera--module.exports+lookAt)
+        * [.lookAt(target, [up])](#module_PerspectiveCamera--module.exports+lookAt)
         * [.render(gl, program, uniformPositionLocation, uniformProjectionMatrixLocation, uniformRotationLocation)](#module_PerspectiveCamera--module.exports+render)
 
 <a name="exp_module_PerspectiveCamera--module.exports"></a>
@@ -39,13 +39,13 @@
 
 <a name="module_PerspectiveCamera--module.exports+lookAt"></a>
 
-#### module.exports.lookAt(target, up)
+#### module.exports.lookAt(target, [up])
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_PerspectiveCamera--module.exports)  
 
-| Param | Type | Default |
-| --- | --- | --- |
-| target | <code>Vector3</code> |  | 
-| up | <code>Vector3</code> | <code></code> | 
+| Param | Type |
+| --- | --- |
+| target | <code>Vector3</code> | 
+| [up] | <code>Vector3</code> | 
 
 <a name="module_PerspectiveCamera--module.exports+render"></a>
 

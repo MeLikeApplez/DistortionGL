@@ -19,6 +19,7 @@
 * [WebGL2Renderer](#module_WebGL2Renderer) : [<code>\_WebGL2Renderer</code>](#_WebGL2Renderer)
     * [module.exports](#exp_module_WebGL2Renderer--module.exports) ⏏
         * [new module.exports(canvasElement)](#new_module_WebGL2Renderer--module.exports_new)
+        * [.isAvailable(canvasElement)](#module_WebGL2Renderer--module.exports.isAvailable)
 
 <a name="exp_module_WebGL2Renderer--module.exports"></a>
 
@@ -27,6 +28,15 @@
 <a name="new_module_WebGL2Renderer--module.exports_new"></a>
 
 #### new module.exports(canvasElement)
+
+| Param | Type |
+| --- | --- |
+| canvasElement | <code>HTMLCanvasElement</code> | 
+
+<a name="module_WebGL2Renderer--module.exports.isAvailable"></a>
+
+#### module.exports.isAvailable(canvasElement)
+**Kind**: static method of [<code>module.exports</code>](#exp_module_WebGL2Renderer--module.exports)  
 
 | Param | Type |
 | --- | --- |

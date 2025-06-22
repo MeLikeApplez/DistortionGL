@@ -1,12 +1,12 @@
 import Events from "../Core/Events"
 
 /**
- * @typedef {'onstart' | 'onupdate' | 'onstop'} AnimationGameLoopEvents
+ * @typedef {'onstart' | 'onupdate' | 'onstop'} ClockEvents
  */
 
 /**
- * @typedef {Object} _AnimationGameLoop
- * @property {Events<AnimationGameLoopEvents>} events
+ * @typedef {Object} _Clock
+ * @property {Events<ClockEvents>} events
  * @property {number} animationId
  * @property {number} startTime
  * @property {number} fps
@@ -14,10 +14,10 @@ import Events from "../Core/Events"
  */
 
 /**
- * @type {_AnimationGameLoop}
- * @module AnimationGameLoop
+ * @type {_Clock}
+ * @module Clock
  */
-export default class AnimationGameLoop {
+export default class Clock {
     constructor() {
         this.events = new Events()
 
