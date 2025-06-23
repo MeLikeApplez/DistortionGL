@@ -8,7 +8,6 @@ import Vector3 from '../Math/Vector3.js'
  * @property {number} aspect
  * @property {number} near
  * @property {number} far
- * @property {Vector3} target
  */
 
 /**
@@ -31,8 +30,7 @@ export default class PerspectiveCamera extends Camera {
         this.far = far
     
         this.rotationMatrix = new Matrix4()
-        this.target = new Vector3(0, 0, 0)
-        
+
         this.updateProjectionMatrix()
     }
 
