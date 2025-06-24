@@ -1,5 +1,5 @@
 /**
- * @typedef {Object} Shader
+ * @typedef {Object} _Shader
  * @property {string | null} vertexCode
  * @property {string | null} shaderCode
  * @property {WebGLProgram | null} program
@@ -8,14 +8,14 @@
  */
 
 /**
- * @type {Shader}
+ * @type {_Shader}
  * @template {Record<string, WebGLUniformLocation | null>} Uniforms
  * @template {Record<string, number>} Attributes
  * @module Shader
  */
 export default class Shader {
     /**
-     * @param {string} name 
+     * @param {string=} name 
      */
     constructor(name) {
         this.name = name || 'Shader'
@@ -179,12 +179,12 @@ export default class Shader {
             return [null, new  Error('No WebGL2 context provided!')]
         }
 
-        let [ vertexRespone, shaderResponse ] = await Promise.all([
+        let [ vertexResponse, shaderResponse ] = await Promise.all([
             fetch(vertexSrc),
             fetch(shaderSrc)
         ])
         
-        if(!vertexRespone.ok) {
+        if(!vertexResponse.ok) {
             this.ready = false
             
             return [null, new  Error('Vertex Source failed to load!')]
@@ -197,7 +197,7 @@ export default class Shader {
         }
 
         const [ vertexCode, shaderCode ] = await Promise.all([
-            vertexRespone.text(),
+            vertexResponse.text(),
             shaderResponse.text()
         ])
 

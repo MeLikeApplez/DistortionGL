@@ -22,11 +22,9 @@ export default class Loader {
     }
 
     /**
-     * @param {string | URL} src 
-     * @param {function=} onload 
-     * @param {function=} onerror 
+     * @param  {...*} any 
      */
-    load(src, onload, onerror) {
+    load(...any) {
         // Write loader code here
     }
 }
