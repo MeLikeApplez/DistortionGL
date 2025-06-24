@@ -19,11 +19,12 @@ import Shader from '../Shaders/Shader'
 
 /**
  * @typedef {object} _ShaderLoader
- * @property {Shader} shader
  */
 
 /**
  * @type {_ShaderLoader}
+ * @template {Record<string, WebGLUniformLocation | null>} Uniforms
+ * @template {Record<string, number>} Attributes
  * @module Shader
  */
 export default class ShaderLoader extends Loader {
@@ -33,6 +34,9 @@ export default class ShaderLoader extends Loader {
     constructor(options) {
         super(options.name)
 
+        /**
+         * @type {Shader<Uniforms, Attributes>}
+         */
         this.shader = new Shader()
     
         if(options.type === 'url') {
