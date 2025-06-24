@@ -103,6 +103,7 @@ export default class ShaderLoader extends Loader {
      */
     load(gl) {
         if(!this.shader.preloaded) return void console.error('Shader loader has not loaded any source code!')
+        if(this.shader.program && this.shader.ready && !this.shader.error) return
 
         this.shader.loadSourceCode(gl)
     }
