@@ -1,6 +1,1 @@
-/**
- * @enum {number}
- */
-export const GameObjectType = {
-    None: 100
-}
+export const Empty = -1

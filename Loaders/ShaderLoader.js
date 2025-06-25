@@ -28,9 +28,11 @@ import Shader from '../Shaders/Shader'
 
 /**
  * @type {_ShaderLoader}
+ * @template {Record<string, WebGLUniformLocation | null>} Uniforms
+ * @template {Record<string, GLint>} Attributes
  * @module ShaderLoader
  */
-export class ShaderLoader extends Loader {
+export default class ShaderLoader extends Loader {
     /**
      * @param {URLOption | SourceCodeOption} options 
      */
@@ -46,7 +48,6 @@ export class ShaderLoader extends Loader {
          * @type {Uniforms}
          */
         this.uniforms = {}
-
         /**
          * @type {Attributes}
          */
