@@ -1,5 +1,4 @@
 import { generateUUID } from '../Math/MathUtils.js'
-import { GameObjectType } from './Constants.js'
 // import Material from '../Materials/Material.js'
 import Vector3 from '../Math/Vector3.js'
 import Euler from '../Math/Euler.js'
@@ -7,7 +6,6 @@ import Euler from '../Math/Euler.js'
 /**
  * @typedef {Object} _GameObject
  * @property {string} uuid
- * @property {GameObjectType} type
  * @property {Material | null} material
  * @property {Vector3} position
  * @property {Euler} rotation
@@ -22,7 +20,6 @@ import Euler from '../Math/Euler.js'
 export default class GameObject {
     constructor() {
         this.uuid = generateUUID()
-        this.type = GameObjectType.None
     
         // this.material = material
     
