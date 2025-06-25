@@ -1,5 +1,4 @@
 import Loader from "./Loader"
-import Shader from '../Shaders/Shader'
 
 /**
  * @typedef {object} URLOption

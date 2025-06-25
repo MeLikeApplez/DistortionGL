@@ -1,12 +1,12 @@
 import Camera from '../Camera/Camera'
 import GameObject from '../Core/GameObject'
+import ShaderLoader from '../Loaders/ShaderLoader'
 import Renderer from '../Renderers/Renderer'
-import Shader from '../Shaders/Shader'
 
 /**
  * @typedef {Object} _Scene
  * @property {Camera} camera 
- * @property {Object.<string, Shader>} shaders
+ * @property {Object.<string, ShaderLoader>} shaders
  * @property {boolean} enabled
  */
 
