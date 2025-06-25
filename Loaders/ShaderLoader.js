@@ -1,3 +1,4 @@
+import Events from "../Core/Events"
 import Loader from "./Loader"
 
 /**
@@ -94,6 +95,8 @@ export default class ShaderLoader extends Loader {
         if(vertexResponse.status === 'rejected' || !vertexResponse.value.ok) {
             this.shader.ready = false
             this.error = new Error('Failed to fetch vertex shader!')
+
+            this.events.dispatchEvent('onerror', this.error)
             
             return void console.error(this.error)
         }
@@ -102,6 +105,8 @@ export default class ShaderLoader extends Loader {
             this.shader.ready = false
             this.error = new Error('Failed to fetch fragment shader!')
             
+            this.events.dispatchEvent('onerror', this.error)
+
             return void console.error(this.error)
         }
 
@@ -114,6 +119,8 @@ export default class ShaderLoader extends Loader {
             this.shader.ready = false
             this.error = new Error('Failed to parse text for vertex shader!')
             
+            this.events.dispatchEvent('onerror', this.error)
+         
             return void console.error(this.error)
         }
 
@@ -121,6 +128,8 @@ export default class ShaderLoader extends Loader {
             this.shader.ready = false
             this.error = new Error('Failed to parse text for fragment shader!')
             
+            this.events.dispatchEvent('onerror', this.error)
+         
             return void console.error(this.error)
         }
 
@@ -148,6 +157,8 @@ export default class ShaderLoader extends Loader {
             this.ready = false
             this.error = compileError
 
+            this.events.dispatchEvent('onerror', compileError)
+
             return void console.error(compileError)
         }
 
@@ -163,6 +174,8 @@ export default class ShaderLoader extends Loader {
             this.program = null
             this.ready = false
             this.error = compileError
+
+            this.events.dispatchEvent('onerror', compileError)
 
             return void console.error(compileError)
         }
@@ -180,6 +193,8 @@ export default class ShaderLoader extends Loader {
             this.program = null
             this.ready = false
             this.error = compileError
+
+            this.events.dispatchEvent('onerror', compileError)
 
             return void console.error(compileError)
         }
@@ -200,5 +215,7 @@ export default class ShaderLoader extends Loader {
         this.program = program
         this.ready = true
         this.error = null
+
+        this.events.dispatchEvent('onload', this.program)
     }
 }

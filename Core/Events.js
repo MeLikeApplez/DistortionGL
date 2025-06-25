@@ -5,8 +5,8 @@ import { generateUUID } from "../Math/MathUtils.js"
  */
 
 /**
- * @template EventNameList
  * @type {_Events}
+ * @template EventNameList
  * @module Events
  */
 export default class Events {
