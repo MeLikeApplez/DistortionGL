@@ -71,7 +71,7 @@ export default class ShaderLoader extends Loader {
 
     /**
      * @param {WebGL2RenderingContext} gl 
-     * @param {Array<ShaderLoader2>} shaders 
+     * @param {Array<ShaderLoader>} shaders 
      * @param {boolean=} recompile
      */
     static loadAll(gl, shaders, recompile=false) {
@@ -199,17 +199,20 @@ export default class ShaderLoader extends Loader {
             return void console.error(compileError)
         }
 
-        for(const key in this.uniforms) {
-            const uniformLocation = gl.getUniformLocation(program, key)
+        const numOfActiveUniforms = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS)
 
-            this.uniforms[key] = uniformLocation
+        for(let i = 0; i < numOfActiveUniforms; i++) {
+            const activeUniform = gl.getActiveUniform(program, i)
+
+            this.uniforms[activeUniform.name] = gl.getUniformLocation(program, activeUniform.name)
         }
-
         
-        for(const key in this.attributes) {
-            const attributeLocation = gl.getAttribLocation(program, key)
+        const numOfActiveAttribs = gl.getProgramParameter(program, gl.ACTIVE_ATTRIBUTES)
+        
+        for(let i = 0; i < numOfActiveAttribs; i++) {
+            const activeAttrib = gl.getActiveAttrib(program, i)
             
-            this.attributes[key] = attributeLocation
+            this.uniforms[activeAttrib.name] = gl.getAttribLocation(program, activeAttrib.name)
         }
 
         this.program = program
