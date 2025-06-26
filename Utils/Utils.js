@@ -3,7 +3,8 @@
  * @template TError
  * @param {Promise<TData>} promiseFunc 
  * @param {TError=} customError 
- * @returns {Promise<[TData, null] | [null, TError]>}
+ * @returns {Promise<Array<TData, null> | Array<null, TError>>}
+ * @module Promisify
  */
 export function Promisify(promiseFunc, customError) {
     return new Promise(res => {
@@ -21,7 +22,8 @@ export function Promisify(promiseFunc, customError) {
  * @param {string | URL} url 
  * @param {RequestInit} fetchOptions 
  * @param {{ json: boolean }} customOptions 
- * @returns {Promise<[Response | object, null] | [null, Error]>}
+ * @returns {Promise<Array<Response | object, null> | Array<null, Error>>}
+ * @module APIFetch
  */
 export async function APIFetch(url, fetchOptions, customOptions) {
     const [ data, dataError ] = await Promisify(fetch(url, fetchOptions), Error('Failed to fetch!'))

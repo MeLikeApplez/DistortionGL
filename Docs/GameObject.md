@@ -60,7 +60,6 @@
 | Name | Type |
 | --- | --- |
 | uuid | <code>string</code> | 
-| type | <code>GameObjectType</code> | 
 | material | <code>Material</code> \| <code>null</code> | 
 | position | <code>Vector3</code> | 
 | rotation | <code>Euler</code> | 

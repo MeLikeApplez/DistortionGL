@@ -85,6 +85,6 @@
 | Name | Type |
 | --- | --- |
 | camera | <code>Camera</code> | 
-| shaders | <code>Object.&lt;string, Shader&gt;</code> | 
+| shaders | <code>Object.&lt;string, ShaderLoader&gt;</code> | 
 | enabled | <code>boolean</code> | 
 

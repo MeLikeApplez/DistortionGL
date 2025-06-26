@@ -72,5 +72,4 @@
 | aspect | <code>number</code> | 
 | near | <code>number</code> | 
 | far | <code>number</code> | 
-| target | <code>Vector3</code> | 
 
