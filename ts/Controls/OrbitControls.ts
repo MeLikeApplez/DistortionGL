@@ -87,6 +87,7 @@ export default class OrbitControls {
         const dy = this.drag.y / height  * distance * this.rotateSpeed
 
         const position = new Vector3(this.camera.position.x, this.camera.position.y, this.camera.position.z).subtract(this.camera.target)
+
         const rho = Math.sqrt(position.x * position.x + position.y * position.y + position.z * position.z)
         const theta = Math.atan2(position.z, position.x) + dx
         const phi = Math.asin(position.y / rho) + dy
@@ -95,7 +96,8 @@ export default class OrbitControls {
             rho * Math.cos(phi) * Math.cos(theta),
             rho * Math.sin(phi),
             rho * Math.cos(phi) * Math.sin(theta)
-        )
+        ).add(this.camera.target)
+        
         this.camera.lookAt(this.camera.target)
 
         this._initialRotatePosition.copy(this.rotatePosition)

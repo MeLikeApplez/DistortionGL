@@ -33,11 +33,11 @@ export default class Camera2D extends Camera {
      */
     render(gl, program, uniforms) {
         gl.uniform3f(uniforms.position, this.position.x, this.position.y, this.position.z);
-        gl.uniformMatrix4fv(uniforms.matrix, false, this.projectionMatrix);
+        gl.uniformMatrix4fv(uniforms.projection, false, this.projectionMatrix);
     }
 }
 /**
  * @typedef {Object} RenderUniforms
  * @property {WebGLUniformLocation | null} position
- * @property {WebGLUniformLocation | null} matrix
+ * @property {WebGLUniformLocation | null} projection
  */

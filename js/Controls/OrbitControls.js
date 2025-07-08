@@ -77,7 +77,7 @@ export default class OrbitControls {
         const rho = Math.sqrt(position.x * position.x + position.y * position.y + position.z * position.z);
         const theta = Math.atan2(position.z, position.x) + dx;
         const phi = Math.asin(position.y / rho) + dy;
-        this.camera.position.set(rho * Math.cos(phi) * Math.cos(theta), rho * Math.sin(phi), rho * Math.cos(phi) * Math.sin(theta));
+        this.camera.position.set(rho * Math.cos(phi) * Math.cos(theta), rho * Math.sin(phi), rho * Math.cos(phi) * Math.sin(theta)).add(this.camera.target);
         this.camera.lookAt(this.camera.target);
         this._initialRotatePosition.copy(this.rotatePosition);
     }
