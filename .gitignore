@@ -131,4 +131,6 @@ dist
 
 Playground
 JSDOC_CONVERTER
+ts-to-js
+js-backup
 __test__.ts
