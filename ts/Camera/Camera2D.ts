@@ -3,7 +3,7 @@ import Vector2 from '../Math/Vector2.ts'
 
 type RenderUniforms = {
     position: WebGLUniformLocation | null
-    matrix: WebGLUniformLocation | null
+    projection: WebGLUniformLocation | null
 }
 
 export default class Camera2D extends Camera {
@@ -31,6 +31,6 @@ export default class Camera2D extends Camera {
 
     render(gl: WebGL2RenderingContext, program: WebGLProgram, uniforms: RenderUniforms) {
         gl.uniform3f(uniforms.position, this.position.x, this.position.y, this.position.z)
-        gl.uniformMatrix4fv(uniforms.matrix, false, this.projectionMatrix)
+        gl.uniformMatrix4fv(uniforms.projection, false, this.projectionMatrix)
     }
 }

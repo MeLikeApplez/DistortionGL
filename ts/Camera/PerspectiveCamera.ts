@@ -4,7 +4,7 @@ import Vector3 from '../Math/Vector3.ts'
 
 type RenderUniforms = {
     position: WebGLUniformLocation | null
-    matrix: WebGLUniformLocation | null
+    projection: WebGLUniformLocation | null
     rotation: WebGLUniformLocation | null
 }
 
@@ -67,7 +67,7 @@ export default class PerspectiveCamera extends Camera {
 
    render(gl: WebGL2RenderingContext, program: WebGLProgram, uniforms: RenderUniforms) {
        gl.uniform3f(uniforms.position, this.position.x, this.position.y, this.position.z)
-       gl.uniformMatrix4fv(uniforms.matrix, false, this.projectionMatrix)
+       gl.uniformMatrix4fv(uniforms.projection, false, this.projectionMatrix)
        gl.uniformMatrix4fv(uniforms.rotation, false, this.rotationMatrix)
     }
 }
