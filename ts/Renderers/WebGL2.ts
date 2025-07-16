@@ -24,6 +24,8 @@ export default class WebGL2Renderer extends Renderer {
         this.clear()
         this.gl.viewport(0, 0, this.canvasElement.width, this.canvasElement.height)
 
+        if(!this.scene.enabled) return
+
         this.scene.render(this)
     }
 }

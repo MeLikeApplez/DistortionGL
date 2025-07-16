@@ -24,6 +24,8 @@ export default class Canvas2DRenderer extends Renderer {
         if (this.scene === null || !this.scene.enabled)
             return;
         this.context2D.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
+        if (!this.scene.enabled)
+            return;
         this.scene.render(this);
     }
 }
