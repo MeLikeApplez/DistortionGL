@@ -26,14 +26,13 @@ export default class Camera2D extends Camera {
         this.projectionMatrix[5] = this.zoom.y / this.resolution.y;
     }
     /**
-     * @param {WebGL2RenderingContext} gl
-     * @param {WebGLProgram} program
+     * @param {WebGL2Renderer} renderer
      * @param {RenderUniforms} uniforms
      * @returns {void}
      */
-    render(gl, program, uniforms) {
-        gl.uniform3f(uniforms.position, this.position.x, this.position.y, this.position.z);
-        gl.uniformMatrix4fv(uniforms.projection, false, this.projectionMatrix);
+    render(renderer, uniforms) {
+        renderer.gl.uniform3f(uniforms.position, this.position.x, this.position.y, this.position.z);
+        renderer.gl.uniformMatrix4fv(uniforms.projection, false, this.projectionMatrix);
     }
 }
 /**

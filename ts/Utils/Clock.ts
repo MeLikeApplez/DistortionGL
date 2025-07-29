@@ -14,17 +14,13 @@ export default class Clock {
     deltaTime: number
 
     constructor() {
-        this.events = new Events()
+        this.events = new Events(['onstart', 'onstop', 'onupdate'])
 
         this.animationId = -1
         this.startTime = -1
 
         this.fps = 0
         this.deltaTime = 0
-
-        this.events.createEventDispatch('onstart')
-        this.events.createEventDispatch('onupdate')
-        this.events.createEventDispatch('onstop')
     }
 
     start() {
@@ -47,7 +43,7 @@ export default class Clock {
         return this.animationId
     }
 
-    update(time) {
+    update(time: number) {
         this.animationId = window.requestAnimationFrame(this.update.bind(this))
 
         if(this.startTime === -1) {

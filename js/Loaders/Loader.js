@@ -5,9 +5,7 @@ export default class Loader {
      *
      */
     constructor() {
-        this.events = new Events();
-        this.events.createEventDispatch('onload');
-        this.events.createEventDispatch('onerror');
+        this.events = new Events(['onload', 'onerror']);
     }
     /**
      * @param {...any} [any]

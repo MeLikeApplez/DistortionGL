@@ -1,6 +1,7 @@
 import Euler from '../Math/Euler.ts'
 import Matrix4 from '../Math/Matrix4.ts'
 import Vector3 from '../Math/Vector3.ts'
+import WebGL2Renderer from '../Renderers/WebGL2.ts'
 
 export default class Camera {
     position: Vector3
@@ -24,5 +25,5 @@ export default class Camera {
 
     updateProjectionMatrix() {}
 
-    render(gl: WebGL2RenderingContext, program: WebGLProgram, ...any: any) {}
+    render(renderer: WebGL2Renderer, ...any: any) {}
 }

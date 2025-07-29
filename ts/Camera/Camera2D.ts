@@ -1,5 +1,6 @@
 import Camera from './Camera.ts'
 import Vector2 from '../Math/Vector2.ts'
+import WebGL2Renderer from '../Renderers/WebGL2.ts'
 
 type RenderUniforms = {
     position: WebGLUniformLocation | null
@@ -29,8 +30,8 @@ export default class Camera2D extends Camera {
         this.projectionMatrix[5] = this.zoom.y / this.resolution.y
     }
 
-    render(gl: WebGL2RenderingContext, program: WebGLProgram, uniforms: RenderUniforms) {
-        gl.uniform3f(uniforms.position, this.position.x, this.position.y, this.position.z)
-        gl.uniformMatrix4fv(uniforms.projection, false, this.projectionMatrix)
+    render(renderer: WebGL2Renderer, uniforms: RenderUniforms) {
+        renderer.gl.uniform3f(uniforms.position, this.position.x, this.position.y, this.position.z)
+        renderer.gl.uniformMatrix4fv(uniforms.projection, false, this.projectionMatrix)
     }
 }

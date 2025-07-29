@@ -24,10 +24,9 @@ export default class Camera {
      */
     updateProjectionMatrix() { }
     /**
-     * @param {WebGL2RenderingContext} gl
-     * @param {WebGLProgram} program
+     * @param {WebGL2Renderer} renderer
      * @param {...any} [any]
      * @returns {void}
      */
-    render(gl, program, ...any) { }
+    render(renderer, ...any) { }
 }

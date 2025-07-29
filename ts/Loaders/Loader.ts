@@ -9,10 +9,7 @@ export default class Loader<L, E> {
     events: Events<LoaderEvents<L, E>>
 
     constructor() {
-        this.events = new Events()
-
-        this.events.createEventDispatch('onload')
-        this.events.createEventDispatch('onerror')
+        this.events = new Events(['onload', 'onerror'])
     }
 
     load(...any: any) {

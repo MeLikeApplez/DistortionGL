@@ -1,12 +1,15 @@
-/** @extends Uint8Array */
-export default class Color extends Uint8Array {
+/** @extends Array */
+export default class Color extends Array {
     /**
      * @param {number} r
      * @param {number} g
      * @param {number} b
      */
     constructor(r, g, b) {
-        super([r, g, b]);
+        super(3);
+        this[0] = r;
+        this[1] = g;
+        this[2] = b;
     }
     /**
      * @param {number} r

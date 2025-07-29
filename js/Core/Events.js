@@ -2,16 +2,21 @@ import { generateUUID } from "../Math/MathUtils.ts";
 export default class Events {
     _listeners;
     /**
-     *
+     * @param {Array<keyof T>} [eventNames]
      */
-    constructor() {
+    constructor(eventNames) {
         this._listeners = new Map();
+        if (Array.isArray(eventNames)) {
+            for (let i = 0; i < eventNames.length; i++) {
+                this._listeners.set(eventNames[i], []);
+            }
+        }
     }
     /**
      * @param {keyof T} eventName
      * @returns {this}
      */
-    createEventDispatch(eventName) {
+    createEvent(eventName) {
         this._listeners.set(eventName, []);
         return this;
     }
@@ -19,7 +24,7 @@ export default class Events {
      * @param {keyof T} eventName
      * @returns {void}
      */
-    removeEventDispatch(eventName) {
+    removeEvent(eventName) {
         this._listeners.delete(eventName);
     }
     /**
@@ -44,7 +49,7 @@ export default class Events {
      * @param {(data: T[K]) => void} callback
      * @returns {string | Error}
      */
-    addEventListener(eventName, callback) {
+    listen(eventName, callback) {
         const group = this._listeners.get(eventName);
         if (!group)
             return new Error(`Unable to find event eventName: "${String(eventName)}"`);
@@ -60,7 +65,7 @@ export default class Events {
      * @param {string} uuid
      * @returns {true | Error}
      */
-    removeEventListener(eventName, uuid) {
+    unlisten(eventName, uuid) {
         const group = this._listeners.get(eventName);
         if (!group)
             return new Error(`Unable to find event eventName: "${String(eventName)}"`);

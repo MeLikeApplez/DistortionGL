@@ -1,6 +1,7 @@
 import Camera from './Camera.ts'
 import Matrix4 from '../Math/Matrix4.ts'
 import Vector3 from '../Math/Vector3.ts'
+import WebGL2Renderer from '../Renderers/WebGL2.ts'
 
 type RenderUniforms = {
     position: WebGLUniformLocation | null
@@ -65,9 +66,9 @@ export default class PerspectiveCamera extends Camera {
         return this
     }
 
-   render(gl: WebGL2RenderingContext, program: WebGLProgram, uniforms: RenderUniforms) {
-       gl.uniform3f(uniforms.position, this.position.x, this.position.y, this.position.z)
-       gl.uniformMatrix4fv(uniforms.projection, false, this.projectionMatrix)
-       gl.uniformMatrix4fv(uniforms.rotation, false, this.rotationMatrix)
+   render(renderer: WebGL2Renderer, uniforms: RenderUniforms) {
+       renderer.gl.uniform3f(uniforms.position, this.position.x, this.position.y, this.position.z)
+       renderer.gl.uniformMatrix4fv(uniforms.projection, false, this.projectionMatrix)
+       renderer.gl.uniformMatrix4fv(uniforms.rotation, false, this.rotationMatrix)
     }
 }

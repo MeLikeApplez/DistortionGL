@@ -1,10 +1,16 @@
-export default class Matrix3 extends Float32Array {
+export default class Matrix3 extends Array {
     constructor(n11=1, n12=0, n13=0, n21=0, n22=1, n23=0, n31=0, n32=0, n33=1) {
-        super([
-            n11, n12, n13,
-            n21, n22, n23,
-            n31, n32, n33
-        ])
+        super(9)
+
+        this[0] = n11
+        this[1] = n12
+        this[2] = n13
+        this[3] = n21
+        this[4] = n22
+        this[5] = n23
+        this[6] = n31
+        this[7] = n32
+        this[8] = n33
     }
 
     // @ts-ignore

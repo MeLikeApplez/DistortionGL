@@ -1,14 +1,26 @@
 import Euler from "./Euler"
 import Quaternion from "./Quaternion"
 
-export default class Matrix4 extends Float32Array {
+export default class Matrix4 extends Array {
     constructor(n11=1, n12=0, n13=0, n14=0, n21=0, n22=1, n23=0, n24=0, n31=0, n32=0, n33=1, n34=0, n41=0, n42=0, n43=0, n44=1) {
-        super([
-            n11, n12, n13, n14,
-            n21, n22, n23, n24,
-            n31, n32, n33, n34,
-            n41, n42, n43, n44,
-        ])
+        super(16)
+
+        this[0] = n11
+        this[1] = n12
+        this[2] = n13
+        this[3] = n14
+        this[4] = n21
+        this[5] = n22
+        this[6] = n23
+        this[7] = n24
+        this[8] = n31
+        this[9] = n32
+        this[10] = n33
+        this[11] = n34
+        this[12] = n41
+        this[13] = n42
+        this[14] = n43
+        this[15] = n44
     }
 
     // @ts-ignore

@@ -9,14 +9,11 @@ export default class Clock {
      *
      */
     constructor() {
-        this.events = new Events();
+        this.events = new Events(['onstart', 'onstop', 'onupdate']);
         this.animationId = -1;
         this.startTime = -1;
         this.fps = 0;
         this.deltaTime = 0;
-        this.events.createEventDispatch('onstart');
-        this.events.createEventDispatch('onupdate');
-        this.events.createEventDispatch('onstop');
     }
     /**
      * @returns {number}
@@ -38,7 +35,7 @@ export default class Clock {
         return this.animationId;
     }
     /**
-     * @param {any} time
+     * @param {number} time
      * @returns {void}
      */
     update(time) {

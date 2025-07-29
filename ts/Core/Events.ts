@@ -8,17 +8,23 @@ interface EventListeners {
 export default class Events<T extends Record<string, any>> {
     _listeners: Map<keyof T, Array<EventListeners>>
 
-    constructor() {
+    constructor(eventNames?: Array<keyof T>) {
         this._listeners = new Map()
+
+        if(Array.isArray(eventNames)) {
+            for(let i = 0; i < eventNames.length; i++) {
+                this._listeners.set(eventNames[i], [])
+            }
+        }
     }
     
-    createEventDispatch(eventName: keyof T) {
+    createEvent(eventName: keyof T) {
         this._listeners.set(eventName, [])
     
         return this
     }
 
-    removeEventDispatch(eventName: keyof T) {
+    removeEvent(eventName: keyof T) {
         this._listeners.delete(eventName)
     }
 
@@ -36,7 +42,7 @@ export default class Events<T extends Record<string, any>> {
         return true
     }
 
-    addEventListener<K extends keyof T>(eventName: K, callback: (data: T[K]) => void): string | Error {
+    listen<K extends keyof T>(eventName: K, callback: (data: T[K]) => void): string | Error {
         const group = this._listeners.get(eventName)
 
         if(!group) return new Error(`Unable to find event eventName: "${String(eventName)}"`)
@@ -49,7 +55,7 @@ export default class Events<T extends Record<string, any>> {
         return uuid
     }
 
-    removeEventListener<K extends keyof T>(eventName: K, uuid: string): true | Error {
+    unlisten<K extends keyof T>(eventName: K, uuid: string): true | Error {
         const group = this._listeners.get(eventName)
 
         if(!group) return new Error(`Unable to find event eventName: "${String(eventName)}"`)

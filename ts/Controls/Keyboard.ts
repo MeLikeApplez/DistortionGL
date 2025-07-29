@@ -17,10 +17,7 @@ export default class Keyboard {
         this.keys = new Set()
         this.lowerCase = lowerCase
 
-        this.events = new Events()
-
-        this.events.createEventDispatch('onkeydown')
-        this.events.createEventDispatch('onkeyup')
+        this.events = new Events(['onkeyup', 'onkeydown'])
     
         if(element) this.load(element)
     }

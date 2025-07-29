@@ -1,6 +1,10 @@
-export default class Color extends Uint8Array {
+export default class Color extends Array {
     constructor(r: number, g: number, b: number) {
-        super([r, g, b])
+        super(3)
+
+        this[0] = r
+        this[1] = g
+        this[2] = b
     }
 
     setRgb(r: number, g: number, b: number) {

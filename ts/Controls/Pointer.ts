@@ -36,12 +36,7 @@ export default class Pointer {
 
         this.devicePixelRatio = devicePixelRatio
 
-        this.events = new Events()
-
-        this.events.createEventDispatch('onpointerdown')
-        this.events.createEventDispatch('onpointermove')
-        this.events.createEventDispatch('onpointerup')
-        this.events.createEventDispatch('onmousescroll')
+        this.events = new Events(['onpointerup', 'onpointermove', 'onpointerdown', 'onmousescroll'])
 
         if(element) this.load(element)
     }
