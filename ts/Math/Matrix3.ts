@@ -1,3 +1,5 @@
+import Vector2 from "./Vector2"
+
 export default class Matrix3 extends Array {
     constructor(n11=1, n12=0, n13=0, n21=0, n22=1, n23=0, n31=0, n32=0, n33=1) {
         super(9)
@@ -129,6 +131,17 @@ export default class Matrix3 extends Array {
         )
 
         return this
+    }
+
+    compose(position: Vector2, theta: number, scale: Vector2) {
+        const sin = Math.sin(theta)
+        const cos = Math.cos(theta)
+        
+        this.set(
+            cos * scale.x, -sin * scale.y, position.x,
+            sin * scale.x, cos * scale.y, position.y,
+            0, 0, 1
+        )
     }
 
     clone() {

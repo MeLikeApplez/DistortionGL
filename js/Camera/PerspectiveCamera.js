@@ -47,6 +47,7 @@ export default class PerspectiveCamera extends Camera {
         const rangeInv = 1 / (this.near - this.far);
         this.projectionMatrix.set(f / this.aspect, 0, 0, 0, 0, f, 0, 0, 0, 0, (this.near + this.far) * rangeInv, -1, 0, 0, this.near * this.far * rangeInv * 2, 0);
         this.rotationMatrix.makeRotationFromEuler(this.rotation);
+        this.needsUpdate = false;
         return this;
     }
     /**

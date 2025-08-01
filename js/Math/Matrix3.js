@@ -144,6 +144,17 @@ export default class Matrix3 extends Array {
         return this;
     }
     /**
+     * @param {Vector2} position
+     * @param {number} theta
+     * @param {Vector2} scale
+     * @returns {void}
+     */
+    compose(position, theta, scale) {
+        const sin = Math.sin(theta);
+        const cos = Math.cos(theta);
+        this.set(cos * scale.x, -sin * scale.y, position.x, sin * scale.x, cos * scale.y, position.y, 0, 0, 1);
+    }
+    /**
      * @returns {Matrix3}
      */
     clone() {

@@ -17,7 +17,7 @@ export default class Camera2D extends Camera {
     constructor() {
         super()
 
-        this.zoom = new Vector2(0, 0)
+        this.zoom = new Vector2(1, 1)
         this.resolution = new Vector2(1, 1)
 
         this.minZoom = 0.5
@@ -28,6 +28,8 @@ export default class Camera2D extends Camera {
     updateProjectionMatrix() {
         this.projectionMatrix[0] = this.zoom.x / this.resolution.x
         this.projectionMatrix[5] = this.zoom.y / this.resolution.y
+    
+        this.needsUpdate = false
     }
 
     render(renderer: WebGL2Renderer, uniforms: RenderUniforms) {

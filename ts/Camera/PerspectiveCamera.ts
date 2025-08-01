@@ -63,6 +63,8 @@ export default class PerspectiveCamera extends Camera {
 
         this.rotationMatrix.makeRotationFromEuler(this.rotation)
 
+        this.needsUpdate = false
+
         return this
     }
 
