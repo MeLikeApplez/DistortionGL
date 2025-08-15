@@ -14,6 +14,8 @@ export default class Vector3 {
         this.z = z
     }
 
+    static UP = new Vector3(0, 1, 0)
+
     set(x: number, y: number, z: number) {
         this.x = x
         this.y = y
@@ -204,6 +206,35 @@ export default class Vector3 {
         this.z = rho * Math.cos(phi)
 
         return this
+    }
+
+    equals(vector: Vector3) {
+        return this.x === vector.x && this.y === vector.y && this.z === vector.z
+    }
+
+    toArray() {
+        return [this.x, this.y, this.z]
+    }
+
+    fromArray(array: number[]) {
+        this.x = array[0]
+        this.y = array[1]
+        this.z = array[2]
+    
+        return this
+    }
+
+    getComponent(index: number) {
+        switch(index) {
+            case 0:
+                return this.x
+            case 1:
+                return this.y
+            case 2:
+                return this.z
+            default: 
+                return 0
+        }
     }
 
     length() {

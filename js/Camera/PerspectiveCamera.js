@@ -25,10 +25,10 @@ export default class PerspectiveCamera extends Camera {
     }
     /**
      * @param {Vector3} target
-     * @param {any} [up=new Vector3(0, 1, 0)]
+     * @param {any} [up=Vector3.UP]
      * @returns {this}
      */
-    lookAt(target, up = new Vector3(0, 1, 0)) {
+    lookAt(target, up = Vector3.UP) {
         const zAxis = this.position.clone().subtract(target).normalize();
         const xAxis = up.cross(zAxis).normalize();
         const yAxis = zAxis.cross(xAxis).normalize();

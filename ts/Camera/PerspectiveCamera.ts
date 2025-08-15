@@ -8,7 +8,6 @@ type RenderUniforms = {
     projection: WebGLUniformLocation | null
     rotation: WebGLUniformLocation | null
 }
-
 export default class PerspectiveCamera extends Camera {
     fov: number
     aspect: number
@@ -29,7 +28,7 @@ export default class PerspectiveCamera extends Camera {
         this.updateProjectionMatrix()
     }
 
-    lookAt(target: Vector3, up=new Vector3(0, 1, 0)) {
+    lookAt(target: Vector3, up=Vector3.UP) {
         const zAxis = this.position.clone().subtract(target).normalize()
         const xAxis = up.cross(zAxis).normalize()
         const yAxis = zAxis.cross(xAxis).normalize()

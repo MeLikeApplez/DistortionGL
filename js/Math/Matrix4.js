@@ -37,7 +37,6 @@ export default class Matrix4 extends Array {
         this[14] = n43;
         this[15] = n44;
     }
-    // @ts-ignore
     /**
      * @param {number} n11
      * @param {number} n12

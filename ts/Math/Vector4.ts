@@ -181,6 +181,38 @@ export default class Vector4 {
         return (this.x * vector.x) + (this.y * vector.y) + (this.z * vector.z) + (this.w * vector.w)
     }
 
+    equals(vector: Vector4) {
+        return this.x === vector.x && this.y === vector.y && this.z === vector.z && this.w === vector.w
+    }
+
+    toArray() {
+        return [this.x, this.y, this.z, this.w]
+    }
+
+    fromArray(array: number[]) {
+        this.x = array[0]
+        this.y = array[1]
+        this.z = array[2]
+        this.w = array[3]
+    
+        return this
+    }
+
+    getComponent(index: number) {
+        switch(index) {
+            case 0:
+                return this.x
+            case 1:
+                return this.y
+            case 2:
+                return this.z
+            case 3:
+                return this.w
+            default: 
+                return 0
+        }
+    }
+
     length() {
         return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z + this.w * this.w)
     }

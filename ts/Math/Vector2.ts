@@ -119,7 +119,7 @@ export default class Vector2 {
 
         if(magnitude === 0) {
             this.x = 0
-            this.y
+            this.y = 0
         } else {
             this.x /= magnitude
             this.y /= magnitude
@@ -130,6 +130,45 @@ export default class Vector2 {
 
     dot(vector: Vector2) {
         return (this.x * vector.x) + (this.y * vector.y)
+    }
+
+    equals(vector: Vector2) {
+        return this.x === vector.x && this.y === vector.y
+    }
+
+    // https://github.com/mrdoob/three.js/blob/master/src/math/Vector2.js#L828
+    rotateAround(center: Vector2, angle: number) {
+        const c = Math.cos(angle), s = Math.sin(angle)
+
+		const x = this.x - center.x
+		const y = this.y - center.y
+
+		this.x = x * c - y * s + center.x
+		this.y = x * s + y * c + center.y
+
+		return this
+    }
+
+    toArray() {
+        return [this.x, this.y]
+    }
+
+    fromArray(array: number[]) {
+        this.x = array[0]
+        this.y = array[1]
+
+        return this
+    }
+
+    getComponent(index: number) {
+        switch(index) {
+            case 0:
+                return this.x
+            case 1:
+                return this.y
+            default: 
+                return 0
+        }
     }
 
     length() {

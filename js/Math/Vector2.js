@@ -152,7 +152,7 @@ export default class Vector2 {
         const magnitude = Math.sqrt((this.x * this.x) + (this.y * this.y));
         if (magnitude === 0) {
             this.x = 0;
-            this.y;
+            this.y = 0;
         }
         else {
             this.x /= magnitude;
@@ -166,6 +166,56 @@ export default class Vector2 {
      */
     dot(vector) {
         return (this.x * vector.x) + (this.y * vector.y);
+    }
+    /**
+     * @param {Vector2} vector
+     * @returns {boolean}
+     */
+    equals(vector) {
+        return this.x === vector.x && this.y === vector.y;
+    }
+    // https://github.com/mrdoob/three.js/blob/master/src/math/Vector2.js#L828
+    /**
+     * @param {Vector2} center
+     * @param {number} angle
+     * @returns {this}
+     */
+    rotateAround(center, angle) {
+        const c = Math.cos(angle), s = Math.sin(angle);
+        const x = this.x - center.x;
+        const y = this.y - center.y;
+        this.x = x * c - y * s + center.x;
+        this.y = x * s + y * c + center.y;
+        return this;
+    }
+    /**
+     * @returns {number[]}
+     */
+    toArray() {
+        return [this.x, this.y];
+    }
+    /**
+     * @param {number[]} array
+     * @returns {this}
+     */
+    fromArray(array) {
+        this.x = array[0];
+        this.y = array[1];
+        return this;
+    }
+    /**
+     * @param {number} index
+     * @returns {number}
+     */
+    getComponent(index) {
+        switch (index) {
+            case 0:
+                return this.x;
+            case 1:
+                return this.y;
+            default:
+                return 0;
+        }
     }
     /**
      * @returns {number}

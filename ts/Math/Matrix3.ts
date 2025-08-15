@@ -15,7 +15,6 @@ export default class Matrix3 extends Array {
         this[8] = n33
     }
 
-    // @ts-ignore
     set(n11: number, n12: number, n13: number, n21: number, n22: number, n23: number, n31: number, n32: number, n33: number) {
         this[0] = n11
         this[1] = n12

@@ -23,7 +23,6 @@ export default class Matrix3 extends Array {
         this[7] = n32;
         this[8] = n33;
     }
-    // @ts-ignore
     /**
      * @param {number} n11
      * @param {number} n12

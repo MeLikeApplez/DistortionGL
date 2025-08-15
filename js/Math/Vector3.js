@@ -15,6 +15,11 @@ export default class Vector3 {
         this.z = z;
     }
     /**
+     * @static
+     * @default Vector3
+     */
+    static UP = new Vector3(0, 1, 0);
+    /**
      * @param {number} x
      * @param {number} y
      * @param {number} z
@@ -246,6 +251,45 @@ export default class Vector3 {
         this.y = rho * Math.sin(phi) * Math.sin(theta);
         this.z = rho * Math.cos(phi);
         return this;
+    }
+    /**
+     * @param {Vector3} vector
+     * @returns {boolean}
+     */
+    equals(vector) {
+        return this.x === vector.x && this.y === vector.y && this.z === vector.z;
+    }
+    /**
+     * @returns {number[]}
+     */
+    toArray() {
+        return [this.x, this.y, this.z];
+    }
+    /**
+     * @param {number[]} array
+     * @returns {this}
+     */
+    fromArray(array) {
+        this.x = array[0];
+        this.y = array[1];
+        this.z = array[2];
+        return this;
+    }
+    /**
+     * @param {number} index
+     * @returns {number}
+     */
+    getComponent(index) {
+        switch (index) {
+            case 0:
+                return this.x;
+            case 1:
+                return this.y;
+            case 2:
+                return this.z;
+            default:
+                return 0;
+        }
     }
     /**
      * @returns {number}
