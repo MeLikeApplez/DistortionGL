@@ -1,59 +1,83 @@
-import Events from "../Core/Events";
-export default class Keyboard {
-    element;
-    keys;
-    lowerCase;
-    events;
+import { generateUUID } from "../Math/MathUtils.ts";
+export default class Events {
+    _listeners;
     /**
-     * @param {HTMLElement} element
-     * @param {boolean} [lowerCase=false]
+     * @param {Array<keyof T>} [eventNames]
      */
-    constructor(element, lowerCase = false) {
-        this.element = element;
-        this.keys = new Set();
-        this.lowerCase = lowerCase;
-        this.events = new Events(['onkeyup', 'onkeydown']);
-        if (element)
-            this.load(element);
+    constructor(eventNames) {
+        this._listeners = new Map();
+        if (Array.isArray(eventNames)) {
+            for (let i = 0; i < eventNames.length; i++) {
+                this._listeners.set(eventNames[i], []);
+            }
+        }
     }
     /**
+     * @param {keyof T} eventName
+     * @returns {this}
+     */
+    createEvent(eventName) {
+        this._listeners.set(eventName, []);
+        return this;
+    }
+    /**
+     * @param {keyof T} eventName
+     * @returns {void}
+     */
+    removeEvent(eventName) {
+        this._listeners.delete(eventName);
+    }
+    /**
+     * @template {keyof T} K
+     * @param {K} eventName
+     * @param {T[K]} data
      * @returns {boolean}
      */
-    dispose() {
-        if (!this.element)
+    dispatchEvent(eventName, data) {
+        const group = this._listeners.get(eventName);
+        if (!group)
             return false;
-        window.onkeydown = null;
-        window.onkeyup = null;
-        this.element = null;
-        this.keys.clear();
+        for (let i = 0; i < group.length; i++) {
+            const listener = group[i];
+            listener.callback(data);
+        }
         return true;
     }
     /**
-     * @param {HTMLElement} element
-     * @returns {boolean}
+     * @template {keyof T} K
+     * @param {K} eventName
+     * @param {(data: T[K]) => void} callback
+     * @returns {string | Error}
      */
-    load(element) {
-        this.element = element;
-        this.keys.clear();
-        window.onkeydown = event => {
-            const key = this.lowerCase ? event.key.toLowerCase() : event.key;
-            if (this.keys.has(key))
-                return;
-            this.keys.add(key);
-            this.events.dispatchEvent('onkeydown', this);
-        };
-        window.onkeyup = event => {
-            const key = this.lowerCase ? event.key.toLowerCase() : event.key;
-            if (!this.keys.has(key))
-                return;
-            this.keys.delete(key);
-            this.events.dispatchEvent('onkeyup', this);
-        };
+    listen(eventName, callback) {
+        const group = this._listeners.get(eventName);
+        if (!group)
+            return new Error(`Unable to find event eventName: "${String(eventName)}"`);
+        if (typeof callback !== 'function')
+            return new Error('Callback function is required!');
+        const uuid = generateUUID();
+        group.push({ uuid, callback });
+        return uuid;
+    }
+    /**
+     * @template {keyof T} K
+     * @param {K} eventName
+     * @param {string} uuid
+     * @returns {true | Error}
+     */
+    unlisten(eventName, uuid) {
+        const group = this._listeners.get(eventName);
+        if (!group)
+            return new Error(`Unable to find event eventName: "${String(eventName)}"`);
+        const index = group.findIndex(v => v.uuid === uuid);
+        if (index === -1)
+            return new Error(`Unable to find listener function with uuid: "${uuid}"`);
+        group.splice(index, 1);
         return true;
     }
 }
 /**
- * @typedef {Object} KeyboardEvents
- * @property {Keyboard} onkeydown
- * @property {Keyboard} onkeyup
+ * @typedef {Object} EventListeners
+ * @property {string} uuid
+ * @property {(data: any) => void} callback
  */

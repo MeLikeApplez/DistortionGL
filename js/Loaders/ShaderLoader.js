@@ -11,7 +11,7 @@ export default class ShaderLoader extends Loader {
     ready;
     error;
     /**
-     * @param {URLOption | SourceCodeOption} options
+     * @param {URLOption<TU, TA> | SourceCodeOption<TU, TA>} options
      */
     constructor(options) {
         super();
@@ -24,6 +24,7 @@ export default class ShaderLoader extends Loader {
         this.preloaded = false;
         this.ready = false;
         this.error = null;
+        this._setUniformsAndAttributes(options);
         if (options.type === 'source-code') {
             this.vertexCode = options.vertexShader;
             this.fragmentCode = options.fragmentShader;
@@ -90,6 +91,24 @@ export default class ShaderLoader extends Loader {
         this.fragmentCode = fragmentCode.value;
     }
     /**
+     * @param {URLOption<TU, TA> | SourceCodeOption<TU, TA>} options
+     * @returns {void}
+     */
+    _setUniformsAndAttributes(options) {
+        if (Array.isArray(options.uniforms)) {
+            for (let i = 0; i < options.uniforms.length; i++) {
+                const key = options.uniforms[i];
+                this.uniforms[key] = null;
+            }
+        }
+        if (Array.isArray(options.attributes)) {
+            for (let i = 0; i < options.attributes.length; i++) {
+                const key = options.attributes[i];
+                this.attributes[key] = -1;
+            }
+        }
+    }
+    /**
      * @param {WebGL2RenderingContext} gl
      * @param {boolean} [recompile=false]
      * @returns {any}
@@ -152,7 +171,6 @@ export default class ShaderLoader extends Loader {
             const activeUniform = gl.getActiveUniform(program, i);
             if (activeUniform === null)
                 continue;
-            // @ts-ignore
             this.uniforms[activeUniform.name] = gl.getUniformLocation(program, activeUniform.name);
         }
         const numOfActiveAttribs = gl.getProgramParameter(program, gl.ACTIVE_ATTRIBUTES);
@@ -160,7 +178,6 @@ export default class ShaderLoader extends Loader {
             const activeAttrib = gl.getActiveAttrib(program, i);
             if (activeAttrib === null)
                 continue;
-            // @ts-ignore
             this.attributes[activeAttrib.name] = gl.getAttribLocation(program, activeAttrib.name);
         }
         this.program = program;
@@ -169,14 +186,22 @@ export default class ShaderLoader extends Loader {
         this.events.dispatchEvent('onload', this.program);
     }
 }
-/** @typedef {Record<string, WebGLUniformLocation | null>} Uniform */
-/** @typedef {Record<string, number>} Attribute */
+/**
+ * @typedef {Record<K, WebGLUniformLocation | null>} Uniform
+ * @template {string} K
+ */
+/**
+ * @typedef {Record<K, number>} Attribute
+ * @template {string} K
+ */
 /**
  * @typedef {Object} URLOption
  * @property {'url'} type
  * @property {string} [name]
  * @property {string} vertexShader
  * @property {string} fragmentShader
+ * @property {TU} [uniforms]
+ * @property {TA} [attributes]
  */
 /**
  * @typedef {Object} SourceCodeOption
@@ -184,4 +209,6 @@ export default class ShaderLoader extends Loader {
  * @property {string} [name]
  * @property {string} vertexShader
  * @property {string} fragmentShader
+ * @property {TU} [uniforms]
+ * @property {TA} [attributes]
  */

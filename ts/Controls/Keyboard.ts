@@ -1,63 +1,70 @@
-import Events from "../Core/Events"
+import { generateUUID } from "../Math/MathUtils.ts"
 
-interface KeyboardEvents {
-    onkeydown: Keyboard
-    onkeyup: Keyboard
+interface EventListeners {
+    uuid: string
+    callback: (data: any) => void
 }
 
-export default class Keyboard {
-    element: HTMLElement | null
-    keys: Set<string>
-    lowerCase: boolean
-    events: Events<KeyboardEvents>
+export default class Events<T extends Record<string, any>> {
+    _listeners: Map<keyof T, Array<EventListeners>>
 
-    constructor(element: HTMLElement, lowerCase=false) {
-        this.element = element
+    constructor(eventNames?: Array<keyof T>) {
+        this._listeners = new Map()
 
-        this.keys = new Set()
-        this.lowerCase = lowerCase
-
-        this.events = new Events(['onkeyup', 'onkeydown'])
+        if(Array.isArray(eventNames)) {
+            for(let i = 0; i < eventNames.length; i++) {
+                this._listeners.set(eventNames[i], [])
+            }
+        }
+    }
     
-        if(element) this.load(element)
+    createEvent(eventName: keyof T) {
+        this._listeners.set(eventName, [])
+    
+        return this
     }
 
-    dispose() {
-        if(!this.element) return false
+    removeEvent(eventName: keyof T) {
+        this._listeners.delete(eventName)
+    }
 
-        window.onkeydown = null
-        window.onkeyup = null
+    dispatchEvent<K extends keyof T>(eventName: K, data: T[K]) {
+        const group = this._listeners.get(eventName)
 
-        this.element = null
-        this.keys.clear()
+        if(!group) return false
+
+        for(let i = 0; i < group.length; i++) {
+            const listener = group[i]
+            
+            listener.callback(data)
+        }
 
         return true
     }
 
-    load(element: HTMLElement) {
-        this.element = element
-        this.keys.clear()
+    listen<K extends keyof T>(eventName: K, callback: (data: T[K]) => void): string | Error {
+        const group = this._listeners.get(eventName)
 
-        window.onkeydown = event => {
-            const key = this.lowerCase ? event.key.toLowerCase() : event.key
+        if(!group) return new Error(`Unable to find event eventName: "${String(eventName)}"`)
+        if(typeof callback !== 'function') return new Error('Callback function is required!')
 
-            if(this.keys.has(key)) return;
-
-            this.keys.add(key)
+        const uuid = generateUUID()
         
-            this.events.dispatchEvent('onkeydown', this)
-        }
+        group.push({ uuid, callback })
 
-        window.onkeyup = event => {
-            const key = this.lowerCase ? event.key.toLowerCase() : event.key
-            
-            if(!this.keys.has(key)) return;
-        
-            this.keys.delete(key)
-        
-            this.events.dispatchEvent('onkeyup', this)
-        }
+        return uuid
+    }
 
+    unlisten<K extends keyof T>(eventName: K, uuid: string): true | Error {
+        const group = this._listeners.get(eventName)
+
+        if(!group) return new Error(`Unable to find event eventName: "${String(eventName)}"`)
+        const index = group.findIndex(v => v.uuid === uuid)
+
+        if(index === -1) return new Error(`Unable to find listener function with uuid: "${uuid}"`)
+    
+        group.splice(index, 1)
+        
         return true
     }
 }

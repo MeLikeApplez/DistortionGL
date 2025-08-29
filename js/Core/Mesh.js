@@ -10,5 +10,3 @@ export default class Mesh extends GameObject {
         this.shader = null;
     }
 }
-/** @typedef {Record<string, WebGLUniformLocation | null>} Uniform */
-/** @typedef {Record<string, number>} Attribute */
