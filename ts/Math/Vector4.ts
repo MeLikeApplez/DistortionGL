@@ -169,10 +169,12 @@ export default class Vector4 {
     }
 
     applyFromMatrix4(matrix: Matrix4) {
-        this.x = (matrix[0] * this.x) + (matrix[1] * this.y) + (matrix[2] * this.z) + (matrix[3] * this.w)
-        this.y = (matrix[4] * this.x) + (matrix[5] * this.y) + (matrix[6] * this.z) + (matrix[7] * this.w)
-        this.z = (matrix[8] * this.x) + (matrix[9] * this.y) + (matrix[10] * this.z) + (matrix[11] * this.w)
-        this.w = (matrix[12] * this.x) + (matrix[13] * this.y) + (matrix[14] * this.z) + (matrix[15] * this.w)
+        const { x, y, z, w } = this
+
+        this.x = (matrix[0] * x) + (matrix[1] * y) + (matrix[2] * z) + (matrix[3] * w)
+        this.y = (matrix[4] * x) + (matrix[5] * y) + (matrix[6] * z) + (matrix[7] * w)
+        this.z = (matrix[8] * x) + (matrix[9] * y) + (matrix[10] * z) + (matrix[11] * w)
+        this.w = (matrix[12] * x) + (matrix[13] * y) + (matrix[14] * z) + (matrix[15] * w)
 
         return this
     }

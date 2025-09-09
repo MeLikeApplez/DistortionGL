@@ -12,11 +12,11 @@ export default class GameObject<TRenderer=Renderer> {
     uuid: string
     name: string
     type: string
-    position: Vector2 | Vector3 | Vector4
-    scale: Vector2 | Vector3 | Vector4
-    rotation: Euler
-    quaternion: Quaternion
-    matrix: Matrix3 | Matrix4
+    position: Vector2 | Vector3 | Vector4 | null
+    scale: Vector2 | Vector3 | Vector4 | null
+    rotation: Euler | null
+    quaternion: Quaternion | null
+    matrix: Matrix3 | Matrix4 | null
     matrixAutoUpdate: boolean
     matrixNeedsUpdate: boolean
     autoUpdate: boolean
@@ -27,12 +27,12 @@ export default class GameObject<TRenderer=Renderer> {
         this.name = ''
         this.type = ''
             
-        this.position = new Vector3()
-        this.scale = new Vector3()
-        this.rotation = new Euler()
-        this.quaternion = new Quaternion()
+        this.position = null
+        this.scale = null
+        this.rotation = null
+        this.quaternion = null
     
-        this.matrix = new Matrix4()
+        this.matrix = null
 
         this.matrixAutoUpdate = false
         this.matrixNeedsUpdate = false

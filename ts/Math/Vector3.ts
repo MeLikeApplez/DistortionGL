@@ -155,9 +155,11 @@ export default class Vector3 {
     }
 
     applyFromMatrix3(matrix: Matrix3) {
-        this.x = (matrix[0] * this.x) + (matrix[1] * this.y) + (matrix[2] * this.z)
-        this.y = (matrix[3] * this.x) + (matrix[4] * this.y) + (matrix[5] * this.z)
-        this.z = (matrix[6] * this.x) + (matrix[7] * this.y) + (matrix[8] * this.z)
+        const { x, y, z } = this
+
+        this.x = (matrix[0] * x) + (matrix[1] * y) + (matrix[2] * z)
+        this.y = (matrix[3] * x) + (matrix[4] * y) + (matrix[5] * z)
+        this.z = (matrix[6] * x) + (matrix[7] * y) + (matrix[8] * z)
 
         return this
     }
