@@ -232,9 +232,7 @@ export default class Matrix4 extends Array {
      * @returns {this}
      */
     multiply(matrix) {
-        for (let i = 0; i < this.length; i++) {
-            this[i] *= matrix[i];
-        }
+        this.multiplyMatrices(this, matrix);
         return this;
     }
     // https://github.com/mrdoob/three.js/blob/0af9729d0c143a86a1d725d6e2c3ad83301f3f34/src/math/Matrix4.js#L542

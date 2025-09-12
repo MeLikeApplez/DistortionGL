@@ -97,10 +97,8 @@ export default class Matrix3 extends Array {
     }
 
     multiply(matrix: Matrix3) {
-        for(let i = 0; i < this.length; i++) {
-            this[i] *= matrix[i]
-        }
-    
+        this.multiplyMatrices(this, matrix)
+        
         return this
     }
 

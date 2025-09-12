@@ -280,9 +280,7 @@ export default class Matrix4 extends Array {
     }
 
     multiply(matrix: Matrix4) {
-        for(let i = 0; i < this.length; i++) {
-            this[i] *= matrix[i]
-        }
+        this.multiplyMatrices(this, matrix)
     
         return this
     }
