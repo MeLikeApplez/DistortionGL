@@ -8,7 +8,7 @@ A JavaScript WebGL2 library template customizable for 3D or 2D projects.
 - Most code is sourced from other people and places, such as Stack Overflow and ThreeJS. Those are commented within the code and attributed to the individuals who created them.
 
 ## Inspiration
-- This project is heavily inspired by ThreeJS, and many parts of this project are very ThreeJS-like, so similarities will show up
+- This project is heavily inspired by [ThreeJS](https://threejs.org/), and many parts of this project are very ThreeJS-like, so similarities will show up
 
 ## What is this?
 - This library is mainly used to utilize common game dev functions such as shader loader, scenes, math, etc.
