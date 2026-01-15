@@ -89,7 +89,7 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-dist
+# dist
 
 # Gatsby files
 .cache/
@@ -131,6 +131,4 @@ dist
 
 Playground
 JSDOC_CONVERTER
-ts-to-js
-js-backup
-__test__.ts
+dev

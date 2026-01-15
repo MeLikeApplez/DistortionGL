@@ -12,13 +12,13 @@ A JavaScript WebGL2 library template customizable for 3D or 2D projects.
 
 ## What is this?
 - This library is mainly used to utilize common game dev functions such as shader loader, scenes, math, etc.
-- Modules such as Scene, GameObject, etc, are purposely empty for customizable and organized code.
+- Modules such as Scene, Entity, etc, are purposely empty for customizable and organized code.
 
 ### Library Contents
 - [2D Canvas](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API), [WebGL](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API), [WebGPU (Experimental)](https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API)
 - > Note that [WebGPU](https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API) is still in experimental phase (as of 12/23/2025). [Please check if your browser supports WebGPU as it may or may not work on your device.](https://caniuse.com/?search=webgpu)
 - 2D Camera & 3D Perspective Camera
 - Keyboard & Mouse/Touch Controls
-- Event handlers & GameObject class template
+- Event handlers & Entity class template
 - Math utilities including vectors, matrices, quaternions, euler and other math utils
 - Typescript now supported, including separate JavaScript JSDoc annotations
