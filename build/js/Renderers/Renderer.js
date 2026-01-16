@@ -1,5 +1,4 @@
-// ../src/Renderers/Renderer.ts
-var Renderer = class {
+class Renderer {
   scene;
   canvasElement;
   constructor(canvasElement) {
@@ -12,7 +11,7 @@ var Renderer = class {
   }
   render(scene, camera) {
   }
-};
+}
 export {
   Renderer
 };

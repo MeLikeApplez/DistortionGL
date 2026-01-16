@@ -1,12 +1,7 @@
-import { generateUUID } from "../Math/MathUtils.ts"
-
-interface EventListeners {
-    uuid: string
-    callback: (data: any) => void
-}
+type EventCallback = (...data: any) => void
 
 export class Events<T extends Record<string, any>> {
-    _listeners: Map<keyof T, Array<EventListeners>>
+    private _listeners: Map<keyof T, Array<EventCallback>>
 
     constructor(eventNames?: Array<keyof T>) {
         this._listeners = new Map()
@@ -17,37 +12,31 @@ export class Events<T extends Record<string, any>> {
             }
         }
     }
-    
-    createEvent(eventName: keyof T) {
-        this._listeners.set(eventName, [])
-    
-        return this
-    }
 
     dispatchEvent<K extends keyof T>(eventName: K, data: T[K]) {
         const group = this._listeners.get(eventName)
 
-        if(!group) return false
+        if(!Array.isArray(group)) {
+            this._listeners.set(eventName, [])
+        
+            return false
+        }
 
         for(let i = 0; i < group.length; i++) {
             const listener = group[i]
             
-            listener.callback(data)
+            listener(data)
         }
 
         return true
     }
 
-    listen<K extends keyof T>(eventName: K, callback: (data: T[K]) => void): string | Error {
+    addEventListener<K extends keyof T>(eventName: K, callback: (data: T[K]) => void) {
         const group = this._listeners.get(eventName)
 
-        if(!group) return new Error(`Unable to find event eventName: "${String(eventName)}"`)
-        if(typeof callback !== 'function') return new Error('Callback function is required!')
+        if(!group) throw Error(`Unable to find event event name: "${String(eventName)}"`)
+        if(typeof callback !== 'function') throw Error('Callback function is required!')
 
-        const uuid = generateUUID()
-        
-        group.push({ uuid, callback })
-
-        return uuid
+        group.push(callback)
     }
 }

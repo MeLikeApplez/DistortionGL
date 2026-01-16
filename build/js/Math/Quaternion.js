@@ -1,5 +1,4 @@
-// ../src/Math/Quaternion.ts
-var Quaternion = class _Quaternion {
+class Quaternion {
   x;
   y;
   z;
@@ -35,7 +34,7 @@ var Quaternion = class _Quaternion {
   setFromAxisAngle(axis, angle) {
     const halfAngle = angle * 0.5;
     const s = Math.sin(halfAngle);
-    return new _Quaternion(
+    return new Quaternion(
       axis.x * s,
       axis.y * s,
       axis.z * s,
@@ -76,7 +75,7 @@ var Quaternion = class _Quaternion {
     return this;
   }
   clone() {
-    return new _Quaternion(this.x, this.y, this.z, this.w);
+    return new Quaternion(this.x, this.y, this.z, this.w);
   }
   copy(quaternion) {
     this.x = quaternion.x;
@@ -85,7 +84,7 @@ var Quaternion = class _Quaternion {
     this.w = quaternion.w;
     return this;
   }
-};
+}
 export {
   Quaternion
 };

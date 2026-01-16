@@ -1,4 +1,3 @@
-// ../src/Utils/Utils.ts
 function Promisify(promiseFunc, customError) {
   return new Promise((res) => {
     promiseFunc.then((value) => {

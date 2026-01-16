@@ -6,15 +6,14 @@ interface ClockEvents {
     onstop: Clock
 }
 
-export class Clock {
-    events: Events<ClockEvents>
-    animationId: number
+export class Clock extends Events<ClockEvents> {
+    private animationId: number
     startTime: number
     fps: number
     deltaTime: number
 
     constructor() {
-        this.events = new Events(['onstart', 'onstop', 'onupdate'])
+        super(['onstart', 'onstop', 'onupdate'])
 
         this.animationId = -1
         this.startTime = -1
@@ -27,7 +26,7 @@ export class Clock {
         this.startTime = -1
         this.animationId = window.requestAnimationFrame(this.update.bind(this))
 
-        this.events.dispatchEvent('onstart', this)
+        this.dispatchEvent('onstart', this)
 
         return this.animationId
     }
@@ -38,7 +37,7 @@ export class Clock {
         this.animationId = -1
         this.startTime = -1
 
-        this.events.dispatchEvent('onstop', this)
+        this.dispatchEvent('onstop', this)
 
         return this.animationId
     }
@@ -57,6 +56,6 @@ export class Clock {
 
         this.startTime = time
 
-        this.events.dispatchEvent('onupdate', this)
+        this.dispatchEvent('onupdate', this)
     }
 }

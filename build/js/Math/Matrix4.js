@@ -1,5 +1,4 @@
-// ../src/Math/Matrix4.ts
-var Matrix4 = class _Matrix4 extends Array {
+class Matrix4 extends Array {
   constructor(n11 = 1, n12 = 0, n13 = 0, n14 = 0, n21 = 0, n22 = 1, n23 = 0, n24 = 0, n31 = 0, n32 = 0, n33 = 1, n34 = 0, n41 = 0, n42 = 0, n43 = 0, n44 = 1) {
     super(16);
     this[0] = n11;
@@ -528,7 +527,7 @@ var Matrix4 = class _Matrix4 extends Array {
   }
   // source: https://evanw.github.io/lightgl.js/docs/matrix.html
   inverse() {
-    const result = new _Matrix4();
+    const result = new Matrix4();
     const r = result;
     const m = this;
     r[0] = m[5] * m[10] * m[15] - m[5] * m[14] * m[11] - m[6] * m[9] * m[15] + m[6] * m[13] * m[11] + m[7] * m[9] * m[14] - m[7] * m[13] * m[10];
@@ -599,7 +598,7 @@ var Matrix4 = class _Matrix4 extends Array {
     return this;
   }
   clone() {
-    return new _Matrix4(...this);
+    return new Matrix4(...this);
   }
   copy(matrix) {
     return this.set(
@@ -621,7 +620,7 @@ var Matrix4 = class _Matrix4 extends Array {
       matrix[15]
     );
   }
-};
+}
 export {
   Matrix4
 };

@@ -16,7 +16,6 @@
     "glob": "^13.0.0",
     "rollup": "^4.55.1",
     "rollup-plugin-dts": "^6.3.0",
-    "ts-to-jsdoc": "^2.4.0",
     "typescript": "^5.8.3"
   },
   "devDependencies": {

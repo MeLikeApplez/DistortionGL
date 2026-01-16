@@ -1,5 +1,4 @@
-// ../src/Scenes/Scene.ts
-var Scene = class {
+class Scene {
   camera;
   children;
   enabled;
@@ -25,7 +24,7 @@ var Scene = class {
   }
   render(renderer, ...any) {
   }
-};
+}
 export {
   Scene
 };

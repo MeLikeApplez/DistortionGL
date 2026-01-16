@@ -1,5 +1,4 @@
-// ../src/Math/Vector2.ts
-var Vector2 = class _Vector2 {
+class Vector2 {
   x;
   y;
   constructor(x = 0, y = 0) {
@@ -131,14 +130,14 @@ var Vector2 = class _Vector2 {
     return Math.sqrt(this.x * this.x + this.y * this.y);
   }
   clone() {
-    return new _Vector2(this.x, this.y);
+    return new Vector2(this.x, this.y);
   }
   copy(vector) {
     this.x = vector.x;
     this.y = vector.y;
     return this;
   }
-};
+}
 export {
   Vector2
 };

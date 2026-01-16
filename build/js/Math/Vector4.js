@@ -1,5 +1,4 @@
-// ../src/Math/Vector4.ts
-var Vector4 = class _Vector4 {
+class Vector4 {
   x;
   y;
   z;
@@ -174,7 +173,7 @@ var Vector4 = class _Vector4 {
     return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z + this.w * this.w);
   }
   clone() {
-    return new _Vector4(this.x, this.y, this.z, this.w);
+    return new Vector4(this.x, this.y, this.z, this.w);
   }
   copy(vector) {
     this.x = vector.x;
@@ -183,7 +182,7 @@ var Vector4 = class _Vector4 {
     this.w = vector.w;
     return this;
   }
-};
+}
 export {
   Vector4
 };

@@ -1,5 +1,4 @@
-// ../src/Math/Color.ts
-var Color = class _Color extends Array {
+class Color extends Array {
   constructor(r, g, b, a = 1) {
     super(4);
     this[0] = r;
@@ -180,7 +179,7 @@ var Color = class _Color extends Array {
     return this;
   }
   clone() {
-    return new _Color(this[0], this[1], this[2], this[3]);
+    return new Color(this[0], this[1], this[2], this[3]);
   }
   copy(color) {
     this[0] = color[0];
@@ -189,7 +188,7 @@ var Color = class _Color extends Array {
     this[3] = color[3];
     return this;
   }
-};
+}
 export {
   Color
 };

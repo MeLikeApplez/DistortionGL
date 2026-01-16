@@ -1,5 +1,4 @@
-// ../src/Math/Matrix3.ts
-var Matrix3 = class _Matrix3 extends Array {
+class Matrix3 extends Array {
   constructor(n11 = 1, n12 = 0, n13 = 0, n21 = 0, n22 = 1, n23 = 0, n31 = 0, n32 = 0, n33 = 1) {
     super(9);
     this[0] = n11;
@@ -178,7 +177,7 @@ var Matrix3 = class _Matrix3 extends Array {
     return this;
   }
   clone() {
-    return new _Matrix3(...this);
+    return new Matrix3(...this);
   }
   copy(matrix) {
     this.set(
@@ -194,7 +193,7 @@ var Matrix3 = class _Matrix3 extends Array {
     );
     return this;
   }
-};
+}
 export {
   Matrix3
 };

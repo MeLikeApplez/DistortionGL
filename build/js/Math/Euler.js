@@ -1,5 +1,4 @@
-// ../src/Math/Euler.ts
-var Euler = class _Euler {
+class Euler {
   x;
   y;
   z;
@@ -58,7 +57,7 @@ var Euler = class _Euler {
     return this;
   }
   clone() {
-    return new _Euler(this.x, this.y, this.z);
+    return new Euler(this.x, this.y, this.z);
   }
   copy(euler) {
     this.x = euler.x;
@@ -66,7 +65,7 @@ var Euler = class _Euler {
     this.z = euler.z;
     return this;
   }
-};
+}
 export {
   Euler
 };

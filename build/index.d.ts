@@ -1,35 +1,6 @@
 type Promisified<TData, TError> = Promise<[TData, null] | [null, TError]>;
 declare function Promisify<TData, TError>(promiseFunc: Promise<TData>, customError?: TError): Promisified<TData, TError>;
 
-interface EventListeners {
-    uuid: string;
-    callback: (data: any) => void;
-}
-declare class Events<T extends Record<string, any>> {
-    _listeners: Map<keyof T, Array<EventListeners>>;
-    constructor(eventNames?: Array<keyof T>);
-    createEvent(eventName: keyof T): this;
-    dispatchEvent<K extends keyof T>(eventName: K, data: T[K]): boolean;
-    listen<K extends keyof T>(eventName: K, callback: (data: T[K]) => void): string | Error;
-}
-
-interface ClockEvents {
-    onstart: Clock;
-    onupdate: Clock;
-    onstop: Clock;
-}
-declare class Clock {
-    events: Events<ClockEvents>;
-    animationId: number;
-    startTime: number;
-    fps: number;
-    deltaTime: number;
-    constructor();
-    start(): number;
-    stop(): number;
-    update(time: number): void;
-}
-
 declare class Vector2 {
     x: number;
     y: number;
@@ -182,21 +153,6 @@ declare class Euler {
     copy(euler: Euler): this;
 }
 
-declare class Renderer {
-    scene: Scene | null;
-    canvasElement: HTMLCanvasElement;
-    constructor(canvasElement: HTMLCanvasElement);
-    setSize(width: number, height: number, devicePixelRatio?: number): void;
-    render(scene: Scene, camera: Camera): void;
-}
-
-declare class WebGL2Renderer extends Renderer {
-    gl: WebGL2RenderingContext;
-    static isAvailable(canvasElement: HTMLCanvasElement): boolean;
-    constructor(canvasElement: HTMLCanvasElement, glOptions?: WebGLContextAttributes);
-    render(scene: Scene, camera: Camera): void;
-}
-
 declare class Camera {
     position: Vector3;
     rotation: Euler;
@@ -207,6 +163,14 @@ declare class Camera {
     constructor();
     updateProjectionMatrix(): void;
     render(renderer: WebGL2Renderer, ...any: any): void;
+}
+
+declare class Renderer {
+    scene: Scene | null;
+    canvasElement: HTMLCanvasElement;
+    constructor(canvasElement: HTMLCanvasElement);
+    setSize(width: number, height: number, devicePixelRatio?: number): void;
+    render(scene: Scene, camera: Camera): void;
 }
 
 declare class Vector4 {
@@ -271,6 +235,36 @@ declare class Scene<TCamera = Camera, TRenderer = Renderer> {
     dispose(renderer: TRenderer, ...any: any): void;
     load(renderer: TRenderer, ...any: any): void;
     render(renderer: TRenderer, ...any: any): void;
+}
+
+declare class WebGL2Renderer extends Renderer {
+    gl: WebGL2RenderingContext;
+    static isAvailable(canvasElement: HTMLCanvasElement): boolean;
+    constructor(canvasElement: HTMLCanvasElement, glOptions?: WebGLContextAttributes);
+    render(scene: Scene, camera: Camera): void;
+}
+
+declare class Events<T extends Record<string, any>> {
+    private _listeners;
+    constructor(eventNames?: Array<keyof T>);
+    dispatchEvent<K extends keyof T>(eventName: K, data: T[K]): boolean;
+    addEventListener<K extends keyof T>(eventName: K, callback: (data: T[K]) => void): void;
+}
+
+interface ClockEvents {
+    onstart: Clock;
+    onupdate: Clock;
+    onstop: Clock;
+}
+declare class Clock extends Events<ClockEvents> {
+    private animationId;
+    startTime: number;
+    fps: number;
+    deltaTime: number;
+    constructor();
+    start(): number;
+    stop(): number;
+    update(time: number): void;
 }
 
 declare function randomInt(min: number, max: number): number;
@@ -429,22 +423,21 @@ declare class OrbitControls {
     zoom(controller: Pointer): void;
 }
 
-type RenderUniforms$1 = {
-    position: WebGLUniformLocation | null;
-    projection: WebGLUniformLocation | null;
-};
-declare class Camera2D extends Camera {
-    zoom: Vector2;
-    resolution: Vector2;
-    minZoom: number;
-    maxZoom: number;
-    zoomScaleFactor: number;
-    constructor();
-    updateProjectionMatrix(): void;
-    render(renderer: WebGL2Renderer, uniforms: RenderUniforms$1): void;
+interface KeyboardEvents {
+    onkeydown: Keyboard;
+    onkeyup: Keyboard;
+}
+declare class Keyboard {
+    element: HTMLElement | null;
+    keys: Set<string>;
+    lowerCase: boolean;
+    events: Events<KeyboardEvents>;
+    constructor(element: HTMLElement, lowerCase?: boolean);
+    dispose(): boolean;
+    load(element: HTMLElement): boolean;
 }
 
-type RenderUniforms = {
+type RenderUniforms$1 = {
     position: WebGLUniformLocation | null;
     projection: WebGLUniformLocation | null;
     rotation: WebGLUniformLocation | null;
@@ -462,21 +455,22 @@ declare class OrthographicCamera extends Camera {
     constructor(left: number, right: number, top: number, bottom: number, aspect: number, near: number, far: number);
     lookAt(target: Vector3, up?: Vector3): this;
     updateProjectionMatrix(reversedDepth?: boolean): this;
-    render(renderer: WebGL2Renderer, uniforms: RenderUniforms): void;
+    render(renderer: WebGL2Renderer, uniforms: RenderUniforms$1): void;
 }
 
-interface KeyboardEvents {
-    onkeydown: Keyboard;
-    onkeyup: Keyboard;
-}
-declare class Keyboard {
-    element: HTMLElement | null;
-    keys: Set<string>;
-    lowerCase: boolean;
-    events: Events<KeyboardEvents>;
-    constructor(element: HTMLElement, lowerCase?: boolean);
-    dispose(): boolean;
-    load(element: HTMLElement): boolean;
+type RenderUniforms = {
+    position: WebGLUniformLocation | null;
+    projection: WebGLUniformLocation | null;
+};
+declare class Camera2D extends Camera {
+    zoom: Vector2;
+    resolution: Vector2;
+    minZoom: number;
+    maxZoom: number;
+    zoomScaleFactor: number;
+    constructor();
+    updateProjectionMatrix(): void;
+    render(renderer: WebGL2Renderer, uniforms: RenderUniforms): void;
 }
 
 export { Camera, Camera2D, Clock, Color, Entity, Euler, Events, ImageLoader, Keyboard, Loader, Matrix3, Matrix4, OrbitControls, OrthographicCamera, PerspectiveCamera, Pointer, Promisify, Quaternion, Renderer, Scene, ShaderLoader, Vector2, Vector3, Vector4, WebGL2Renderer, WebGL2ShaderLoader, clamp, extendArray, generateUUID, lerp, randomFloat, randomInt };
