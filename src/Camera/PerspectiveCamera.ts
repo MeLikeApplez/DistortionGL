@@ -1,13 +1,7 @@
 import { Camera } from './Camera.ts'
 import { Matrix4 } from '../Math/Matrix4.ts'
 import { Vector3 } from '../Math/Vector3.ts'
-import { WebGL2Renderer } from '../Renderers/WebGL2Renderer.ts'
 
-type RenderUniforms = {
-    position: WebGLUniformLocation | null
-    projection: WebGLUniformLocation | null
-    rotation: WebGLUniformLocation | null
-}
 export class PerspectiveCamera extends Camera {
     fov: number
     aspect: number

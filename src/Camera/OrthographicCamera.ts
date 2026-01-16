@@ -1,13 +1,6 @@
 import { Matrix4 } from "../Math/Matrix4"
 import { Vector3 } from "../Math/Vector3"
-import { WebGL2Renderer } from "../Renderers/WebGL2Renderer"
 import { Camera } from "./Camera"
-
-type RenderUniforms = {
-    position: WebGLUniformLocation | null
-    projection: WebGLUniformLocation | null
-    rotation: WebGLUniformLocation | null
-}
 
 export class OrthographicCamera extends Camera {
     left: number
