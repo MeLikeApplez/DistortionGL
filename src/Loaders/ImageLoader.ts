@@ -1,24 +1,30 @@
 import { Loader } from "./Loader"
 
 export class ImageLoader extends Loader<HTMLImageElement, string | Event> {
+    img: HTMLImageElement
+
     constructor() {
         super()
+
+        this.img = new Image()
     }
 
     load(src: string, onload: (img: HTMLImageElement) => void, onerror: (error: string | Event) => void) {
-        const imgElement = new Image()
+        this.img.src = src
+        this.img.onload = () => {
+            if(onload) onload(this.img)
 
-        imgElement.src = src
-        imgElement.onload = () => {
-            if(onload) onload(imgElement)
+            this.dispatchEvent('onload', this.img)
 
-            this.dispatchEvent('onload', imgElement)
+            this.ready = true
         }
         
-        imgElement.onerror = (error: string | Event) => {
+        this.img.onerror = (error: string | Event) => {
             if(onerror) onerror(error)
 
             this.dispatchEvent('onerror', error)
+        
+            this.ready = false
         }
     }
 }

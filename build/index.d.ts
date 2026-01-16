@@ -153,6 +153,21 @@ declare class Euler {
     copy(euler: Euler): this;
 }
 
+declare class Renderer {
+    scene: Scene | null;
+    canvasElement: HTMLCanvasElement;
+    constructor(canvasElement: HTMLCanvasElement);
+    setSize(width: number, height: number, devicePixelRatio?: number): void;
+    render(scene: Scene, camera: Camera): void;
+}
+
+declare class WebGL2Renderer extends Renderer {
+    gl: WebGL2RenderingContext;
+    static isAvailable(canvasElement: HTMLCanvasElement): boolean;
+    constructor(canvasElement: HTMLCanvasElement, glOptions?: WebGLContextAttributes);
+    render(scene: Scene, camera: Camera): void;
+}
+
 declare class Camera {
     position: Vector3;
     rotation: Euler;
@@ -163,14 +178,6 @@ declare class Camera {
     constructor();
     updateProjectionMatrix(): void;
     render(renderer: WebGL2Renderer, ...any: any): void;
-}
-
-declare class Renderer {
-    scene: Scene | null;
-    canvasElement: HTMLCanvasElement;
-    constructor(canvasElement: HTMLCanvasElement);
-    setSize(width: number, height: number, devicePixelRatio?: number): void;
-    render(scene: Scene, camera: Camera): void;
 }
 
 declare class Vector4 {
@@ -235,13 +242,6 @@ declare class Scene<TCamera = Camera, TRenderer = Renderer> {
     dispose(renderer: TRenderer, ...any: any): void;
     load(renderer: TRenderer, ...any: any): void;
     render(renderer: TRenderer, ...any: any): void;
-}
-
-declare class WebGL2Renderer extends Renderer {
-    gl: WebGL2RenderingContext;
-    static isAvailable(canvasElement: HTMLCanvasElement): boolean;
-    constructor(canvasElement: HTMLCanvasElement, glOptions?: WebGLContextAttributes);
-    render(scene: Scene, camera: Camera): void;
 }
 
 declare class Events<T extends Record<string, any>> {
@@ -314,12 +314,33 @@ interface LoaderEvents<L, E> {
     onerror: E;
 }
 declare class Loader<L, E> extends Events<LoaderEvents<L, E>> {
+    ready: boolean;
     constructor();
     load(...any: any): void;
 }
 
+interface URLOption$1 {
+    type: 'url';
+    name?: string;
+    vertexShader: string;
+    fragmentShader: string;
+}
+interface SourceCodeOption$1 {
+    type: 'source-code';
+    name?: string;
+    vertexShader: string;
+    fragmentShader: string;
+}
 declare class WebGL2ShaderLoader extends Loader<WebGLProgram, Error> {
-    constructor();
+    type: URLOption$1['type'] | SourceCodeOption$1['type'];
+    name: string;
+    vertexShader: string;
+    fragmentShader: string;
+    program: WebGLProgram | null;
+    constructor(option: URLOption$1 | SourceCodeOption$1);
+    getUniform(gl: WebGL2RenderingContext, name: string): WebGLUniformLocation;
+    getAttribute(gl: WebGL2RenderingContext, name: string): number;
+    load(gl: WebGL2RenderingContext): Promise<void>;
 }
 
 interface URLOption<TU extends string[], TA extends string[]> {
@@ -358,6 +379,7 @@ declare class ShaderLoader<const TU extends string[], const TA extends string[]>
 }
 
 declare class ImageLoader extends Loader<HTMLImageElement, string | Event> {
+    img: HTMLImageElement;
     constructor();
     load(src: string, onload: (img: HTMLImageElement) => void, onerror: (error: string | Event) => void): void;
 }
@@ -385,7 +407,7 @@ declare class Pointer {
     load(element: HTMLElement): boolean;
 }
 
-type RenderUniforms$2 = {
+type RenderUniforms$1 = {
     position: WebGLUniformLocation | null;
     projection: WebGLUniformLocation | null;
     rotation: WebGLUniformLocation | null;
@@ -399,7 +421,7 @@ declare class PerspectiveCamera extends Camera {
     constructor(fov: number, aspect: number, near: number, far: number);
     lookAt(target: Vector3, up?: Vector3): this;
     updateProjectionMatrix(): this;
-    render(renderer: WebGL2Renderer, uniforms: RenderUniforms$2): void;
+    render(renderer: WebGL2Renderer, uniforms: RenderUniforms$1): void;
 }
 
 declare class OrbitControls {
@@ -437,7 +459,7 @@ declare class Keyboard {
     load(element: HTMLElement): boolean;
 }
 
-type RenderUniforms$1 = {
+type RenderUniforms = {
     position: WebGLUniformLocation | null;
     projection: WebGLUniformLocation | null;
     rotation: WebGLUniformLocation | null;
@@ -455,23 +477,8 @@ declare class OrthographicCamera extends Camera {
     constructor(left: number, right: number, top: number, bottom: number, aspect: number, near: number, far: number);
     lookAt(target: Vector3, up?: Vector3): this;
     updateProjectionMatrix(reversedDepth?: boolean): this;
-    render(renderer: WebGL2Renderer, uniforms: RenderUniforms$1): void;
-}
-
-type RenderUniforms = {
-    position: WebGLUniformLocation | null;
-    projection: WebGLUniformLocation | null;
-};
-declare class Camera2D extends Camera {
-    zoom: Vector2;
-    resolution: Vector2;
-    minZoom: number;
-    maxZoom: number;
-    zoomScaleFactor: number;
-    constructor();
-    updateProjectionMatrix(): void;
     render(renderer: WebGL2Renderer, uniforms: RenderUniforms): void;
 }
 
-export { Camera, Camera2D, Clock, Color, Entity, Euler, Events, ImageLoader, Keyboard, Loader, Matrix3, Matrix4, OrbitControls, OrthographicCamera, PerspectiveCamera, Pointer, Promisify, Quaternion, Renderer, Scene, ShaderLoader, Vector2, Vector3, Vector4, WebGL2Renderer, WebGL2ShaderLoader, clamp, extendArray, generateUUID, lerp, randomFloat, randomInt };
+export { Camera, Clock, Color, Entity, Euler, Events, ImageLoader, Keyboard, Loader, Matrix3, Matrix4, OrbitControls, OrthographicCamera, PerspectiveCamera, Pointer, Promisify, Quaternion, Renderer, Scene, ShaderLoader, Vector2, Vector3, Vector4, WebGL2Renderer, WebGL2ShaderLoader, clamp, extendArray, generateUUID, lerp, randomFloat, randomInt };
 export type { Promisified };

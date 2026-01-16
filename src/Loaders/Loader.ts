@@ -6,8 +6,12 @@ interface LoaderEvents<L, E> {
 }
 
 export class Loader<L, E> extends Events<LoaderEvents<L, E>> {
+    ready: boolean
+
     constructor() {
         super()
+
+        this.ready = false
     }
 
     load(...any: any) {

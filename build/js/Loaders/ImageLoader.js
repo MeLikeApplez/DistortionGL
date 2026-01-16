@@ -1,18 +1,21 @@
 import { Loader } from "./Loader";
 class ImageLoader extends Loader {
+  img;
   constructor() {
     super();
+    this.img = new Image();
   }
   load(src, onload, onerror) {
-    const imgElement = new Image();
-    imgElement.src = src;
-    imgElement.onload = () => {
-      if (onload) onload(imgElement);
-      this.dispatchEvent("onload", imgElement);
+    this.img.src = src;
+    this.img.onload = () => {
+      if (onload) onload(this.img);
+      this.dispatchEvent("onload", this.img);
+      this.ready = true;
     };
-    imgElement.onerror = (error) => {
+    this.img.onerror = (error) => {
       if (onerror) onerror(error);
       this.dispatchEvent("onerror", error);
+      this.ready = false;
     };
   }
 }
