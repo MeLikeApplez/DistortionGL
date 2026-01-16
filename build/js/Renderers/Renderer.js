@@ -1,13 +1,13 @@
 class Renderer {
+  type;
   scene;
   canvasElement;
-  constructor(canvasElement) {
+  ready;
+  constructor(type, canvasElement) {
+    this.type = type;
     this.scene = null;
     this.canvasElement = canvasElement;
-  }
-  setSize(width, height, devicePixelRatio = 1) {
-    this.canvasElement.width = width * devicePixelRatio;
-    this.canvasElement.height = height * devicePixelRatio;
+    this.ready = false;
   }
   render(scene, camera) {
   }

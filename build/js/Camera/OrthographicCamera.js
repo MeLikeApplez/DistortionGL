@@ -98,11 +98,11 @@ class OrthographicCamera extends Camera {
     this.rotationMatrix.makeRotationFromEuler(this.rotation);
     return this;
   }
-  render(renderer, uniforms) {
-    renderer.gl.uniform3f(uniforms.position, this.position.x, this.position.y, this.position.z);
-    renderer.gl.uniformMatrix4fv(uniforms.projection, false, this.projectionMatrix);
-    renderer.gl.uniformMatrix4fv(uniforms.rotation, false, this.rotationMatrix);
-  }
+  //    render(renderer: WebGL2Renderer, uniforms: RenderUniforms) {
+  //         renderer.gl.uniform3f(uniforms.position, this.position.x, this.position.y, this.position.z)
+  //         renderer.gl.uniformMatrix4fv(uniforms.projection, false, this.projectionMatrix)
+  //         renderer.gl.uniformMatrix4fv(uniforms.rotation, false, this.rotationMatrix)
+  //     }
 }
 export {
   OrthographicCamera

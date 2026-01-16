@@ -2,13 +2,11 @@ import { Camera } from '../Camera/Camera'
 import { Entity } from '../Core/Entity'
 import { Renderer } from '../Renderers/Renderer'
 
-export class Scene<TCamera=Camera, TRenderer=Renderer> {
-    camera: TCamera
+export class Scene<TRenderer=Renderer> {
     children: Entity[]
     enabled: boolean
 
-    constructor(camera: TCamera) {
-        this.camera = camera
+    constructor() {
         this.children = []
 
         this.enabled = true

@@ -1,9 +1,7 @@
 class Scene {
-  camera;
   children;
   enabled;
-  constructor(camera) {
-    this.camera = camera;
+  constructor() {
     this.children = [];
     this.enabled = true;
   }

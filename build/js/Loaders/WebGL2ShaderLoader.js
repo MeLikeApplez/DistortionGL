@@ -5,6 +5,7 @@ class WebGL2ShaderLoader extends Loader {
   vertexShader;
   fragmentShader;
   program;
+  _uniforms;
   constructor(option) {
     super();
     this.type = option.type;
@@ -12,6 +13,7 @@ class WebGL2ShaderLoader extends Loader {
     this.vertexShader = option.vertexShader;
     this.fragmentShader = option.fragmentShader;
     this.program = null;
+    this._uniforms = option.uniforms;
   }
   getUniform(gl, name) {
     if (!this.program || !this.ready) return null;
@@ -85,6 +87,16 @@ class WebGL2ShaderLoader extends Loader {
     this.program = program;
     this.dispatchEvent("onload", program);
     this.ready = true;
+    const failedUniforms = [];
+    for (const key in this._uniforms.camera) {
+      const uniform = this.getUniform(gl, key);
+      if (uniform !== null) continue;
+      failedUniforms.push(key);
+    }
+    if (failedUniforms.length > 0) {
+      const listOfFailedUniforms = failedUniforms.map((u) => `"${u}"`).join(", ");
+      throw new Error(`Failed to located camera uniforms ${listOfFailedUniforms}!`);
+    }
   }
 }
 export {

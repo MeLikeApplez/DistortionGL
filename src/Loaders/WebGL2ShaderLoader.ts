@@ -1,17 +1,24 @@
 import { Loader } from "./Loader"
 
-interface URLOption {
-    type: 'url'
+interface BaseShaderOptions {
     name?: string
     vertexShader: string
     fragmentShader: string
+    uniforms: {
+        camera: {
+            position: string
+            rotation: string
+            projectionMatrix: string
+        }
+    }
 }
 
-interface SourceCodeOption {
+interface URLOption extends BaseShaderOptions {
+    type: 'url'
+}
+
+interface SourceCodeOption extends BaseShaderOptions {
     type: 'source-code'
-    name?: string
-    vertexShader: string
-    fragmentShader: string
 }
 
 export class WebGL2ShaderLoader extends Loader<WebGLProgram, Error> {
@@ -20,6 +27,7 @@ export class WebGL2ShaderLoader extends Loader<WebGLProgram, Error> {
     vertexShader: string
     fragmentShader: string
     program: WebGLProgram | null
+    private _uniforms: BaseShaderOptions['uniforms']
 
     constructor(option: URLOption | SourceCodeOption) {
         super()
@@ -28,8 +36,10 @@ export class WebGL2ShaderLoader extends Loader<WebGLProgram, Error> {
         this.name = option?.name ?? 'WebGL2Shader'
         this.vertexShader = option.vertexShader
         this.fragmentShader = option.fragmentShader
-
+        
         this.program = null
+
+        this._uniforms = option.uniforms
     }
 
     getUniform(gl: WebGL2RenderingContext, name: string) {
@@ -136,8 +146,25 @@ export class WebGL2ShaderLoader extends Loader<WebGLProgram, Error> {
 
         this.program = program
 
+        
         this.dispatchEvent('onload', program)
 
         this.ready = true
+    
+        // check for required camera uniforms
+        const failedUniforms: string[] = []
+        for(const key in this._uniforms.camera) {
+            const uniform = this.getUniform(gl, key)
+
+            if(uniform !== null) continue
+        
+            failedUniforms.push(key)
+        }
+    
+        if(failedUniforms.length > 0) {
+            const listOfFailedUniforms = failedUniforms.map(u => `"${u}"`).join(', ')
+            
+            throw new Error(`Failed to located camera uniforms ${listOfFailedUniforms}!`)
+        }
     }
 }

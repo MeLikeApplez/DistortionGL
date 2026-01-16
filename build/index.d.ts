@@ -1,6 +1,95 @@
 type Promisified<TData, TError> = Promise<[TData, null] | [null, TError]>;
 declare function Promisify<TData, TError>(promiseFunc: Promise<TData>, customError?: TError): Promisified<TData, TError>;
 
+declare class Events<T extends Record<string, any>> {
+    private _listeners;
+    constructor(eventNames?: Array<keyof T>);
+    dispatchEvent<K extends keyof T>(eventName: K, data: T[K]): boolean;
+    addEventListener<K extends keyof T>(eventName: K, callback: (data: T[K]) => void): void;
+}
+
+interface ClockEvents {
+    onstart: Clock;
+    onupdate: Clock;
+    onstop: Clock;
+}
+declare class Clock extends Events<ClockEvents> {
+    private animationId;
+    startTime: number;
+    fps: number;
+    deltaTime: number;
+    constructor();
+    start(): number;
+    stop(): number;
+    update(time: number): void;
+}
+
+declare class Quaternion {
+    x: number;
+    y: number;
+    z: number;
+    w: number;
+    constructor(x?: number, y?: number, z?: number, w?: number);
+    set(x: number, y: number, z: number, w: number): this;
+    setFromEuler(euler: Euler): this;
+    setFromAxisAngle(axis: Vector3, angle: number): Quaternion;
+    identity(): this;
+    normalize(): this;
+    conjugate(): this;
+    multiply(quaternion: Quaternion): this;
+    clone(): Quaternion;
+    copy(quaternion: Quaternion): this;
+}
+
+declare class Matrix4 extends Array {
+    constructor(n11?: number, n12?: number, n13?: number, n14?: number, n21?: number, n22?: number, n23?: number, n24?: number, n31?: number, n32?: number, n33?: number, n34?: number, n41?: number, n42?: number, n43?: number, n44?: number);
+    set(n11: number, n12: number, n13: number, n14: number, n21: number, n22: number, n23: number, n24: number, n31: number, n32: number, n33: number, n34: number, n41: number, n42: number, n43: number, n44: number): this;
+    setFromMatrix4(matrix: Matrix4): this;
+    identity(): this;
+    makeTranslation(x: number, y: number, z: number): this;
+    translate(x: number, y: number, z: number): this;
+    makeScale(x: number, y: number, z: number): this;
+    makeRotationX(theta: number): this;
+    makeRotationY(theta: number): this;
+    makeRotationZ(theta: number): this;
+    makeRotationFromEuler(euler: Euler): this;
+    makeRotationFromQuaternion(quaternion: Quaternion): this;
+    multiply(matrix: Matrix4): this;
+    multiplyMatrices(a: Matrix4, b: Matrix4): this;
+    multiplyScalar(scale: number): this;
+    inverse(): this;
+    compose(position: Vector3, quaternion: Quaternion, scale: Vector3): this;
+    clone(): Matrix4;
+    copy(matrix: Matrix4): this;
+}
+
+declare class Euler {
+    x: number;
+    y: number;
+    z: number;
+    order: string;
+    constructor(x?: number, y?: number, z?: number);
+    set(x: number, y: number, z: number, order?: string): this;
+    setFromQuaternion(quaternion: Quaternion): this;
+    getEulerByOrder(): {
+        a: number;
+        b: number;
+        c: number;
+    };
+    getEulerByOrderTrig(): {
+        s1: number;
+        s2: number;
+        s3: number;
+        c1: number;
+        c2: number;
+        c3: number;
+    };
+    setFromRotationMatrix(matrix4: Matrix4): this;
+    reorder(order: string): this;
+    clone(): Euler;
+    copy(euler: Euler): this;
+}
+
 declare class Vector2 {
     x: number;
     y: number;
@@ -87,87 +176,10 @@ declare class Vector3 {
     copy(vector: Vector3): this;
 }
 
-declare class Quaternion {
-    x: number;
-    y: number;
-    z: number;
-    w: number;
-    constructor(x?: number, y?: number, z?: number, w?: number);
-    set(x: number, y: number, z: number, w: number): this;
-    setFromEuler(euler: Euler): this;
-    setFromAxisAngle(axis: Vector3, angle: number): Quaternion;
-    identity(): this;
-    normalize(): this;
-    conjugate(): this;
-    multiply(quaternion: Quaternion): this;
-    clone(): Quaternion;
-    copy(quaternion: Quaternion): this;
-}
+declare const WebGL2RenderingSystem = 1000;
+declare const WebGPURenderingSystem = 1001;
 
-declare class Matrix4 extends Array {
-    constructor(n11?: number, n12?: number, n13?: number, n14?: number, n21?: number, n22?: number, n23?: number, n24?: number, n31?: number, n32?: number, n33?: number, n34?: number, n41?: number, n42?: number, n43?: number, n44?: number);
-    set(n11: number, n12: number, n13: number, n14: number, n21: number, n22: number, n23: number, n24: number, n31: number, n32: number, n33: number, n34: number, n41: number, n42: number, n43: number, n44: number): this;
-    setFromMatrix4(matrix: Matrix4): this;
-    identity(): this;
-    makeTranslation(x: number, y: number, z: number): this;
-    translate(x: number, y: number, z: number): this;
-    makeScale(x: number, y: number, z: number): this;
-    makeRotationX(theta: number): this;
-    makeRotationY(theta: number): this;
-    makeRotationZ(theta: number): this;
-    makeRotationFromEuler(euler: Euler): this;
-    makeRotationFromQuaternion(quaternion: Quaternion): this;
-    multiply(matrix: Matrix4): this;
-    multiplyMatrices(a: Matrix4, b: Matrix4): this;
-    multiplyScalar(scale: number): this;
-    inverse(): this;
-    compose(position: Vector3, quaternion: Quaternion, scale: Vector3): this;
-    clone(): Matrix4;
-    copy(matrix: Matrix4): this;
-}
-
-declare class Euler {
-    x: number;
-    y: number;
-    z: number;
-    order: string;
-    constructor(x?: number, y?: number, z?: number);
-    set(x: number, y: number, z: number, order?: string): this;
-    setFromQuaternion(quaternion: Quaternion): this;
-    getEulerByOrder(): {
-        a: number;
-        b: number;
-        c: number;
-    };
-    getEulerByOrderTrig(): {
-        s1: number;
-        s2: number;
-        s3: number;
-        c1: number;
-        c2: number;
-        c3: number;
-    };
-    setFromRotationMatrix(matrix4: Matrix4): this;
-    reorder(order: string): this;
-    clone(): Euler;
-    copy(euler: Euler): this;
-}
-
-declare class Renderer {
-    scene: Scene | null;
-    canvasElement: HTMLCanvasElement;
-    constructor(canvasElement: HTMLCanvasElement);
-    setSize(width: number, height: number, devicePixelRatio?: number): void;
-    render(scene: Scene, camera: Camera): void;
-}
-
-declare class WebGL2Renderer extends Renderer {
-    gl: WebGL2RenderingContext;
-    static isAvailable(canvasElement: HTMLCanvasElement): boolean;
-    constructor(canvasElement: HTMLCanvasElement, glOptions?: WebGLContextAttributes);
-    render(scene: Scene, camera: Camera): void;
-}
-
+type RenderingSystem$1 = typeof WebGL2RenderingSystem | typeof WebGPURenderingSystem;
 declare class Camera {
     position: Vector3;
     rotation: Euler;
@@ -175,9 +187,19 @@ declare class Camera {
     target: Vector3;
     autoUpdate: boolean;
     needsUpdate: boolean;
+    renderingSystem: RenderingSystem$1;
     constructor();
     updateProjectionMatrix(): void;
-    render(renderer: WebGL2Renderer, ...any: any): void;
+}
+
+type RenderingSystem = typeof WebGL2RenderingSystem | typeof WebGPURenderingSystem;
+declare class Renderer {
+    type: RenderingSystem;
+    scene: Scene | null;
+    canvasElement: HTMLCanvasElement;
+    ready: boolean;
+    constructor(type: RenderingSystem, canvasElement: HTMLCanvasElement);
+    render(scene: Scene, camera: Camera): void;
 }
 
 declare class Vector4 {
@@ -232,11 +254,10 @@ declare class Entity<TRenderer = Renderer> {
     render(renderer: TRenderer, ...any: any): void;
 }
 
-declare class Scene<TCamera = Camera, TRenderer = Renderer> {
-    camera: TCamera;
+declare class Scene<TRenderer = Renderer> {
     children: Entity[];
     enabled: boolean;
-    constructor(camera: TCamera);
+    constructor();
     add(entities: Entity[]): void;
     remove(entities: Entity[]): void;
     dispose(renderer: TRenderer, ...any: any): void;
@@ -244,27 +265,15 @@ declare class Scene<TCamera = Camera, TRenderer = Renderer> {
     render(renderer: TRenderer, ...any: any): void;
 }
 
-declare class Events<T extends Record<string, any>> {
-    private _listeners;
-    constructor(eventNames?: Array<keyof T>);
-    dispatchEvent<K extends keyof T>(eventName: K, data: T[K]): boolean;
-    addEventListener<K extends keyof T>(eventName: K, callback: (data: T[K]) => void): void;
+declare class WebGPURenderer extends Renderer {
+    constructor(canvasElement: HTMLCanvasElement);
+    render(scene: Scene, camera: Camera): void;
 }
 
-interface ClockEvents {
-    onstart: Clock;
-    onupdate: Clock;
-    onstop: Clock;
-}
-declare class Clock extends Events<ClockEvents> {
-    private animationId;
-    startTime: number;
-    fps: number;
-    deltaTime: number;
-    constructor();
-    start(): number;
-    stop(): number;
-    update(time: number): void;
+declare class WebGL2Renderer extends Renderer {
+    gl: WebGL2RenderingContext;
+    constructor(canvasElement: HTMLCanvasElement, glOptions?: WebGLContextAttributes);
+    render(scene: Scene, camera: Camera): void;
 }
 
 declare function randomInt(min: number, max: number): number;
@@ -319,17 +328,23 @@ declare class Loader<L, E> extends Events<LoaderEvents<L, E>> {
     load(...any: any): void;
 }
 
-interface URLOption$1 {
-    type: 'url';
+interface BaseShaderOptions {
     name?: string;
     vertexShader: string;
     fragmentShader: string;
+    uniforms: {
+        camera: {
+            position: string;
+            rotation: string;
+            projectionMatrix: string;
+        };
+    };
 }
-interface SourceCodeOption$1 {
+interface URLOption$1 extends BaseShaderOptions {
+    type: 'url';
+}
+interface SourceCodeOption$1 extends BaseShaderOptions {
     type: 'source-code';
-    name?: string;
-    vertexShader: string;
-    fragmentShader: string;
 }
 declare class WebGL2ShaderLoader extends Loader<WebGLProgram, Error> {
     type: URLOption$1['type'] | SourceCodeOption$1['type'];
@@ -337,6 +352,7 @@ declare class WebGL2ShaderLoader extends Loader<WebGLProgram, Error> {
     vertexShader: string;
     fragmentShader: string;
     program: WebGLProgram | null;
+    private _uniforms;
     constructor(option: URLOption$1 | SourceCodeOption$1);
     getUniform(gl: WebGL2RenderingContext, name: string): WebGLUniformLocation;
     getAttribute(gl: WebGL2RenderingContext, name: string): number;
@@ -407,11 +423,6 @@ declare class Pointer {
     load(element: HTMLElement): boolean;
 }
 
-type RenderUniforms$1 = {
-    position: WebGLUniformLocation | null;
-    projection: WebGLUniformLocation | null;
-    rotation: WebGLUniformLocation | null;
-};
 declare class PerspectiveCamera extends Camera {
     fov: number;
     aspect: number;
@@ -421,7 +432,6 @@ declare class PerspectiveCamera extends Camera {
     constructor(fov: number, aspect: number, near: number, far: number);
     lookAt(target: Vector3, up?: Vector3): this;
     updateProjectionMatrix(): this;
-    render(renderer: WebGL2Renderer, uniforms: RenderUniforms$1): void;
 }
 
 declare class OrbitControls {
@@ -459,11 +469,6 @@ declare class Keyboard {
     load(element: HTMLElement): boolean;
 }
 
-type RenderUniforms = {
-    position: WebGLUniformLocation | null;
-    projection: WebGLUniformLocation | null;
-    rotation: WebGLUniformLocation | null;
-};
 declare class OrthographicCamera extends Camera {
     left: number;
     right: number;
@@ -477,8 +482,7 @@ declare class OrthographicCamera extends Camera {
     constructor(left: number, right: number, top: number, bottom: number, aspect: number, near: number, far: number);
     lookAt(target: Vector3, up?: Vector3): this;
     updateProjectionMatrix(reversedDepth?: boolean): this;
-    render(renderer: WebGL2Renderer, uniforms: RenderUniforms): void;
 }
 
-export { Camera, Clock, Color, Entity, Euler, Events, ImageLoader, Keyboard, Loader, Matrix3, Matrix4, OrbitControls, OrthographicCamera, PerspectiveCamera, Pointer, Promisify, Quaternion, Renderer, Scene, ShaderLoader, Vector2, Vector3, Vector4, WebGL2Renderer, WebGL2ShaderLoader, clamp, extendArray, generateUUID, lerp, randomFloat, randomInt };
+export { Camera, Clock, Color, Entity, Euler, Events, ImageLoader, Keyboard, Loader, Matrix3, Matrix4, OrbitControls, OrthographicCamera, PerspectiveCamera, Pointer, Promisify, Quaternion, Renderer, Scene, ShaderLoader, Vector2, Vector3, Vector4, WebGL2Renderer, WebGL2RenderingSystem, WebGL2ShaderLoader, WebGPURenderer, WebGPURenderingSystem, clamp, extendArray, generateUUID, lerp, randomFloat, randomInt };
 export type { Promisified };
