@@ -506,5 +506,5 @@ var OrbitControls = class {
   }
 };
 export {
-  OrbitControls as default
+  OrbitControls
 };

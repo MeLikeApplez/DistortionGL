@@ -92,5 +92,5 @@ var ImageLoader = class extends Loader {
   }
 };
 export {
-  ImageLoader as default
+  ImageLoader
 };

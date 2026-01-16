@@ -1166,5 +1166,5 @@ var Camera2D = class extends Camera {
   }
 };
 export {
-  Camera2D as default
+  Camera2D
 };

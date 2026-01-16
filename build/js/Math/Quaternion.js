@@ -87,5 +87,5 @@ var Quaternion = class _Quaternion {
   }
 };
 export {
-  Quaternion as default
+  Quaternion
 };

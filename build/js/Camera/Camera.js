@@ -998,5 +998,5 @@ var Camera = class {
   }
 };
 export {
-  Camera as default
+  Camera
 };

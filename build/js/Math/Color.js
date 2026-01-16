@@ -191,5 +191,5 @@ var Color = class _Color extends Array {
   }
 };
 export {
-  Color as default
+  Color
 };

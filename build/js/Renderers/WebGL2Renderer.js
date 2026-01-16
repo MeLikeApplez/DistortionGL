@@ -29,5 +29,5 @@ var WebGL2Renderer = class extends Renderer {
   }
 };
 export {
-  WebGL2Renderer as default
+  WebGL2Renderer
 };

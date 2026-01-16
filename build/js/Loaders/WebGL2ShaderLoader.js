@@ -80,5 +80,5 @@ var WebGL2ShaderLoader = class extends Loader {
   }
 };
 export {
-  WebGL2ShaderLoader as default
+  WebGL2ShaderLoader
 };

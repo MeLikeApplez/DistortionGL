@@ -27,5 +27,5 @@ var Scene = class {
   }
 };
 export {
-  Scene as default
+  Scene
 };

@@ -30,7 +30,7 @@ function extendArray(array, size) {
   return arrayCopy;
 }
 
-// ../src/Controls/Keyboard.ts
+// ../src/Core/Events.ts
 var Events = class {
   _listeners;
   constructor(eventNames) {
@@ -44,9 +44,6 @@ var Events = class {
   createEvent(eventName) {
     this._listeners.set(eventName, []);
     return this;
-  }
-  removeEvent(eventName) {
-    this._listeners.delete(eventName);
   }
   dispatchEvent(eventName, data) {
     const group = this._listeners.get(eventName);
@@ -65,15 +62,47 @@ var Events = class {
     group.push({ uuid, callback });
     return uuid;
   }
-  unlisten(eventName, uuid) {
-    const group = this._listeners.get(eventName);
-    if (!group) return new Error(`Unable to find event eventName: "${String(eventName)}"`);
-    const index = group.findIndex((v) => v.uuid === uuid);
-    if (index === -1) return new Error(`Unable to find listener function with uuid: "${uuid}"`);
-    group.splice(index, 1);
+};
+
+// ../src/Controls/Keyboard.ts
+var Keyboard = class {
+  element;
+  keys;
+  lowerCase;
+  events;
+  constructor(element, lowerCase = false) {
+    this.element = element;
+    this.keys = /* @__PURE__ */ new Set();
+    this.lowerCase = lowerCase;
+    this.events = new Events(["onkeyup", "onkeydown"]);
+    if (element) this.load(element);
+  }
+  dispose() {
+    if (!this.element) return false;
+    window.onkeydown = null;
+    window.onkeyup = null;
+    this.element = null;
+    this.keys.clear();
+    return true;
+  }
+  load(element) {
+    this.element = element;
+    this.keys.clear();
+    window.onkeydown = (event) => {
+      const key = this.lowerCase ? event.key.toLowerCase() : event.key;
+      if (this.keys.has(key)) return;
+      this.keys.add(key);
+      this.events.dispatchEvent("onkeydown", this);
+    };
+    window.onkeyup = (event) => {
+      const key = this.lowerCase ? event.key.toLowerCase() : event.key;
+      if (!this.keys.has(key)) return;
+      this.keys.delete(key);
+      this.events.dispatchEvent("onkeyup", this);
+    };
     return true;
   }
 };
 export {
-  Events as default
+  Keyboard
 };

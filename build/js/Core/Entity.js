@@ -66,5 +66,5 @@ var Entity = class {
   }
 };
 export {
-  Entity as default
+  Entity
 };

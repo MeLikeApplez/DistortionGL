@@ -1103,5 +1103,5 @@ var OrthographicCamera = class extends Camera {
   }
 };
 export {
-  OrthographicCamera as default
+  OrthographicCamera
 };

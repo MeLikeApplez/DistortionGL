@@ -64,5 +64,5 @@ var Events = class {
   }
 };
 export {
-  Events as default
+  Events
 };

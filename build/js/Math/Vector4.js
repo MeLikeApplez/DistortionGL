@@ -185,5 +185,5 @@ var Vector4 = class _Vector4 {
   }
 };
 export {
-  Vector4 as default
+  Vector4
 };

@@ -1,0 +1,28 @@
+{
+  "name": "ts-to",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch index.ts",
+    "build": "tsx index.ts && rollup -c"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.6.2",
+    "glob": "^13.0.0",
+    "rollup": "^4.55.1",
+    "rollup-plugin-dts": "^6.3.0",
+    "ts-to-jsdoc": "^2.4.0",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.10",
+    "esbuild": "^0.25.11",
+    "tsc": "^2.0.4",
+    "tsx": "^4.20.3"
+  }
+}

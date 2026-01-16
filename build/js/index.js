@@ -10,179 +10,6 @@ function Promisify(promiseFunc, customError) {
   });
 }
 
-// ../src/Renderers/Renderer.ts
-var Renderer = class {
-  scene;
-  canvasElement;
-  constructor(canvasElement) {
-    this.scene = null;
-    this.canvasElement = canvasElement;
-  }
-  setSize(width, height, devicePixelRatio = 1) {
-    this.canvasElement.width = width * devicePixelRatio;
-    this.canvasElement.height = height * devicePixelRatio;
-  }
-  render(scene, camera) {
-  }
-};
-
-// ../src/Renderers/WebGL2Renderer.ts
-var WebGL2Renderer = class extends Renderer {
-  gl;
-  static isAvailable(canvasElement) {
-    return !!canvasElement.getContext("webgl2");
-  }
-  constructor(canvasElement, glOptions = {}) {
-    super(canvasElement);
-    this.gl = canvasElement.getContext("webgl2", glOptions);
-  }
-  render(scene, camera) {
-    scene.render(this);
-  }
-};
-
-// ../src/Math/Vector2.ts
-var Vector2 = class _Vector2 {
-  x;
-  y;
-  constructor(x = 0, y = 0) {
-    this.x = x;
-    this.y = y;
-  }
-  set(x, y) {
-    this.x = x;
-    this.y = y;
-    return this;
-  }
-  add(vector) {
-    this.x += vector.x;
-    this.y += vector.y;
-    return this;
-  }
-  subtract(vector) {
-    this.x -= vector.x;
-    this.y -= vector.y;
-    return this;
-  }
-  multiply(vector) {
-    this.x *= vector.x;
-    this.y *= vector.y;
-    return this;
-  }
-  divide(vector) {
-    this.x /= vector.x;
-    this.y /= vector.y;
-    return this;
-  }
-  addScalar(factor) {
-    this.x += factor;
-    this.y += factor;
-    return this;
-  }
-  subtractScalar(factor) {
-    this.x -= factor;
-    this.y -= factor;
-    return this;
-  }
-  multiplyScalar(factor) {
-    this.x *= factor;
-    this.y *= factor;
-    return this;
-  }
-  divideScalar(factor) {
-    this.x /= factor;
-    this.y /= factor;
-    return this;
-  }
-  distanceTo(vector) {
-    const u = vector.x - this.x;
-    const v = vector.y - this.y;
-    const distance = Math.sqrt(u * u + v * v);
-    return distance;
-  }
-  distanceToSquared(vector) {
-    const u = vector.x - this.x;
-    const v = vector.y - this.y;
-    const distance = u * u + v * v;
-    return distance;
-  }
-  floor() {
-    this.x = Math.floor(this.x);
-    this.y = Math.floor(this.y);
-    return this;
-  }
-  ceil() {
-    this.x = Math.ceil(this.x);
-    this.y = Math.ceil(this.y);
-    return this;
-  }
-  round() {
-    this.x = Math.round(this.x);
-    this.y = Math.round(this.y);
-    return this;
-  }
-  clamp(min, max) {
-    this.x = Math.max(min.x, Math.min(this.x, max.x));
-    this.y = Math.max(min.y, Math.min(this.y, max.y));
-    return this;
-  }
-  normalize() {
-    const magnitude = Math.sqrt(this.x * this.x + this.y * this.y);
-    if (magnitude === 0) {
-      this.x = 0;
-      this.y = 0;
-    } else {
-      this.x /= magnitude;
-      this.y /= magnitude;
-    }
-    return this;
-  }
-  dot(vector) {
-    return this.x * vector.x + this.y * vector.y;
-  }
-  equals(vector) {
-    return this.x === vector.x && this.y === vector.y;
-  }
-  // https://github.com/mrdoob/three.js/blob/master/src/math/Vector2.js#L828
-  rotateAround(center, angle) {
-    const c = Math.cos(angle), s = Math.sin(angle);
-    const x = this.x - center.x;
-    const y = this.y - center.y;
-    this.x = x * c - y * s + center.x;
-    this.y = x * s + y * c + center.y;
-    return this;
-  }
-  toArray() {
-    return [this.x, this.y];
-  }
-  fromArray(array) {
-    this.x = array[0];
-    this.y = array[1];
-    return this;
-  }
-  getComponent(index) {
-    switch (index) {
-      case 0:
-        return this.x;
-      case 1:
-        return this.y;
-      default:
-        return 0;
-    }
-  }
-  length() {
-    return Math.sqrt(this.x * this.x + this.y * this.y);
-  }
-  clone() {
-    return new _Vector2(this.x, this.y);
-  }
-  copy(vector) {
-    this.x = vector.x;
-    this.y = vector.y;
-    return this;
-  }
-};
-
 // ../src/Math/MathUtils.ts
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -286,6 +113,253 @@ var Clock = class {
     this.fps = 1 / this.deltaTime;
     this.startTime = time;
     this.events.dispatchEvent("onupdate", this);
+  }
+};
+
+// ../src/Scenes/Scene.ts
+var Scene = class {
+  camera;
+  children;
+  enabled;
+  constructor(camera) {
+    this.camera = camera;
+    this.children = [];
+    this.enabled = true;
+  }
+  add(entities) {
+    this.children.push(...entities);
+  }
+  remove(entities) {
+    for (let i = 0; i < entities.length; i++) {
+      const entity = entities[i];
+      const index = this.children.findIndex((e) => e.uuid === entity.uuid);
+      if (index === -1) continue;
+      this.children.splice(index, 1);
+    }
+  }
+  dispose(renderer, ...any) {
+  }
+  load(renderer, ...any) {
+  }
+  render(renderer, ...any) {
+  }
+};
+
+// ../src/Renderers/Renderer.ts
+var Renderer2 = class {
+  scene;
+  canvasElement;
+  constructor(canvasElement) {
+    this.scene = null;
+    this.canvasElement = canvasElement;
+  }
+  setSize(width, height, devicePixelRatio = 1) {
+    this.canvasElement.width = width * devicePixelRatio;
+    this.canvasElement.height = height * devicePixelRatio;
+  }
+  render(scene, camera) {
+  }
+};
+
+// ../src/Renderers/WebGL2Renderer.ts
+var WebGL2Renderer = class extends Renderer2 {
+  gl;
+  static isAvailable(canvasElement) {
+    return !!canvasElement.getContext("webgl2");
+  }
+  constructor(canvasElement, glOptions = {}) {
+    super(canvasElement);
+    this.gl = canvasElement.getContext("webgl2", glOptions);
+  }
+  render(scene, camera) {
+    scene.render(this);
+  }
+};
+
+// ../src/Math/Vector4.ts
+var Vector4 = class _Vector4 {
+  x;
+  y;
+  z;
+  w;
+  constructor(x = 0, y = 0, z = 0, w = 0) {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.w = w;
+  }
+  set(x, y, z, w) {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.w = w;
+    return this;
+  }
+  add(vector) {
+    this.x += vector.x;
+    this.y += vector.y;
+    this.z += vector.z;
+    this.w += vector.w;
+    return this;
+  }
+  subtract(vector) {
+    this.x -= vector.x;
+    this.y -= vector.y;
+    this.z -= vector.z;
+    this.w -= vector.w;
+    return this;
+  }
+  multiply(vector) {
+    this.x *= vector.x;
+    this.y *= vector.y;
+    this.z *= vector.z;
+    this.w *= vector.w;
+    return this;
+  }
+  divide(vector) {
+    this.x /= vector.x;
+    this.y /= vector.y;
+    this.z /= vector.z;
+    this.w /= vector.w;
+    return this;
+  }
+  addScalar(factor) {
+    this.x += factor;
+    this.y += factor;
+    this.z += factor;
+    this.w += factor;
+    return this;
+  }
+  subtractScalar(factor) {
+    this.x -= factor;
+    this.y -= factor;
+    this.z -= factor;
+    this.w -= factor;
+    return this;
+  }
+  multiplyScalar(factor) {
+    this.x *= factor;
+    this.y *= factor;
+    this.z *= factor;
+    this.w *= factor;
+    return this;
+  }
+  divideScalar(factor) {
+    this.x /= factor;
+    this.y /= factor;
+    this.z /= factor;
+    this.w /= factor;
+    return this;
+  }
+  distanceTo(vector) {
+    const a = vector.x - this.x;
+    const b = vector.y - this.y;
+    const c = vector.z - this.z;
+    const d = vector.w - this.w;
+    const distance = Math.sqrt(a * a + b * b + c * c + d * d);
+    return distance;
+  }
+  distanceToSquared(vector) {
+    const a = vector.x - this.x;
+    const b = vector.y - this.y;
+    const c = vector.z - this.z;
+    const d = vector.w - this.w;
+    const distance = a * a + b * b + c * c + d * d;
+    return distance;
+  }
+  floor() {
+    this.x = Math.floor(this.x);
+    this.y = Math.floor(this.y);
+    this.z = Math.floor(this.z);
+    this.w = Math.floor(this.w);
+    return this;
+  }
+  ceil() {
+    this.x = Math.ceil(this.x);
+    this.y = Math.ceil(this.y);
+    this.z = Math.ceil(this.z);
+    this.w = Math.ceil(this.w);
+    return this;
+  }
+  round() {
+    this.x = Math.round(this.x);
+    this.y = Math.round(this.y);
+    this.z = Math.round(this.z);
+    this.w = Math.round(this.w);
+    return this;
+  }
+  clamp(min, max) {
+    this.x = Math.max(min.x, Math.min(this.x, max.x));
+    this.y = Math.max(min.y, Math.min(this.y, max.y));
+    this.z = Math.max(min.z, Math.min(this.z, max.z));
+    this.w = Math.max(min.w, Math.min(this.w, max.w));
+    return this;
+  }
+  normalize() {
+    const magnitude = Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z + this.w * this.w);
+    if (magnitude === 0) {
+      this.x = 0;
+      this.y = 0;
+      this.z = 0;
+      this.w = 0;
+    } else {
+      this.x /= magnitude;
+      this.y /= magnitude;
+      this.z /= magnitude;
+      this.w /= magnitude;
+    }
+    return this;
+  }
+  applyFromMatrix4(matrix) {
+    const { x, y, z, w } = this;
+    this.x = matrix[0] * x + matrix[1] * y + matrix[2] * z + matrix[3] * w;
+    this.y = matrix[4] * x + matrix[5] * y + matrix[6] * z + matrix[7] * w;
+    this.z = matrix[8] * x + matrix[9] * y + matrix[10] * z + matrix[11] * w;
+    this.w = matrix[12] * x + matrix[13] * y + matrix[14] * z + matrix[15] * w;
+    return this;
+  }
+  dot(vector) {
+    return this.x * vector.x + this.y * vector.y + this.z * vector.z + this.w * vector.w;
+  }
+  equals(vector) {
+    return this.x === vector.x && this.y === vector.y && this.z === vector.z && this.w === vector.w;
+  }
+  toArray() {
+    return [this.x, this.y, this.z, this.w];
+  }
+  fromArray(array) {
+    this.x = array[0];
+    this.y = array[1];
+    this.z = array[2];
+    this.w = array[3];
+    return this;
+  }
+  getComponent(index) {
+    switch (index) {
+      case 0:
+        return this.x;
+      case 1:
+        return this.y;
+      case 2:
+        return this.z;
+      case 3:
+        return this.w;
+      default:
+        return 0;
+    }
+  }
+  length() {
+    return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z + this.w * this.w);
+  }
+  clone() {
+    return new _Vector4(this.x, this.y, this.z, this.w);
+  }
+  copy(vector) {
+    this.x = vector.x;
+    this.y = vector.y;
+    this.z = vector.z;
+    this.w = vector.w;
+    return this;
   }
 };
 
@@ -572,8 +646,150 @@ var Vector32 = class _Vector3 {
   }
 };
 
+// ../src/Math/Vector2.ts
+var Vector2 = class _Vector2 {
+  x;
+  y;
+  constructor(x = 0, y = 0) {
+    this.x = x;
+    this.y = y;
+  }
+  set(x, y) {
+    this.x = x;
+    this.y = y;
+    return this;
+  }
+  add(vector) {
+    this.x += vector.x;
+    this.y += vector.y;
+    return this;
+  }
+  subtract(vector) {
+    this.x -= vector.x;
+    this.y -= vector.y;
+    return this;
+  }
+  multiply(vector) {
+    this.x *= vector.x;
+    this.y *= vector.y;
+    return this;
+  }
+  divide(vector) {
+    this.x /= vector.x;
+    this.y /= vector.y;
+    return this;
+  }
+  addScalar(factor) {
+    this.x += factor;
+    this.y += factor;
+    return this;
+  }
+  subtractScalar(factor) {
+    this.x -= factor;
+    this.y -= factor;
+    return this;
+  }
+  multiplyScalar(factor) {
+    this.x *= factor;
+    this.y *= factor;
+    return this;
+  }
+  divideScalar(factor) {
+    this.x /= factor;
+    this.y /= factor;
+    return this;
+  }
+  distanceTo(vector) {
+    const u = vector.x - this.x;
+    const v = vector.y - this.y;
+    const distance = Math.sqrt(u * u + v * v);
+    return distance;
+  }
+  distanceToSquared(vector) {
+    const u = vector.x - this.x;
+    const v = vector.y - this.y;
+    const distance = u * u + v * v;
+    return distance;
+  }
+  floor() {
+    this.x = Math.floor(this.x);
+    this.y = Math.floor(this.y);
+    return this;
+  }
+  ceil() {
+    this.x = Math.ceil(this.x);
+    this.y = Math.ceil(this.y);
+    return this;
+  }
+  round() {
+    this.x = Math.round(this.x);
+    this.y = Math.round(this.y);
+    return this;
+  }
+  clamp(min, max) {
+    this.x = Math.max(min.x, Math.min(this.x, max.x));
+    this.y = Math.max(min.y, Math.min(this.y, max.y));
+    return this;
+  }
+  normalize() {
+    const magnitude = Math.sqrt(this.x * this.x + this.y * this.y);
+    if (magnitude === 0) {
+      this.x = 0;
+      this.y = 0;
+    } else {
+      this.x /= magnitude;
+      this.y /= magnitude;
+    }
+    return this;
+  }
+  dot(vector) {
+    return this.x * vector.x + this.y * vector.y;
+  }
+  equals(vector) {
+    return this.x === vector.x && this.y === vector.y;
+  }
+  // https://github.com/mrdoob/three.js/blob/master/src/math/Vector2.js#L828
+  rotateAround(center, angle) {
+    const c = Math.cos(angle), s = Math.sin(angle);
+    const x = this.x - center.x;
+    const y = this.y - center.y;
+    this.x = x * c - y * s + center.x;
+    this.y = x * s + y * c + center.y;
+    return this;
+  }
+  toArray() {
+    return [this.x, this.y];
+  }
+  fromArray(array) {
+    this.x = array[0];
+    this.y = array[1];
+    return this;
+  }
+  getComponent(index) {
+    switch (index) {
+      case 0:
+        return this.x;
+      case 1:
+        return this.y;
+      default:
+        return 0;
+    }
+  }
+  length() {
+    return Math.sqrt(this.x * this.x + this.y * this.y);
+  }
+  clone() {
+    return new _Vector2(this.x, this.y);
+  }
+  copy(vector) {
+    this.x = vector.x;
+    this.y = vector.y;
+    return this;
+  }
+};
+
 // ../src/Math/Matrix4.ts
-var Matrix4 = class _Matrix4 extends Array {
+var Matrix42 = class _Matrix4 extends Array {
   constructor(n11 = 1, n12 = 0, n13 = 0, n14 = 0, n21 = 0, n22 = 1, n23 = 0, n24 = 0, n31 = 0, n32 = 0, n33 = 1, n34 = 0, n41 = 0, n42 = 0, n43 = 0, n44 = 1) {
     super(16);
     this[0] = n11;
@@ -1197,6 +1413,204 @@ var Matrix4 = class _Matrix4 extends Array {
   }
 };
 
+// ../src/Math/Matrix3.ts
+var Matrix32 = class _Matrix3 extends Array {
+  constructor(n11 = 1, n12 = 0, n13 = 0, n21 = 0, n22 = 1, n23 = 0, n31 = 0, n32 = 0, n33 = 1) {
+    super(9);
+    this[0] = n11;
+    this[1] = n12;
+    this[2] = n13;
+    this[3] = n21;
+    this[4] = n22;
+    this[5] = n23;
+    this[6] = n31;
+    this[7] = n32;
+    this[8] = n33;
+  }
+  set(n11, n12, n13, n21, n22, n23, n31, n32, n33) {
+    this[0] = n11;
+    this[1] = n12;
+    this[2] = n13;
+    this[3] = n21;
+    this[4] = n22;
+    this[5] = n23;
+    this[6] = n31;
+    this[7] = n32;
+    this[8] = n33;
+    return this;
+  }
+  setFromMatrix3(matrix) {
+    this[0] = matrix[0];
+    this[1] = matrix[1];
+    this[2] = matrix[2];
+    this[3] = matrix[3];
+    this[4] = matrix[4];
+    this[5] = matrix[5];
+    this[6] = matrix[6];
+    this[7] = matrix[7];
+    this[8] = matrix[8];
+    return this;
+  }
+  identity() {
+    this.set(
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1
+    );
+    return this;
+  }
+  makeRotation(theta) {
+    const sin = Math.sin(theta);
+    const cos = Math.cos(theta);
+    this.set(
+      cos,
+      -sin,
+      0,
+      sin,
+      cos,
+      0,
+      0,
+      0,
+      1
+    );
+    return this;
+  }
+  makeTranslation(x, y) {
+    this.set(
+      1,
+      0,
+      x,
+      0,
+      1,
+      y,
+      0,
+      0,
+      1
+    );
+    return this;
+  }
+  translate(x, y) {
+    this.set(
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      x,
+      y,
+      1
+    );
+    return this;
+  }
+  makeScale(x, y) {
+    this.set(
+      x,
+      0,
+      0,
+      0,
+      y,
+      0,
+      0,
+      0,
+      1
+    );
+    return this;
+  }
+  multiply(matrix) {
+    this.multiplyMatrices(this, matrix);
+    return this;
+  }
+  // https://github.com/mrdoob/three.js/blob/0af9729d0c143a86a1d725d6e2c3ad83301f3f34/src/math/Matrix3.js#L215
+  multiplyMatrices(a, b) {
+    const ae = a;
+    const be = b;
+    const te = this;
+    const a11 = ae[0], a12 = ae[3], a13 = ae[6];
+    const a21 = ae[1], a22 = ae[4], a23 = ae[7];
+    const a31 = ae[2], a32 = ae[5], a33 = ae[8];
+    const b11 = be[0], b12 = be[3], b13 = be[6];
+    const b21 = be[1], b22 = be[4], b23 = be[7];
+    const b31 = be[2], b32 = be[5], b33 = be[8];
+    te[0] = a11 * b11 + a12 * b21 + a13 * b31;
+    te[3] = a11 * b12 + a12 * b22 + a13 * b32;
+    te[6] = a11 * b13 + a12 * b23 + a13 * b33;
+    te[1] = a21 * b11 + a22 * b21 + a23 * b31;
+    te[4] = a21 * b12 + a22 * b22 + a23 * b32;
+    te[7] = a21 * b13 + a22 * b23 + a23 * b33;
+    te[2] = a31 * b11 + a32 * b21 + a33 * b31;
+    te[5] = a31 * b12 + a32 * b22 + a33 * b32;
+    te[8] = a31 * b13 + a32 * b23 + a33 * b33;
+    return this;
+  }
+  multiplyScalar(scale) {
+    for (let i = 0; i < this.length; i++) {
+      this[i] *= scale;
+    }
+    return this;
+  }
+  // source: https://stackoverflow.com/a/72596891/13159492
+  inverse() {
+    const [a, b, c, d, e, f, g, h, i] = this;
+    const x = e * i - h * f;
+    const y = f * g - d * i;
+    const z = d * h - g * e;
+    const det = a * x + b * y + c * z;
+    if (det === 0) return null;
+    this.set(
+      x,
+      c * h - b * i,
+      b * f - c * e,
+      y,
+      a * i - c * g,
+      d * c - a * f,
+      z,
+      g * b - a * h,
+      a * e - d * b
+    );
+    return this;
+  }
+  compose(position, theta, scale) {
+    const sin = Math.sin(theta);
+    const cos = Math.cos(theta);
+    this.set(
+      cos * scale.x,
+      -sin * scale.y,
+      position.x,
+      sin * scale.x,
+      cos * scale.y,
+      position.y,
+      0,
+      0,
+      1
+    );
+    return this;
+  }
+  clone() {
+    return new _Matrix3(...this);
+  }
+  copy(matrix) {
+    this.set(
+      matrix[0],
+      matrix[1],
+      matrix[2],
+      matrix[3],
+      matrix[4],
+      matrix[5],
+      matrix[6],
+      matrix[7],
+      matrix[8]
+    );
+    return this;
+  }
+};
+
 // ../src/Math/Euler.ts
 var Euler4 = class _Euler {
   x;
@@ -1263,6 +1677,199 @@ var Euler4 = class _Euler {
     this.x = euler.x;
     this.y = euler.y;
     this.z = euler.z;
+    return this;
+  }
+};
+
+// ../src/Math/Color.ts
+var Color = class _Color extends Array {
+  constructor(r, g, b, a = 1) {
+    super(4);
+    this[0] = r;
+    this[1] = g;
+    this[2] = b;
+    this[3] = a;
+  }
+  get r() {
+    return this[0];
+  }
+  get g() {
+    return this[1];
+  }
+  get b() {
+    return this[2];
+  }
+  get a() {
+    return this[3];
+  }
+  set r(value) {
+    this[0] = value;
+  }
+  set g(value) {
+    this[1] = value;
+  }
+  set b(value) {
+    this[2] = value;
+  }
+  set a(value) {
+    this[3] = value;
+  }
+  set(r, g, b, a = 1) {
+    this[0] = r;
+    this[1] = g;
+    this[2] = b;
+    this[3] = a;
+    return this;
+  }
+  setFromArray(array) {
+    this[0] = array[0];
+    this[1] = array[1];
+    this[2] = array[2];
+    this[3] = array[3];
+    return this;
+  }
+  setFromVector3(vector) {
+    this[0] = vector.x;
+    this[1] = vector.y;
+    this[2] = vector.z;
+    return this;
+  }
+  setFromVector4(vector) {
+    this[0] = vector.x;
+    this[1] = vector.y;
+    this[2] = vector.z;
+    this[3] = vector.w;
+    return this;
+  }
+  setRgb(r, g, b, a = 1) {
+    this[0] = r;
+    this[1] = g;
+    this[2] = b;
+    this[3] = a;
+    return this;
+  }
+  setHex(hex, alpha = 1) {
+    this[3] = alpha;
+    this[2] = hex & 255;
+    this[1] = (hex & 65280) >> 8;
+    this[0] = (hex & 16711680) >> 16;
+    return this;
+  }
+  add(color) {
+    this[0] += color[0];
+    this[1] += color[1];
+    this[2] += color[2];
+    this[3] += color[3];
+    return this;
+  }
+  subtract(color) {
+    this[0] -= color[0];
+    this[1] -= color[1];
+    this[2] -= color[2];
+    this[3] -= color[3];
+    return this;
+  }
+  multiply(color) {
+    this[0] *= color[0];
+    this[1] *= color[1];
+    this[2] *= color[2];
+    this[3] *= color[3];
+    return this;
+  }
+  divide(color) {
+    this[0] /= color[0];
+    this[1] /= color[1];
+    this[2] /= color[2];
+    this[3] /= color[3];
+    return this;
+  }
+  addScalar(factor) {
+    this[0] += factor;
+    this[1] += factor;
+    this[2] += factor;
+    this[3] += factor;
+    return this;
+  }
+  subtractScalar(factor) {
+    this[0] -= factor;
+    this[1] -= factor;
+    this[2] -= factor;
+    this[3] -= factor;
+    return this;
+  }
+  multiplyScalar(factor) {
+    this[0] *= factor;
+    this[1] *= factor;
+    this[2] *= factor;
+    this[3] *= factor;
+    return this;
+  }
+  divideScalar(factor) {
+    this[0] /= factor;
+    this[1] /= factor;
+    this[2] /= factor;
+    this[3] /= factor;
+    return this;
+  }
+  normalize() {
+    const magnitude = Math.sqrt(this[0] * this[0] + this[1] * this[1] + this[2] * this[2]);
+    if (magnitude === 0) {
+      this[0] = 0;
+      this[1] = 0;
+      this[2] = 0;
+    } else {
+      this[0] /= magnitude;
+      this[1] /= magnitude;
+      this[2] /= magnitude;
+    }
+    return this;
+  }
+  floor() {
+    this[0] = Math.floor(this[0]);
+    this[1] = Math.floor(this[1]);
+    this[2] = Math.floor(this[2]);
+    this[3] = Math.floor(this[3]);
+    return this;
+  }
+  ceil() {
+    this[0] = Math.ceil(this[0]);
+    this[1] = Math.ceil(this[1]);
+    this[2] = Math.ceil(this[2]);
+    this[3] = Math.ceil(this[3]);
+    return this;
+  }
+  round() {
+    this[0] = Math.round(this[0]);
+    this[1] = Math.round(this[1]);
+    this[2] = Math.round(this[2]);
+    this[3] = Math.round(this[3]);
+    return this;
+  }
+  clamp(min, max) {
+    this[0] = Math.max(min.x, Math.min(this[0], max.x));
+    this[1] = Math.max(min.y, Math.min(this[1], max.y));
+    this[2] = Math.max(min.z, Math.min(this[2], max.z));
+    this[3] = Math.max(min.w, Math.min(this[3], max.w));
+    return this;
+  }
+  equals(color) {
+    return this[0] === color[0] && this[1] === color[1] && this[2] === color[2] && this[3] === color[3];
+  }
+  // https://github.com/mrdoob/three.js/blob/master/src/math/Color.js#L777
+  lerp(color, alpha) {
+    this[0] += (color[0] - this[0]) * alpha;
+    this[1] += (color[1] - this[1]) * alpha;
+    this[2] += (color[2] - this[2]) * alpha;
+    return this;
+  }
+  clone() {
+    return new _Color(this[0], this[1], this[2], this[3]);
+  }
+  copy(color) {
+    this[0] = color[0];
+    this[1] = color[1];
+    this[2] = color[2];
+    this[3] = color[3];
     return this;
   }
 };
@@ -1457,7 +2064,7 @@ var ImageLoader = class extends Loader {
 };
 
 // ../src/Core/Entity.ts
-var Entity = class {
+var Entity2 = class {
   uuid;
   name;
   type;
@@ -1664,53 +2271,8 @@ var OrbitControls = class {
   }
 };
 
-// ../src/Controls/Keyboard.ts
-var Events2 = class {
-  _listeners;
-  constructor(eventNames) {
-    this._listeners = /* @__PURE__ */ new Map();
-    if (Array.isArray(eventNames)) {
-      for (let i = 0; i < eventNames.length; i++) {
-        this._listeners.set(eventNames[i], []);
-      }
-    }
-  }
-  createEvent(eventName) {
-    this._listeners.set(eventName, []);
-    return this;
-  }
-  removeEvent(eventName) {
-    this._listeners.delete(eventName);
-  }
-  dispatchEvent(eventName, data) {
-    const group = this._listeners.get(eventName);
-    if (!group) return false;
-    for (let i = 0; i < group.length; i++) {
-      const listener = group[i];
-      listener.callback(data);
-    }
-    return true;
-  }
-  listen(eventName, callback) {
-    const group = this._listeners.get(eventName);
-    if (!group) return new Error(`Unable to find event eventName: "${String(eventName)}"`);
-    if (typeof callback !== "function") return new Error("Callback function is required!");
-    const uuid = generateUUID();
-    group.push({ uuid, callback });
-    return uuid;
-  }
-  unlisten(eventName, uuid) {
-    const group = this._listeners.get(eventName);
-    if (!group) return new Error(`Unable to find event eventName: "${String(eventName)}"`);
-    const index = group.findIndex((v) => v.uuid === uuid);
-    if (index === -1) return new Error(`Unable to find listener function with uuid: "${uuid}"`);
-    group.splice(index, 1);
-    return true;
-  }
-};
-
 // ../src/Camera/Camera.ts
-var Camera3 = class {
+var Camera4 = class {
   position;
   rotation;
   projectionMatrix;
@@ -1720,7 +2282,7 @@ var Camera3 = class {
   constructor() {
     this.position = new Vector32(0, 0, 0);
     this.rotation = new Euler4();
-    this.projectionMatrix = new Matrix4();
+    this.projectionMatrix = new Matrix42();
     this.target = new Vector32(0, 0, 0);
     this.autoUpdate = false;
     this.needsUpdate = false;
@@ -1731,84 +2293,34 @@ var Camera3 = class {
   }
 };
 
-// ../src/Camera/PerspectiveCamera.ts
-var PerspectiveCamera2 = class extends Camera3 {
-  fov;
-  aspect;
-  near;
-  far;
-  rotationMatrix;
-  constructor(fov, aspect, near, far) {
+// ../src/Camera/Camera2D.ts
+var Camera2D = class extends Camera4 {
+  zoom;
+  resolution;
+  minZoom;
+  maxZoom;
+  zoomScaleFactor;
+  constructor() {
     super();
-    this.fov = fov;
-    this.aspect = aspect;
-    this.near = near;
-    this.far = far;
-    this.rotationMatrix = new Matrix4();
-    this.updateProjectionMatrix();
-  }
-  lookAt(target, up = Vector32.UP) {
-    const zAxis = this.position.clone().subtract(target).normalize();
-    const xAxis = up.cross(zAxis).normalize();
-    const yAxis = zAxis.cross(xAxis).normalize();
-    const rotationMatrix = new Matrix4(
-      xAxis.x,
-      xAxis.y,
-      xAxis.z,
-      0,
-      yAxis.x,
-      yAxis.y,
-      yAxis.z,
-      0,
-      zAxis.x,
-      zAxis.y,
-      zAxis.z,
-      0,
-      0,
-      0,
-      0,
-      1
-    );
-    this.target.set(target.x, target.y, target.z);
-    this.rotationMatrix.setFromMatrix4(rotationMatrix);
-    this.rotation.setFromRotationMatrix(this.rotationMatrix);
-    return this;
+    this.zoom = new Vector2(1, 1);
+    this.resolution = new Vector2(1, 1);
+    this.minZoom = 0.5;
+    this.maxZoom = 4;
+    this.zoomScaleFactor = 0.1;
   }
   updateProjectionMatrix() {
-    const fovRadian = this.fov * (Math.PI / 180);
-    const f = 1 / Math.tan(fovRadian / 2);
-    const rangeInv = 1 / (this.near - this.far);
-    this.projectionMatrix.set(
-      f / this.aspect,
-      0,
-      0,
-      0,
-      0,
-      f,
-      0,
-      0,
-      0,
-      0,
-      (this.near + this.far) * rangeInv,
-      -1,
-      0,
-      0,
-      this.near * this.far * rangeInv * 2,
-      0
-    );
-    this.rotationMatrix.makeRotationFromEuler(this.rotation);
+    this.projectionMatrix[0] = this.zoom.x / this.resolution.x;
+    this.projectionMatrix[5] = this.zoom.y / this.resolution.y;
     this.needsUpdate = false;
-    return this;
   }
   render(renderer, uniforms) {
     renderer.gl.uniform3f(uniforms.position, this.position.x, this.position.y, this.position.z);
     renderer.gl.uniformMatrix4fv(uniforms.projection, false, this.projectionMatrix);
-    renderer.gl.uniformMatrix4fv(uniforms.rotation, false, this.rotationMatrix);
   }
 };
 
 // ../src/Camera/OrthographicCamera.ts
-var OrthographicCamera = class extends Camera3 {
+var OrthographicCamera = class extends Camera4 {
   left;
   right;
   top;
@@ -1828,14 +2340,14 @@ var OrthographicCamera = class extends Camera3 {
     this.near = near;
     this.far = far;
     this.zoom = 1;
-    this.rotationMatrix = new Matrix4();
+    this.rotationMatrix = new Matrix42();
     this.updateProjectionMatrix();
   }
   lookAt(target, up = Vector32.UP) {
     const zAxis = this.position.clone().subtract(target).normalize();
     const xAxis = up.cross(zAxis).normalize();
     const yAxis = zAxis.cross(xAxis).normalize();
-    const rotationMatrix = new Matrix4(
+    const rotationMatrix = new Matrix42(
       xAxis.x,
       xAxis.y,
       xAxis.z,
@@ -1912,33 +2424,148 @@ var OrthographicCamera = class extends Camera3 {
   }
 };
 
-// ../src/Camera/Camera2D.ts
-var Camera2D = class extends Camera3 {
-  zoom;
-  resolution;
-  minZoom;
-  maxZoom;
-  zoomScaleFactor;
-  constructor() {
+// ../src/Controls/Keyboard.ts
+var Keyboard = class {
+  element;
+  keys;
+  lowerCase;
+  events;
+  constructor(element, lowerCase = false) {
+    this.element = element;
+    this.keys = /* @__PURE__ */ new Set();
+    this.lowerCase = lowerCase;
+    this.events = new Events(["onkeyup", "onkeydown"]);
+    if (element) this.load(element);
+  }
+  dispose() {
+    if (!this.element) return false;
+    window.onkeydown = null;
+    window.onkeyup = null;
+    this.element = null;
+    this.keys.clear();
+    return true;
+  }
+  load(element) {
+    this.element = element;
+    this.keys.clear();
+    window.onkeydown = (event) => {
+      const key = this.lowerCase ? event.key.toLowerCase() : event.key;
+      if (this.keys.has(key)) return;
+      this.keys.add(key);
+      this.events.dispatchEvent("onkeydown", this);
+    };
+    window.onkeyup = (event) => {
+      const key = this.lowerCase ? event.key.toLowerCase() : event.key;
+      if (!this.keys.has(key)) return;
+      this.keys.delete(key);
+      this.events.dispatchEvent("onkeyup", this);
+    };
+    return true;
+  }
+};
+
+// ../src/Camera/PerspectiveCamera.ts
+var PerspectiveCamera2 = class extends Camera4 {
+  fov;
+  aspect;
+  near;
+  far;
+  rotationMatrix;
+  constructor(fov, aspect, near, far) {
     super();
-    this.zoom = new Vector2(1, 1);
-    this.resolution = new Vector2(1, 1);
-    this.minZoom = 0.5;
-    this.maxZoom = 4;
-    this.zoomScaleFactor = 0.1;
+    this.fov = fov;
+    this.aspect = aspect;
+    this.near = near;
+    this.far = far;
+    this.rotationMatrix = new Matrix42();
+    this.updateProjectionMatrix();
+  }
+  lookAt(target, up = Vector32.UP) {
+    const zAxis = this.position.clone().subtract(target).normalize();
+    const xAxis = up.cross(zAxis).normalize();
+    const yAxis = zAxis.cross(xAxis).normalize();
+    const rotationMatrix = new Matrix42(
+      xAxis.x,
+      xAxis.y,
+      xAxis.z,
+      0,
+      yAxis.x,
+      yAxis.y,
+      yAxis.z,
+      0,
+      zAxis.x,
+      zAxis.y,
+      zAxis.z,
+      0,
+      0,
+      0,
+      0,
+      1
+    );
+    this.target.set(target.x, target.y, target.z);
+    this.rotationMatrix.setFromMatrix4(rotationMatrix);
+    this.rotation.setFromRotationMatrix(this.rotationMatrix);
+    return this;
   }
   updateProjectionMatrix() {
-    this.projectionMatrix[0] = this.zoom.x / this.resolution.x;
-    this.projectionMatrix[5] = this.zoom.y / this.resolution.y;
+    const fovRadian = this.fov * (Math.PI / 180);
+    const f = 1 / Math.tan(fovRadian / 2);
+    const rangeInv = 1 / (this.near - this.far);
+    this.projectionMatrix.set(
+      f / this.aspect,
+      0,
+      0,
+      0,
+      0,
+      f,
+      0,
+      0,
+      0,
+      0,
+      (this.near + this.far) * rangeInv,
+      -1,
+      0,
+      0,
+      this.near * this.far * rangeInv * 2,
+      0
+    );
+    this.rotationMatrix.makeRotationFromEuler(this.rotation);
     this.needsUpdate = false;
+    return this;
   }
   render(renderer, uniforms) {
     renderer.gl.uniform3f(uniforms.position, this.position.x, this.position.y, this.position.z);
     renderer.gl.uniformMatrix4fv(uniforms.projection, false, this.projectionMatrix);
+    renderer.gl.uniformMatrix4fv(uniforms.rotation, false, this.rotationMatrix);
   }
 };
 export {
+  Camera4 as Camera,
+  Camera2D,
+  Clock,
+  Color,
+  Entity2 as Entity,
+  Euler4 as Euler,
+  Events,
+  ImageLoader,
+  Keyboard,
+  Loader,
+  Matrix32 as Matrix3,
+  Matrix42 as Matrix4,
+  OrbitControls,
+  OrthographicCamera,
+  PerspectiveCamera2 as PerspectiveCamera,
+  Pointer,
   Promisify,
+  Quaternion,
+  Renderer2 as Renderer,
+  Scene,
+  ShaderLoader,
+  Vector2,
+  Vector32 as Vector3,
+  Vector4,
+  WebGL2Renderer,
+  WebGL2ShaderLoader,
   clamp,
   extendArray,
   generateUUID,

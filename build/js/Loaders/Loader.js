@@ -73,5 +73,5 @@ var Loader = class extends Events {
   }
 };
 export {
-  Loader as default
+  Loader
 };

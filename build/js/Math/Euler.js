@@ -68,5 +68,5 @@ var Euler = class _Euler {
   }
 };
 export {
-  Euler as default
+  Euler
 };

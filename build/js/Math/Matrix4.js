@@ -623,5 +623,5 @@ var Matrix4 = class _Matrix4 extends Array {
   }
 };
 export {
-  Matrix4 as default
+  Matrix4
 };

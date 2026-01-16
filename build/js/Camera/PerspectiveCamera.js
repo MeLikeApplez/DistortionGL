@@ -1074,5 +1074,5 @@ var PerspectiveCamera = class extends Camera {
   }
 };
 export {
-  PerspectiveCamera as default
+  PerspectiveCamera
 };

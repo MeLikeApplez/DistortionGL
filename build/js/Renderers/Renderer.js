@@ -14,5 +14,5 @@ var Renderer = class {
   }
 };
 export {
-  Renderer as default
+  Renderer
 };

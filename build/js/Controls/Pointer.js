@@ -295,5 +295,5 @@ var Pointer = class {
   }
 };
 export {
-  Pointer as default
+  Pointer
 };

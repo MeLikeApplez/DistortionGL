@@ -281,5 +281,5 @@ var Vector32 = class _Vector3 {
   }
 };
 export {
-  Vector32 as default
+  Vector32 as Vector3
 };

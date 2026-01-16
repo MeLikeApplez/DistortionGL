@@ -1,4 +1,4 @@
-# DistortionGL (v1.0)
+# DistortionGL (v1.1)
 A JavaScript WebGL2 library template customizable for 3D or 2D projects.
 <!-- > API Reference [Docs](./js/Docs/API.md) -->
 
@@ -21,4 +21,4 @@ A JavaScript WebGL2 library template customizable for 3D or 2D projects.
 - Keyboard & Mouse/Touch Controls
 - Event handlers & Entity class template
 - Math utilities including vectors, matrices, quaternions, euler and other math utils
-- Typescript now supported, including separate JavaScript JSDoc annotations
+- Typescript now supported including a separate index.d.ts for type annotations, a minified index.js barrel file and a non-minified js library

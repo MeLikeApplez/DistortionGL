@@ -104,5 +104,5 @@ var Clock = class {
   }
 };
 export {
-  Clock as default
+  Clock
 };

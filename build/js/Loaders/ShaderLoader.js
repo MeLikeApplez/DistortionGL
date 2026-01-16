@@ -227,5 +227,5 @@ var ShaderLoader = class extends Loader {
   }
 };
 export {
-  ShaderLoader as default
+  ShaderLoader
 };
