@@ -16,7 +16,7 @@ A JavaScript WebGL2 library template customizable for 3D or 2D projects.
 
 ### Library Contents
 - [2D Canvas](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API), [WebGL](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API), [WebGPU (Experimental)](https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API)
-- > Note that [WebGPU](https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API) is still in experimental phase (as of 12/23/2025) which means that most devices may not support WebGPU at all. [Please check if your browser supports WebGPU.](https://caniuse.com/?search=webgpu)
+- > Note that [WebGPU](https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API) is still in experimental phase (as of 12/23/2025) which means that most devices may not support WebGPU at all. [Please check if your browser supports WebGPU.](https://caniuse.com/?search=webgpu) Check out the [WebGPU Examples/Demos](https://webkit.org/demos/webgpu/) to test if your browser is compatible with WebGPU
 - 2D Camera & 3D Perspective Camera
 - Keyboard & Mouse/Touch Controls
 - Event handlers & Entity class template
