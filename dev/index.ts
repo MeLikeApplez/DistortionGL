@@ -18,7 +18,8 @@ const ENTRY_PATH_GLOB = await glob(ENTRY_PATH, {
     posix: true
 })
 const OUTPUT_PATH_JS = '../build/js'
-const OUTPUT_MINIFIED_JS = '../build/index.js'
+const OUTPUT_JS = '../build/index.js'
+const OUTPUT_MINIFIED_JS = '../build/index-minified.js'
 
 async function createBarrelFile(barrelDirectory: string, barrelFilepath: string, globs: string[]) {
     await fsPromise.writeFile(path.join(barrelDirectory, barrelFilepath), '')
@@ -30,7 +31,7 @@ async function createBarrelFile(barrelDirectory: string, barrelFilepath: string,
             continue
         }
 
-        const srcFile = path.posix.relative(barrelDirectory, filepath)
+        const srcFile = path.posix.relative(barrelDirectory, filepath).replace(/\.\w+/g, '')
         const exportString = `export * from "./${srcFile}"\n`
 
         console.log(
@@ -55,6 +56,16 @@ async function useEsBuild() {
         bundle: true,
         treeShaking: false,
         minify: true,
+    })
+
+    await esbuild.build({
+        entryPoints: [ENTRY_BARREL_PATH],
+        format: 'esm',
+        outfile: OUTPUT_JS,
+        bundle: true,
+        minifyWhitespace: true,
+        minifySyntax: true,
+        treeShaking: false,
     })
 
     await esbuild.build({
