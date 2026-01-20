@@ -1,15 +1,17 @@
-import { Camera } from '../Camera/Camera'
 import { Entity } from '../Core/Entity'
-import { Renderer } from '../Renderers/Renderer'
+import { Renderer, type RenderingSystem } from '../Renderers/Renderer'
+import type { Camera } from '../Camera/Camera.ts'
 
-export class Scene<TRenderer=Renderer> {
+export class Scene<TRenderer=Renderer<RenderingSystem>, TCamera=Camera> {
     children: Entity[]
     enabled: boolean
+    ready: boolean
 
     constructor() {
         this.children = []
 
         this.enabled = true
+        this.ready = false
     }
 
     add(entities: Entity[]) {
@@ -27,15 +29,15 @@ export class Scene<TRenderer=Renderer> {
         }
     }
 
-    dispose(renderer: TRenderer, ...any: any) {
+    dispose(renderer: TRenderer, camera: TCamera, ...any: any) {
         // Write scene code here
     }
 
-    load(renderer: TRenderer, ...any: any) {
+    load(renderer: TRenderer, camera: TCamera, ...any: any) {
         // Write scene code here
     }
 
-    render(renderer: TRenderer, ...any: any) {
+    render(renderer: TRenderer, camera: TCamera, ...any: any) {
         // Write scene code here
     }
 }

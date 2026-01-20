@@ -1,5 +1,5 @@
-const WebGL2RenderingSystem = 1e3;
-const WebGPURenderingSystem = 1001;
+const WebGL2RenderingSystem = "WebGL2";
+const WebGPURenderingSystem = "WebGPU";
 export {
   WebGL2RenderingSystem,
   WebGPURenderingSystem

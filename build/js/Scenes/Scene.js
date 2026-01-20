@@ -1,9 +1,11 @@
 class Scene {
   children;
   enabled;
+  ready;
   constructor() {
     this.children = [];
     this.enabled = true;
+    this.ready = false;
   }
   add(entities) {
     this.children.push(...entities);
@@ -16,11 +18,11 @@ class Scene {
       this.children.splice(index, 1);
     }
   }
-  dispose(renderer, ...any) {
+  dispose(renderer, camera, ...any) {
   }
-  load(renderer, ...any) {
+  load(renderer, camera, ...any) {
   }
-  render(renderer, ...any) {
+  render(renderer, camera, ...any) {
   }
 }
 export {

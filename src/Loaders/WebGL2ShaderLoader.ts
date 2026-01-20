@@ -4,13 +4,6 @@ interface BaseShaderOptions {
     name?: string
     vertexShader: string
     fragmentShader: string
-    uniforms: {
-        camera: {
-            position: string
-            rotation: string
-            projectionMatrix: string
-        }
-    }
 }
 
 interface URLOption extends BaseShaderOptions {
@@ -26,8 +19,9 @@ export class WebGL2ShaderLoader extends Loader<WebGLProgram, Error> {
     name: string
     vertexShader: string
     fragmentShader: string
+    gl: WebGL2RenderingContext | null
     program: WebGLProgram | null
-    private _uniforms: BaseShaderOptions['uniforms']
+    // private _uniforms: BaseShaderOptions['uniforms']
 
     constructor(option: URLOption | SourceCodeOption) {
         super()
@@ -37,21 +31,22 @@ export class WebGL2ShaderLoader extends Loader<WebGLProgram, Error> {
         this.vertexShader = option.vertexShader
         this.fragmentShader = option.fragmentShader
         
+        this.gl = null
         this.program = null
 
-        this._uniforms = option.uniforms
+        // this._uniforms = option.uniforms
     }
 
-    getUniform(gl: WebGL2RenderingContext, name: string) {
-        if(!this.program || !this.ready) return null
+    getUniform(name: string) {
+        if(!this.gl || !this.program || !this.ready) return null
 
-        return gl.getUniformLocation(this.program, name)
+        return this.gl.getUniformLocation(this.program, name)
     }
 
-    getAttribute(gl: WebGL2RenderingContext, name: string) {
-        if(!this.program || !this.ready) return -1
+    getAttribute(name: string) {
+        if(!this.gl || !this.program || !this.ready) return -1
 
-        return gl.getAttribLocation(this.program, name)
+        return this.gl.getAttribLocation(this.program, name)
     }
 
     async load(gl: WebGL2RenderingContext) {
@@ -145,26 +140,31 @@ export class WebGL2ShaderLoader extends Loader<WebGLProgram, Error> {
         }
 
         this.program = program
-
         
         this.dispatchEvent('onload', program)
 
+        this.gl = gl
         this.ready = true
     
         // check for required camera uniforms
-        const failedUniforms: string[] = []
-        for(const key in this._uniforms.camera) {
-            const uniform = this.getUniform(gl, key)
+        // const failedUniforms: string[] = []
+        // for(const group in this._uniforms) {
+        //     for(const requiredUniform in this._uniforms[group]) {
+        //         const name = this._uniforms[group][requiredUniform]
+        //         const uniform = this.getUniform(gl, name)
 
-            if(uniform !== null) continue
-        
-            failedUniforms.push(key)
-        }
+        //         if(uniform !== null) continue
+
+        //         failedUniforms.push(name)
+        //     }
+        // }
     
-        if(failedUniforms.length > 0) {
-            const listOfFailedUniforms = failedUniforms.map(u => `"${u}"`).join(', ')
+        // if(failedUniforms.length > 0) {
+        //     const listOfFailedUniforms = failedUniforms.map(u => `"${u}"`).join(', ')
+
+        //     this.ready = false
             
-            throw new Error(`Failed to located camera uniforms ${listOfFailedUniforms}!`)
-        }
+        //     throw new Error(`Failed to located camera uniforms ${listOfFailedUniforms}!`)
+        // }
     }
 }

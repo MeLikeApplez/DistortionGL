@@ -2,29 +2,59 @@ import { Euler } from '../Math/Euler.ts'
 import { Matrix4 } from '../Math/Matrix4.ts'
 import { Vector3 } from '../Math/Vector3.ts'
 import { WebGL2RenderingSystem, WebGPURenderingSystem } from '../Core/Constants.ts'
+import { WebGL2Renderer } from '../Renderers/WebGL2Renderer.ts'
+import type { WebGPURenderer } from '../Renderers/WebGPURenderer.ts'
 
-type RenderingSystem = typeof WebGL2RenderingSystem | typeof WebGPURenderingSystem
+interface WebGL2RenderUniforms {
+    position: WebGLUniformLocation | null
+    projection: WebGLUniformLocation | null
+    rotation: WebGLUniformLocation | null
+}
+
+interface WebGPURenderUniforms {
+    position: null
+    projection: null
+    rotation: null
+}
 
 export class Camera {
     position: Vector3
     rotation: Euler
     projectionMatrix: Matrix4
+    rotationMatrix: Matrix4
     target: Vector3
     autoUpdate: boolean
     needsUpdate: boolean
-    renderingSystem: RenderingSystem
+    enabled: boolean
 
     constructor() {
         this.position = new Vector3()
         this.rotation = new Euler()
         this.projectionMatrix = new Matrix4()
+        this.rotationMatrix = new Matrix4()
 
         this.target = new Vector3()
         
         this.autoUpdate = false
         this.needsUpdate = false
-        this.renderingSystem = WebGL2RenderingSystem
+        this.enabled = true
     }
 
     updateProjectionMatrix() {}
+
+    // uniforms param type needs to be fixed
+    render(renderer: WebGL2Renderer | WebGPURenderer, uniforms: WebGL2RenderUniforms | WebGPURenderUniforms) {
+        if(!this.enabled) return
+
+        if(renderer.system === WebGL2RenderingSystem) {
+            const { gl } = renderer
+
+            gl.uniform3f(uniforms.position, this.position.x, this.position.y, this.position.z)
+            gl.uniformMatrix4fv(uniforms.projection, false, this.projectionMatrix)
+            gl.uniformMatrix4fv(uniforms.rotation, false, this.rotationMatrix)
+        } else {
+            throw new Error('WebGPU render not implemented!')
+        }
+
+    }
 }

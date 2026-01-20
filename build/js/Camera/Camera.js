@@ -6,20 +6,34 @@ class Camera {
   position;
   rotation;
   projectionMatrix;
+  rotationMatrix;
   target;
   autoUpdate;
   needsUpdate;
-  renderingSystem;
+  enabled;
   constructor() {
     this.position = new Vector3();
     this.rotation = new Euler();
     this.projectionMatrix = new Matrix4();
+    this.rotationMatrix = new Matrix4();
     this.target = new Vector3();
     this.autoUpdate = false;
     this.needsUpdate = false;
-    this.renderingSystem = WebGL2RenderingSystem;
+    this.enabled = true;
   }
   updateProjectionMatrix() {
+  }
+  // uniforms param type needs to be fixed
+  render(renderer, uniforms) {
+    if (!this.enabled) return;
+    if (renderer.system === WebGL2RenderingSystem) {
+      const { gl } = renderer;
+      gl.uniform3f(uniforms.position, this.position.x, this.position.y, this.position.z);
+      gl.uniformMatrix4fv(uniforms.projection, false, this.projectionMatrix);
+      gl.uniformMatrix4fv(uniforms.rotation, false, this.rotationMatrix);
+    } else {
+      throw new Error("WebGPU render not implemented!");
+    }
   }
 }
 export {

@@ -4,24 +4,25 @@ class WebGL2ShaderLoader extends Loader {
   name;
   vertexShader;
   fragmentShader;
+  gl;
   program;
-  _uniforms;
+  // private _uniforms: BaseShaderOptions['uniforms']
   constructor(option) {
     super();
     this.type = option.type;
     this.name = option?.name ?? "WebGL2Shader";
     this.vertexShader = option.vertexShader;
     this.fragmentShader = option.fragmentShader;
+    this.gl = null;
     this.program = null;
-    this._uniforms = option.uniforms;
   }
-  getUniform(gl, name) {
-    if (!this.program || !this.ready) return null;
-    return gl.getUniformLocation(this.program, name);
+  getUniform(name) {
+    if (!this.gl || !this.program || !this.ready) return null;
+    return this.gl.getUniformLocation(this.program, name);
   }
-  getAttribute(gl, name) {
-    if (!this.program || !this.ready) return -1;
-    return gl.getAttribLocation(this.program, name);
+  getAttribute(name) {
+    if (!this.gl || !this.program || !this.ready) return -1;
+    return this.gl.getAttribLocation(this.program, name);
   }
   async load(gl) {
     if (this.type === "url") {
@@ -86,17 +87,8 @@ class WebGL2ShaderLoader extends Loader {
     }
     this.program = program;
     this.dispatchEvent("onload", program);
+    this.gl = gl;
     this.ready = true;
-    const failedUniforms = [];
-    for (const key in this._uniforms.camera) {
-      const uniform = this.getUniform(gl, key);
-      if (uniform !== null) continue;
-      failedUniforms.push(key);
-    }
-    if (failedUniforms.length > 0) {
-      const listOfFailedUniforms = failedUniforms.map((u) => `"${u}"`).join(", ");
-      throw new Error(`Failed to located camera uniforms ${listOfFailedUniforms}!`);
-    }
   }
 }
 export {

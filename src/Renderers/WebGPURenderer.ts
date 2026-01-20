@@ -3,7 +3,7 @@ import { WebGPURenderingSystem } from "../Core/Constants";
 import { Scene } from "../Scenes/Scene";
 import { Renderer } from "./Renderer";
 
-export class WebGPURenderer extends Renderer {
+export class WebGPURenderer extends Renderer<typeof WebGPURenderingSystem> {
     constructor(canvasElement: HTMLCanvasElement) {
         super(WebGPURenderingSystem, canvasElement)
     }

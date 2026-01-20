@@ -9,8 +9,14 @@ class WebGL2Renderer extends Renderer {
   }
   render(scene, camera) {
     if (!this.ready) throw Error("WebGL2 is unavailable for this device!");
-    camera.renderingSystem = WebGL2RenderingSystem;
-    scene.render(this);
+    this.gl.clearColor(0, 0, 0, 1);
+    this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+    this.gl.viewport(0, 0, this.canvasElement.width, this.canvasElement.height);
+    if (!scene.ready) {
+      scene.load(this, camera);
+    } else {
+      scene.render(this, camera);
+    }
   }
 }
 export {

@@ -6,14 +6,12 @@ class PerspectiveCamera extends Camera {
   aspect;
   near;
   far;
-  rotationMatrix;
   constructor(fov, aspect, near, far) {
     super();
     this.fov = fov;
     this.aspect = aspect;
     this.near = near;
     this.far = far;
-    this.rotationMatrix = new Matrix4();
     this.updateProjectionMatrix();
   }
   lookAt(target, up = Vector3.UP) {

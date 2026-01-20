@@ -3,7 +3,7 @@ import { WebGL2RenderingSystem } from '../Core/Constants'
 import { Scene } from '../Scenes/Scene'
 import { Renderer } from './Renderer'
 
-export class WebGL2Renderer extends Renderer {
+export class WebGL2Renderer extends Renderer<typeof WebGL2RenderingSystem> {
     gl: WebGL2RenderingContext
 
     constructor(canvasElement: HTMLCanvasElement, glOptions: WebGLContextAttributes={}) {
@@ -17,8 +17,14 @@ export class WebGL2Renderer extends Renderer {
     render(scene: Scene, camera: Camera) {
         if(!this.ready) throw Error('WebGL2 is unavailable for this device!')
 
-        camera.renderingSystem = WebGL2RenderingSystem
+        this.gl.clearColor(0, 0, 0, 1)
+        this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT)
+        this.gl.viewport(0, 0, this.canvasElement.width, this.canvasElement.height)
 
-        scene.render(this)
+        if(!scene.ready) {
+            scene.load(this, camera)
+        } else {
+            scene.render(this, camera)
+        }
     }
 }

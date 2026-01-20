@@ -11,7 +11,6 @@ export class OrthographicCamera extends Camera {
     near: number
     far: number
     zoom: number
-    rotationMatrix: Matrix4
 
     constructor(left: number, right: number, top: number, bottom: number, aspect: number, near: number, far: number) {
         super()
@@ -27,7 +26,6 @@ export class OrthographicCamera extends Camera {
 
         this.zoom = 1
 
-        this.rotationMatrix = new Matrix4()
         
         this.updateProjectionMatrix()
     }

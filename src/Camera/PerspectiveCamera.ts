@@ -7,7 +7,6 @@ export class PerspectiveCamera extends Camera {
     aspect: number
     near: number
     far: number
-    rotationMatrix: Matrix4
 
     constructor(fov: number, aspect: number, near: number, far: number) {
         super()
@@ -16,8 +15,6 @@ export class PerspectiveCamera extends Camera {
         this.aspect = aspect
         this.near = near
         this.far = far
-    
-        this.rotationMatrix = new Matrix4()
 
         this.updateProjectionMatrix()
     }

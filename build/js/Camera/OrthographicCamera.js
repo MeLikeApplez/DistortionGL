@@ -10,7 +10,6 @@ class OrthographicCamera extends Camera {
   near;
   far;
   zoom;
-  rotationMatrix;
   constructor(left, right, top, bottom, aspect, near, far) {
     super();
     this.left = left;
@@ -21,7 +20,6 @@ class OrthographicCamera extends Camera {
     this.near = near;
     this.far = far;
     this.zoom = 1;
-    this.rotationMatrix = new Matrix4();
     this.updateProjectionMatrix();
   }
   lookAt(target, up = Vector3.UP) {

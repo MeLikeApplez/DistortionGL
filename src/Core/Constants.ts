@@ -1,2 +1,2 @@
-export const WebGL2RenderingSystem = 1000
-export const WebGPURenderingSystem = 1001
+export const WebGL2RenderingSystem = 'WebGL2'
+export const WebGPURenderingSystem = 'WebGPU'
