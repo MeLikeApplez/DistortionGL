@@ -1,12 +1,15 @@
+import type { OrthographicCamera } from '../Camera/OrthographicCamera'
 import { PerspectiveCamera } from '../Camera/PerspectiveCamera'
 
 import { Vector2 } from '../Math/Vector2'
 import { Vector3 } from '../Math/Vector3'
 import { type Pointer}  from './Pointer'
 
+type OrbitControlsCameras = PerspectiveCamera | OrthographicCamera
+
 export class OrbitControls {
     element: HTMLElement | null
-    camera: PerspectiveCamera
+    camera: OrbitControlsCameras
     _initialRotatePosition: Vector2
     rotatePosition: Vector2
     // _initialPanPosition: Vector2
@@ -22,7 +25,7 @@ export class OrbitControls {
     enableOrbit: boolean
     enableZoom: boolean
 
-    constructor(element: HTMLElement | null, camera: PerspectiveCamera) {
+    constructor(element: HTMLElement | null, camera: OrbitControlsCameras) {
         this.element = element
         this.camera = camera
         
@@ -41,7 +44,7 @@ export class OrbitControls {
         this.panSpeed = 1
         this.zoomSpeed = 1
 
-        this.minZoom = 0
+        this.minZoom = -5
         this.maxZoom = 10
 
         this.enableOrbit = true
@@ -116,10 +119,11 @@ export class OrbitControls {
         }
 
         this.zoomDistance += zoomQuantity
-        const cameraDirection = new Vector3(this.camera.position.x, this.camera.position.y, this.camera.position.z).subtract(this.camera.target).normalize().multiplyScalar(zoomQuantity)
+        // const cameraDirection = new Vector3(this.camera.position.x, this.camera.position.y, this.camera.position.z).subtract(this.camera.target).normalize().multiplyScalar(zoomQuantity)
+        const cameraDirection = this.camera.getWorldDirection().multiplyScalar(zoomQuantity)
 
         this.camera.position.add(cameraDirection)
-        
+
         this._initialZoom = controller.mouseScroll
     }
 

@@ -14,6 +14,11 @@ interface SourceCodeOption extends BaseShaderOptions {
     type: 'source-code'
 }
 
+// interface ShaderCache {
+//     uniforms: Map<string, WebGLUniformLocation>
+//     attributes: Map<string, number>
+// }
+
 export class WebGL2ShaderLoader extends Loader<WebGLProgram, Error> {
     type: URLOption['type'] | SourceCodeOption['type']
     name: string
@@ -21,7 +26,7 @@ export class WebGL2ShaderLoader extends Loader<WebGLProgram, Error> {
     fragmentShader: string
     gl: WebGL2RenderingContext | null
     program: WebGLProgram | null
-    // private _uniforms: BaseShaderOptions['uniforms']
+    // private _shaderCache: ShaderCache
 
     constructor(option: URLOption | SourceCodeOption) {
         super()
@@ -34,7 +39,10 @@ export class WebGL2ShaderLoader extends Loader<WebGLProgram, Error> {
         this.gl = null
         this.program = null
 
-        // this._uniforms = option.uniforms
+        // this._shaderCache = {
+        //     uniforms: new Map(),
+        //     attributes: new Map()
+        // }
     }
 
     getUniform(name: string) {
@@ -145,26 +153,5 @@ export class WebGL2ShaderLoader extends Loader<WebGLProgram, Error> {
 
         this.gl = gl
         this.ready = true
-    
-        // check for required camera uniforms
-        // const failedUniforms: string[] = []
-        // for(const group in this._uniforms) {
-        //     for(const requiredUniform in this._uniforms[group]) {
-        //         const name = this._uniforms[group][requiredUniform]
-        //         const uniform = this.getUniform(gl, name)
-
-        //         if(uniform !== null) continue
-
-        //         failedUniforms.push(name)
-        //     }
-        // }
-    
-        // if(failedUniforms.length > 0) {
-        //     const listOfFailedUniforms = failedUniforms.map(u => `"${u}"`).join(', ')
-
-        //     this.ready = false
-            
-        //     throw new Error(`Failed to located camera uniforms ${listOfFailedUniforms}!`)
-        // }
     }
 }

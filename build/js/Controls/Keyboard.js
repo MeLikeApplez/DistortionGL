@@ -1,14 +1,13 @@
 import { Events } from "../Core/Events";
-class Keyboard {
+class Keyboard extends Events {
   element;
   keys;
   lowerCase;
-  events;
   constructor(element, lowerCase = false) {
+    super(["onkeyup", "onkeydown"]);
     this.element = element;
     this.keys = /* @__PURE__ */ new Set();
     this.lowerCase = lowerCase;
-    this.events = new Events(["onkeyup", "onkeydown"]);
     if (element) this.load(element);
   }
   dispose() {
@@ -19,6 +18,9 @@ class Keyboard {
     this.keys.clear();
     return true;
   }
+  hasKey(key) {
+    return this.keys.has(key);
+  }
   load(element) {
     this.element = element;
     this.keys.clear();
@@ -26,13 +28,13 @@ class Keyboard {
       const key = this.lowerCase ? event.key.toLowerCase() : event.key;
       if (this.keys.has(key)) return;
       this.keys.add(key);
-      this.events.dispatchEvent("onkeydown", this);
+      this.dispatchEvent("onkeydown", this);
     };
     window.onkeyup = (event) => {
       const key = this.lowerCase ? event.key.toLowerCase() : event.key;
       if (!this.keys.has(key)) return;
       this.keys.delete(key);
-      this.events.dispatchEvent("onkeyup", this);
+      this.dispatchEvent("onkeyup", this);
     };
     return true;
   }

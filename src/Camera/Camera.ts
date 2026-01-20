@@ -4,6 +4,7 @@ import { Vector3 } from '../Math/Vector3.ts'
 import { WebGL2RenderingSystem, WebGPURenderingSystem } from '../Core/Constants.ts'
 import { WebGL2Renderer } from '../Renderers/WebGL2Renderer.ts'
 import type { WebGPURenderer } from '../Renderers/WebGPURenderer.ts'
+import { Quaternion } from '../Math/Quaternion.ts'
 
 interface WebGL2RenderUniforms {
     position: WebGLUniformLocation | null
@@ -16,6 +17,7 @@ interface WebGPURenderUniforms {
     projection: null
     rotation: null
 }
+
 
 export class Camera {
     position: Vector3
@@ -30,6 +32,7 @@ export class Camera {
     constructor() {
         this.position = new Vector3()
         this.rotation = new Euler()
+
         this.projectionMatrix = new Matrix4()
         this.rotationMatrix = new Matrix4()
 
@@ -38,6 +41,16 @@ export class Camera {
         this.autoUpdate = false
         this.needsUpdate = false
         this.enabled = true
+    }
+
+    getWorldDirection() {
+        const direction = new Vector3(
+            this.rotationMatrix[8],
+            this.rotationMatrix[9],
+            this.rotationMatrix[10],
+        )
+
+        return direction.normalize()
     }
 
     updateProjectionMatrix() {}

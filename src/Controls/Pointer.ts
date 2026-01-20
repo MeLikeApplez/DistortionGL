@@ -8,7 +8,7 @@ interface PointerEvents {
     onmousescroll: Pointer
 }
 
-export class Pointer {
+export class Pointer extends Events<PointerEvents> {
     element: HTMLElement | null
     position: Vector2
     down: Vector2
@@ -19,9 +19,10 @@ export class Pointer {
     isPointerDown: boolean
     isPointerUp: boolean
     devicePixelRatio: number
-    events: Events<PointerEvents>
 
     constructor(element: HTMLElement | null, devicePixelRatio=1) {
+        super(['onpointerup', 'onpointermove', 'onpointerdown', 'onmousescroll'])
+
         this.element = element
 
         this.position = new Vector2(0, 0)
@@ -35,8 +36,6 @@ export class Pointer {
         this.isPointerUp = true
 
         this.devicePixelRatio = devicePixelRatio
-
-        this.events = new Events(['onpointerup', 'onpointermove', 'onpointerdown', 'onmousescroll'])
 
         if(element) this.load(element)
     }
@@ -65,7 +64,7 @@ export class Pointer {
         element.onwheel = event => {
             this.mouseScroll += event.deltaY
 
-            this.events.dispatchEvent('onmousescroll', this)
+            this.dispatchEvent('onmousescroll', this)
         }
 
         element.onpointerdown = event => {
@@ -86,7 +85,7 @@ export class Pointer {
                 this.down.copy(this.position)
             }
 
-            this.events.dispatchEvent('onpointerdown', this)
+            this.dispatchEvent('onpointerdown', this)
         }
 
         element.onpointermove = event => {
@@ -104,7 +103,7 @@ export class Pointer {
                 )
             }
         
-            this.events.dispatchEvent('onpointermove', this)
+            this.dispatchEvent('onpointermove', this)
         }
 
         element.onpointerup = event => {
@@ -118,7 +117,7 @@ export class Pointer {
                 this.drag.set(0, 0)
             }
         
-            this.events.dispatchEvent('onpointerup', this)
+            this.dispatchEvent('onpointerup', this)
         }
 
         return true

@@ -5,19 +5,18 @@ interface KeyboardEvents {
     onkeyup: Keyboard
 }
 
-export class Keyboard {
+export class Keyboard extends Events<KeyboardEvents> {
     element: HTMLElement | null
     keys: Set<string>
     lowerCase: boolean
-    events: Events<KeyboardEvents>
 
     constructor(element: HTMLElement, lowerCase=false) {
+        super(['onkeyup', 'onkeydown'])
+
         this.element = element
 
         this.keys = new Set()
         this.lowerCase = lowerCase
-
-        this.events = new Events(['onkeyup', 'onkeydown'])
     
         if(element) this.load(element)
     }
@@ -34,6 +33,10 @@ export class Keyboard {
         return true
     }
 
+    hasKey(key: string) {
+        return this.keys.has(key)
+    }
+
     load(element: HTMLElement) {
         this.element = element
         this.keys.clear()
@@ -45,7 +48,7 @@ export class Keyboard {
 
             this.keys.add(key)
         
-            this.events.dispatchEvent('onkeydown', this)
+            this.dispatchEvent('onkeydown', this)
         }
 
         window.onkeyup = event => {
@@ -55,7 +58,7 @@ export class Keyboard {
         
             this.keys.delete(key)
         
-            this.events.dispatchEvent('onkeyup', this)
+            this.dispatchEvent('onkeyup', this)
         }
 
         return true

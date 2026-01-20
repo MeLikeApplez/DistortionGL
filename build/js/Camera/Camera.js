@@ -21,6 +21,14 @@ class Camera {
     this.needsUpdate = false;
     this.enabled = true;
   }
+  getWorldDirection() {
+    const direction = new Vector3(
+      this.rotationMatrix[8],
+      this.rotationMatrix[9],
+      this.rotationMatrix[10]
+    );
+    return direction.normalize();
+  }
   updateProjectionMatrix() {
   }
   // uniforms param type needs to be fixed

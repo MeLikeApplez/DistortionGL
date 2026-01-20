@@ -1,6 +1,6 @@
 import { Events } from "../Core/Events.js";
 import { Vector2 } from "../Math/Vector2.js";
-class Pointer {
+class Pointer extends Events {
   element;
   position;
   down;
@@ -11,8 +11,8 @@ class Pointer {
   isPointerDown;
   isPointerUp;
   devicePixelRatio;
-  events;
   constructor(element, devicePixelRatio = 1) {
+    super(["onpointerup", "onpointermove", "onpointerdown", "onmousescroll"]);
     this.element = element;
     this.position = new Vector2(0, 0);
     this.down = new Vector2(0, 0);
@@ -23,7 +23,6 @@ class Pointer {
     this.isPointerDown = false;
     this.isPointerUp = true;
     this.devicePixelRatio = devicePixelRatio;
-    this.events = new Events(["onpointerup", "onpointermove", "onpointerdown", "onmousescroll"]);
     if (element) this.load(element);
   }
   dispose() {
@@ -43,7 +42,7 @@ class Pointer {
     this.element = element;
     element.onwheel = (event) => {
       this.mouseScroll += event.deltaY;
-      this.events.dispatchEvent("onmousescroll", this);
+      this.dispatchEvent("onmousescroll", this);
     };
     element.onpointerdown = (event) => {
       this.isPointerDown = true;
@@ -58,7 +57,7 @@ class Pointer {
         this.isPointerDragging = true;
         this.down.copy(this.position);
       }
-      this.events.dispatchEvent("onpointerdown", this);
+      this.dispatchEvent("onpointerdown", this);
     };
     element.onpointermove = (event) => {
       const rect = element.getBoundingClientRect();
@@ -72,7 +71,7 @@ class Pointer {
           this.position.y - this.down.y
         );
       }
-      this.events.dispatchEvent("onpointermove", this);
+      this.dispatchEvent("onpointermove", this);
     };
     element.onpointerup = (event) => {
       this.isPointerDown = false;
@@ -82,7 +81,7 @@ class Pointer {
         this.down.set(0, 0);
         this.drag.set(0, 0);
       }
-      this.events.dispatchEvent("onpointerup", this);
+      this.dispatchEvent("onpointerup", this);
     };
     return true;
   }

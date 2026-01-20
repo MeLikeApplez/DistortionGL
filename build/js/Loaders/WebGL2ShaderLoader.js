@@ -6,7 +6,7 @@ class WebGL2ShaderLoader extends Loader {
   fragmentShader;
   gl;
   program;
-  // private _uniforms: BaseShaderOptions['uniforms']
+  // private _shaderCache: ShaderCache
   constructor(option) {
     super();
     this.type = option.type;

@@ -187,6 +187,7 @@ declare class Camera {
     needsUpdate: boolean;
     enabled: boolean;
     constructor();
+    getWorldDirection(): Vector3;
     updateProjectionMatrix(): void;
     render(renderer: WebGL2Renderer | WebGPURenderer, uniforms: WebGL2RenderUniforms | WebGPURenderUniforms): void;
 }
@@ -412,7 +413,7 @@ interface PointerEvents {
     onpointerup: Pointer;
     onmousescroll: Pointer;
 }
-declare class Pointer {
+declare class Pointer extends Events<PointerEvents> {
     element: HTMLElement | null;
     position: Vector2;
     down: Vector2;
@@ -423,53 +424,7 @@ declare class Pointer {
     isPointerDown: boolean;
     isPointerUp: boolean;
     devicePixelRatio: number;
-    events: Events<PointerEvents>;
     constructor(element: HTMLElement | null, devicePixelRatio?: number);
-    dispose(): boolean;
-    load(element: HTMLElement): boolean;
-}
-
-declare class PerspectiveCamera extends Camera {
-    fov: number;
-    aspect: number;
-    near: number;
-    far: number;
-    constructor(fov: number, aspect: number, near: number, far: number);
-    lookAt(target: Vector3, up?: Vector3): this;
-    updateProjectionMatrix(): this;
-}
-
-declare class OrbitControls {
-    element: HTMLElement | null;
-    camera: PerspectiveCamera;
-    _initialRotatePosition: Vector2;
-    rotatePosition: Vector2;
-    _initialZoom: number;
-    zoomDistance: number;
-    drag: Vector2;
-    rotateSpeed: number;
-    panSpeed: number;
-    zoomSpeed: number;
-    minZoom: number;
-    maxZoom: number;
-    enableOrbit: boolean;
-    enableZoom: boolean;
-    constructor(element: HTMLElement | null, camera: PerspectiveCamera);
-    dispose(): boolean;
-    orbit(controller: Pointer): void;
-    zoom(controller: Pointer): void;
-}
-
-interface KeyboardEvents {
-    onkeydown: Keyboard;
-    onkeyup: Keyboard;
-}
-declare class Keyboard {
-    element: HTMLElement | null;
-    keys: Set<string>;
-    lowerCase: boolean;
-    events: Events<KeyboardEvents>;
-    constructor(element: HTMLElement, lowerCase?: boolean);
     dispose(): boolean;
     load(element: HTMLElement): boolean;
 }
@@ -486,6 +441,52 @@ declare class OrthographicCamera extends Camera {
     constructor(left: number, right: number, top: number, bottom: number, aspect: number, near: number, far: number);
     lookAt(target: Vector3, up?: Vector3): this;
     updateProjectionMatrix(reversedDepth?: boolean): this;
+}
+
+declare class PerspectiveCamera extends Camera {
+    fov: number;
+    aspect: number;
+    near: number;
+    far: number;
+    constructor(fov: number, aspect: number, near: number, far: number);
+    lookAt(target: Vector3, up?: Vector3): this;
+    updateProjectionMatrix(): this;
+}
+
+type OrbitControlsCameras = PerspectiveCamera | OrthographicCamera;
+declare class OrbitControls {
+    element: HTMLElement | null;
+    camera: OrbitControlsCameras;
+    _initialRotatePosition: Vector2;
+    rotatePosition: Vector2;
+    _initialZoom: number;
+    zoomDistance: number;
+    drag: Vector2;
+    rotateSpeed: number;
+    panSpeed: number;
+    zoomSpeed: number;
+    minZoom: number;
+    maxZoom: number;
+    enableOrbit: boolean;
+    enableZoom: boolean;
+    constructor(element: HTMLElement | null, camera: OrbitControlsCameras);
+    dispose(): boolean;
+    orbit(controller: Pointer): void;
+    zoom(controller: Pointer): void;
+}
+
+interface KeyboardEvents {
+    onkeydown: Keyboard;
+    onkeyup: Keyboard;
+}
+declare class Keyboard extends Events<KeyboardEvents> {
+    element: HTMLElement | null;
+    keys: Set<string>;
+    lowerCase: boolean;
+    constructor(element: HTMLElement, lowerCase?: boolean);
+    dispose(): boolean;
+    hasKey(key: string): boolean;
+    load(element: HTMLElement): boolean;
 }
 
 export { Camera, Clock, Color, Entity, Euler, Events, ImageLoader, Keyboard, Loader, Matrix3, Matrix4, OrbitControls, OrthographicCamera, PerspectiveCamera, Pointer, Promisify, Quaternion, Renderer, Scene, ShaderLoader, Vector2, Vector3, Vector4, WebGL2Renderer, WebGL2RenderingSystem, WebGL2ShaderLoader, WebGPURenderer, WebGPURenderingSystem, clamp, extendArray, generateUUID, lerp, randomFloat, randomInt };

@@ -28,7 +28,7 @@ class OrbitControls {
     this.rotateSpeed = 1;
     this.panSpeed = 1;
     this.zoomSpeed = 1;
-    this.minZoom = 0;
+    this.minZoom = -5;
     this.maxZoom = 10;
     this.enableOrbit = true;
     this.enableZoom = true;
@@ -76,7 +76,7 @@ class OrbitControls {
       return;
     }
     this.zoomDistance += zoomQuantity;
-    const cameraDirection = new Vector3(this.camera.position.x, this.camera.position.y, this.camera.position.z).subtract(this.camera.target).normalize().multiplyScalar(zoomQuantity);
+    const cameraDirection = this.camera.getWorldDirection().multiplyScalar(zoomQuantity);
     this.camera.position.add(cameraDirection);
     this._initialZoom = controller.mouseScroll;
   }
