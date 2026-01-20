@@ -1,6 +1,6 @@
-import { Camera } from './Camera.ts'
-import { Matrix4 } from '../Math/Matrix4.ts'
-import { Vector3 } from '../Math/Vector3.ts'
+import { Camera } from './Camera'
+import { Matrix4 } from '../Math/Matrix4'
+import { Vector3 } from '../Math/Vector3'
 
 export class PerspectiveCamera extends Camera {
     fov: number

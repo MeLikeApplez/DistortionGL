@@ -1,5 +1,5 @@
-import { Events } from "../Core/Events.js";
-import { Vector2 } from "../Math/Vector2.js";
+import { Events } from "../Core/Events";
+import { Vector2 } from "../Math/Vector2";
 class Pointer extends Events {
   element;
   position;

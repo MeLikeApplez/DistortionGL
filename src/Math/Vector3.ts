@@ -1,5 +1,4 @@
 import { Euler } from "./Euler"
-import { clamp } from "./MathUtils"
 import { Matrix3 } from "./Matrix3"
 import { Quaternion } from "./Quaternion"
 

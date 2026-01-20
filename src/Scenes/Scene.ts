@@ -1,6 +1,6 @@
 import { Entity } from '../Core/Entity'
 import { Renderer, type RenderingSystem } from '../Renderers/Renderer'
-import type { Camera } from '../Camera/Camera.ts'
+import type { Camera } from '../Camera/Camera'
 
 export class Scene<TRenderer=Renderer<RenderingSystem>, TCamera=Camera> {
     children: Entity[]

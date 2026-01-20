@@ -1,10 +1,10 @@
-import { Euler } from '../Math/Euler.ts'
-import { Matrix4 } from '../Math/Matrix4.ts'
-import { Vector3 } from '../Math/Vector3.ts'
-import { WebGL2RenderingSystem, WebGPURenderingSystem } from '../Core/Constants.ts'
-import { WebGL2Renderer } from '../Renderers/WebGL2Renderer.ts'
-import type { WebGPURenderer } from '../Renderers/WebGPURenderer.ts'
-import { Quaternion } from '../Math/Quaternion.ts'
+import { Euler } from '../Math/Euler'
+import { Matrix4 } from '../Math/Matrix4'
+import { Vector3 } from '../Math/Vector3'
+import { WebGL2RenderingSystem, WebGPURenderingSystem } from '../Core/Constants'
+import { WebGL2Renderer } from '../Renderers/WebGL2Renderer'
+import type { WebGPURenderer } from '../Renderers/WebGPURenderer'
+import { Quaternion } from '../Math/Quaternion'
 
 interface WebGL2RenderUniforms {
     position: WebGLUniformLocation | null

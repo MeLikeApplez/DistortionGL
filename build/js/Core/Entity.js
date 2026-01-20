@@ -1,4 +1,4 @@
-import { generateUUID } from "../Math/MathUtils.ts";
+import { generateUUID } from "../Math/MathUtils";
 class Entity {
   uuid;
   name;

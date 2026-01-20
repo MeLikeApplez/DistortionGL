@@ -1,12 +1,12 @@
-import { generateUUID } from '../Math/MathUtils.ts'
-import { Vector3 } from '../Math/Vector3.ts'
-import { Euler } from '../Math/Euler.ts'
-import { Renderer, type RenderingSystem } from '../Renderers/Renderer.ts'
-import { Matrix4 } from '../Math/Matrix4.ts'
-import { Quaternion } from '../Math/Quaternion.ts'
-import { Matrix3 } from '../Math/Matrix3.ts'
-import { Vector2 } from '../Math/Vector2.ts'
-import { Vector4 } from '../Math/Vector4.ts'
+import { generateUUID } from '../Math/MathUtils'
+import { Vector3 } from '../Math/Vector3'
+import { Euler } from '../Math/Euler'
+import { Renderer, type RenderingSystem } from '../Renderers/Renderer'
+import { Matrix4 } from '../Math/Matrix4'
+import { Quaternion } from '../Math/Quaternion'
+import { Matrix3 } from '../Math/Matrix3'
+import { Vector2 } from '../Math/Vector2'
+import { Vector4 } from '../Math/Vector4'
 
 export class Entity<TRenderer=Renderer<RenderingSystem>> {
     uuid: string

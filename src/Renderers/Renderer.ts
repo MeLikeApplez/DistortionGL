@@ -1,6 +1,6 @@
-import { Camera } from "../Camera/Camera.ts"
-import { Scene } from "../Scenes/Scene.ts"
-import { WebGL2RenderingSystem, WebGPURenderingSystem } from "../Core/Constants.ts"
+import { Camera } from "../Camera/Camera"
+import { Scene } from "../Scenes/Scene"
+import { WebGL2RenderingSystem, WebGPURenderingSystem } from "../Core/Constants"
 
 export type RenderingSystem = typeof WebGL2RenderingSystem | typeof WebGPURenderingSystem
 

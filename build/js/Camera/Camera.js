@@ -1,7 +1,7 @@
-import { Euler } from "../Math/Euler.ts";
-import { Matrix4 } from "../Math/Matrix4.ts";
-import { Vector3 } from "../Math/Vector3.ts";
-import { WebGL2RenderingSystem } from "../Core/Constants.ts";
+import { Euler } from "../Math/Euler";
+import { Matrix4 } from "../Math/Matrix4";
+import { Vector3 } from "../Math/Vector3";
+import { WebGL2RenderingSystem } from "../Core/Constants";
 class Camera {
   position;
   rotation;
