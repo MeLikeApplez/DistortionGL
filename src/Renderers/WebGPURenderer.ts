@@ -9,6 +9,8 @@ export class WebGPURenderer extends Renderer<typeof WebGPURenderingSystem> {
     }
 
     render(scene: Scene, camera: Camera) {
+        throw Error('WebGPU Renderer has not been implemented!')
 
+        // super.render(scene, camera)
     }
 }

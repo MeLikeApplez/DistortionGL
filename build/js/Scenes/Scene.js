@@ -1,10 +1,12 @@
 class Scene {
   children;
   enabled;
+  loaded;
   ready;
   constructor() {
     this.children = [];
     this.enabled = true;
+    this.loaded = false;
     this.ready = false;
   }
   add(entities) {

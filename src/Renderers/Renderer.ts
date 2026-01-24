@@ -6,13 +6,11 @@ export type RenderingSystem = typeof WebGL2RenderingSystem | typeof WebGPURender
 
 export class Renderer<TSystem extends RenderingSystem> {
     readonly system: TSystem
-    scene: Scene | null
     canvasElement: HTMLCanvasElement
     ready: boolean
 
     constructor(system: TSystem, canvasElement: HTMLCanvasElement) {
         this.system = system
-        this.scene = null
 
         this.canvasElement = canvasElement
 
@@ -24,5 +22,15 @@ export class Renderer<TSystem extends RenderingSystem> {
         this.canvasElement.height = height * devicePixelRatio
     }
 
-    render(scene: Scene, camera: Camera) {}
+    render(scene: Scene, camera: Camera) {
+        if(!scene.ready) {
+            scene.load(this, camera)
+            
+        if(!scene.loaded) {
+            throw Error('Scene has been loaded but did not set "scene.loaded = true"!')
+        }
+        } else {
+            scene.render(this, camera)
+        }
+    }
 }

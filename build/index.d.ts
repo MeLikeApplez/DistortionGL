@@ -1,6 +1,29 @@
 type Promisified<TData, TError> = Promise<[TData, null] | [null, TError]>;
 declare function Promisify<TData, TError>(promiseFunc: Promise<TData>, customError?: TError): Promisified<TData, TError>;
 
+declare class Events<T extends Record<string, any>> {
+    private _listeners;
+    constructor(eventNames?: Array<keyof T>);
+    dispatchEvent<K extends keyof T>(eventName: K, data: T[K]): boolean;
+    addEventListener<K extends keyof T>(eventName: K, callback: (data: T[K]) => void): void;
+}
+
+interface ClockEvents {
+    onstart: Clock;
+    onupdate: Clock;
+    onstop: Clock;
+}
+declare class Clock extends Events<ClockEvents> {
+    private animationId;
+    startTime: number;
+    fps: number;
+    deltaTime: number;
+    constructor();
+    start(): number;
+    stop(): number;
+    update(time: number): void;
+}
+
 declare class Vector2 {
     x: number;
     y: number;
@@ -159,7 +182,6 @@ declare const WebGPURenderingSystem = "WebGPU";
 type RenderingSystem = typeof WebGL2RenderingSystem | typeof WebGPURenderingSystem;
 declare class Renderer<TSystem extends RenderingSystem> {
     readonly system: TSystem;
-    scene: Scene | null;
     canvasElement: HTMLCanvasElement;
     ready: boolean;
     constructor(system: TSystem, canvasElement: HTMLCanvasElement);
@@ -222,6 +244,7 @@ declare class Entity<TRenderer = Renderer<RenderingSystem>> {
 declare class Scene<TRenderer = Renderer<RenderingSystem>, TCamera = Camera> {
     children: Entity[];
     enabled: boolean;
+    loaded: boolean;
     ready: boolean;
     constructor();
     add(entities: Entity[]): void;
@@ -265,29 +288,6 @@ declare class Camera {
 declare class WebGPURenderer extends Renderer<typeof WebGPURenderingSystem> {
     constructor(canvasElement: HTMLCanvasElement);
     render(scene: Scene, camera: Camera): void;
-}
-
-declare class Events<T extends Record<string, any>> {
-    private _listeners;
-    constructor(eventNames?: Array<keyof T>);
-    dispatchEvent<K extends keyof T>(eventName: K, data: T[K]): boolean;
-    addEventListener<K extends keyof T>(eventName: K, callback: (data: T[K]) => void): void;
-}
-
-interface ClockEvents {
-    onstart: Clock;
-    onupdate: Clock;
-    onstop: Clock;
-}
-declare class Clock extends Events<ClockEvents> {
-    private animationId;
-    startTime: number;
-    fps: number;
-    deltaTime: number;
-    constructor();
-    start(): number;
-    stop(): number;
-    update(time: number): void;
 }
 
 declare function randomInt(min: number, max: number): number;

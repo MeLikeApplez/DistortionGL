@@ -5,6 +5,7 @@ class WebGPURenderer extends Renderer {
     super(WebGPURenderingSystem, canvasElement);
   }
   render(scene, camera) {
+    throw Error("WebGPU Renderer has not been implemented!");
   }
 }
 export {

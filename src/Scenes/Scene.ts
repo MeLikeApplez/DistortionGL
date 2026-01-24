@@ -5,12 +5,14 @@ import type { Camera } from '../Camera/Camera'
 export class Scene<TRenderer=Renderer<RenderingSystem>, TCamera=Camera> {
     children: Entity[]
     enabled: boolean
+    loaded: boolean
     ready: boolean
 
     constructor() {
         this.children = []
 
         this.enabled = true
+        this.loaded = false
         this.ready = false
     }
 

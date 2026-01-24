@@ -1,11 +1,9 @@
 class Renderer {
   system;
-  scene;
   canvasElement;
   ready;
   constructor(system, canvasElement) {
     this.system = system;
-    this.scene = null;
     this.canvasElement = canvasElement;
     this.ready = false;
   }
@@ -14,6 +12,14 @@ class Renderer {
     this.canvasElement.height = height * devicePixelRatio;
   }
   render(scene, camera) {
+    if (!scene.ready) {
+      scene.load(this, camera);
+      if (!scene.loaded) {
+        throw Error('Scene has been loaded but did not set "scene.loaded = true"!');
+      }
+    } else {
+      scene.render(this, camera);
+    }
   }
 }
 export {
