@@ -231,8 +231,9 @@ declare class Scene<TRenderer = Renderer<RenderingSystem>, TCamera = Camera> {
     render(renderer: TRenderer, camera: TCamera, ...any: any): void;
 }
 
-declare class WebGPURenderer extends Renderer<typeof WebGPURenderingSystem> {
-    constructor(canvasElement: HTMLCanvasElement);
+declare class WebGL2Renderer extends Renderer<typeof WebGL2RenderingSystem> {
+    gl: WebGL2RenderingContext;
+    constructor(canvasElement: HTMLCanvasElement, glOptions?: WebGLContextAttributes);
     render(scene: Scene, camera: Camera): void;
 }
 
@@ -261,9 +262,8 @@ declare class Camera {
     render(renderer: WebGL2Renderer | WebGPURenderer, uniforms: WebGL2RenderUniforms | WebGPURenderUniforms): void;
 }
 
-declare class WebGL2Renderer extends Renderer<typeof WebGL2RenderingSystem> {
-    gl: WebGL2RenderingContext;
-    constructor(canvasElement: HTMLCanvasElement, glOptions?: WebGLContextAttributes);
+declare class WebGPURenderer extends Renderer<typeof WebGPURenderingSystem> {
+    constructor(canvasElement: HTMLCanvasElement);
     render(scene: Scene, camera: Camera): void;
 }
 
