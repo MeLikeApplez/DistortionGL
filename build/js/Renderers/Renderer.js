@@ -13,6 +13,7 @@ class Renderer {
   }
   render(scene, camera) {
     if (!scene.ready) {
+      if (scene.loaded) return;
       scene.load(this, camera);
       if (!scene.loaded) {
         throw Error('Scene has been loaded but did not set "scene.loaded = true"!');

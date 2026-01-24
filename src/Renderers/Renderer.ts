@@ -24,11 +24,13 @@ export class Renderer<TSystem extends RenderingSystem> {
 
     render(scene: Scene, camera: Camera) {
         if(!scene.ready) {
+            if(scene.loaded) return
+            
             scene.load(this, camera)
             
-        if(!scene.loaded) {
-            throw Error('Scene has been loaded but did not set "scene.loaded = true"!')
-        }
+            if(!scene.loaded) {
+                throw Error('Scene has been loaded but did not set "scene.loaded = true"!')
+            }
         } else {
             scene.render(this, camera)
         }

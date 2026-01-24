@@ -1,29 +1,6 @@
 type Promisified<TData, TError> = Promise<[TData, null] | [null, TError]>;
 declare function Promisify<TData, TError>(promiseFunc: Promise<TData>, customError?: TError): Promisified<TData, TError>;
 
-declare class Events<T extends Record<string, any>> {
-    private _listeners;
-    constructor(eventNames?: Array<keyof T>);
-    dispatchEvent<K extends keyof T>(eventName: K, data: T[K]): boolean;
-    addEventListener<K extends keyof T>(eventName: K, callback: (data: T[K]) => void): void;
-}
-
-interface ClockEvents {
-    onstart: Clock;
-    onupdate: Clock;
-    onstop: Clock;
-}
-declare class Clock extends Events<ClockEvents> {
-    private animationId;
-    startTime: number;
-    fps: number;
-    deltaTime: number;
-    constructor();
-    start(): number;
-    stop(): number;
-    update(time: number): void;
-}
-
 declare class Vector2 {
     x: number;
     y: number;
@@ -254,9 +231,8 @@ declare class Scene<TRenderer = Renderer<RenderingSystem>, TCamera = Camera> {
     render(renderer: TRenderer, camera: TCamera, ...any: any): void;
 }
 
-declare class WebGL2Renderer extends Renderer<typeof WebGL2RenderingSystem> {
-    gl: WebGL2RenderingContext;
-    constructor(canvasElement: HTMLCanvasElement, glOptions?: WebGLContextAttributes);
+declare class WebGPURenderer extends Renderer<typeof WebGPURenderingSystem> {
+    constructor(canvasElement: HTMLCanvasElement);
     render(scene: Scene, camera: Camera): void;
 }
 
@@ -285,9 +261,33 @@ declare class Camera {
     render(renderer: WebGL2Renderer | WebGPURenderer, uniforms: WebGL2RenderUniforms | WebGPURenderUniforms): void;
 }
 
-declare class WebGPURenderer extends Renderer<typeof WebGPURenderingSystem> {
-    constructor(canvasElement: HTMLCanvasElement);
+declare class WebGL2Renderer extends Renderer<typeof WebGL2RenderingSystem> {
+    gl: WebGL2RenderingContext;
+    constructor(canvasElement: HTMLCanvasElement, glOptions?: WebGLContextAttributes);
     render(scene: Scene, camera: Camera): void;
+}
+
+declare class Events<T extends Record<string, any>> {
+    private _listeners;
+    constructor(eventNames?: Array<keyof T>);
+    dispatchEvent<K extends keyof T>(eventName: K, data: T[K]): boolean;
+    addEventListener<K extends keyof T>(eventName: K, callback: (data: T[K]) => void): void;
+}
+
+interface ClockEvents {
+    onstart: Clock;
+    onupdate: Clock;
+    onstop: Clock;
+}
+declare class Clock extends Events<ClockEvents> {
+    private animationId;
+    startTime: number;
+    fps: number;
+    deltaTime: number;
+    constructor();
+    start(): number;
+    stop(): number;
+    update(time: number): void;
 }
 
 declare function randomInt(min: number, max: number): number;
