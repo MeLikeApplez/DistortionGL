@@ -1,29 +1,6 @@
 type Promisified<TData, TError> = Promise<[TData, null] | [null, TError]>;
 declare function Promisify<TData, TError>(promiseFunc: Promise<TData>, customError?: TError): Promisified<TData, TError>;
 
-declare class Events<T extends Record<string, any>> {
-    private _listeners;
-    constructor(eventNames?: Array<keyof T>);
-    dispatchEvent<K extends keyof T>(eventName: K, data: T[K]): boolean;
-    addEventListener<K extends keyof T>(eventName: K, callback: (data: T[K]) => void): void;
-}
-
-interface ClockEvents {
-    onstart: Clock;
-    onupdate: Clock;
-    onstop: Clock;
-}
-declare class Clock extends Events<ClockEvents> {
-    private animationId;
-    startTime: number;
-    fps: number;
-    deltaTime: number;
-    constructor();
-    start(): number;
-    stop(): number;
-    update(time: number): void;
-}
-
 declare class Quaternion {
     x: number;
     y: number;
@@ -288,6 +265,29 @@ declare class Scene<TRenderer = Renderer<RenderingSystem>, TCamera = Camera> {
     dispose(renderer: TRenderer, camera: TCamera, ...any: any): void;
     load(renderer: TRenderer, camera: TCamera, ...any: any): void;
     render(renderer: TRenderer, camera: TCamera, ...any: any): void;
+}
+
+declare class Events<T extends Record<string, any>> {
+    private _listeners;
+    constructor(eventNames?: Array<keyof T>);
+    dispatchEvent<K extends keyof T>(eventName: K, data: T[K]): boolean;
+    addEventListener<K extends keyof T>(eventName: K, callback: (data: T[K]) => void): void;
+}
+
+interface ClockEvents {
+    onstart: Clock;
+    onupdate: Clock;
+    onstop: Clock;
+}
+declare class Clock extends Events<ClockEvents> {
+    private animationId;
+    startTime: number;
+    fps: number;
+    deltaTime: number;
+    constructor();
+    start(): number;
+    stop(): number;
+    update(time: number): void;
 }
 
 declare function randomInt(min: number, max: number): number;
