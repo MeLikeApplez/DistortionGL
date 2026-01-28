@@ -3,6 +3,9 @@ import { Matrix4 } from '../Math/Matrix4'
 import { Vector3 } from '../Math/Vector3'
 
 export class PerspectiveCamera extends Camera {
+    position: Vector3
+    projectionMatrix: Matrix4
+    rotationMatrix: Matrix4
     fov: number
     aspect: number
     near: number
@@ -10,6 +13,11 @@ export class PerspectiveCamera extends Camera {
 
     constructor(fov: number, aspect: number, near: number, far: number) {
         super()
+        
+        this.position = new Vector3()
+
+        this.projectionMatrix = new Matrix4()
+        this.rotationMatrix = new Matrix4()
         
         this.fov = fov
         this.aspect = aspect

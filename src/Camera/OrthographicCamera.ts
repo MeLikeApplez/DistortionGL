@@ -3,6 +3,9 @@ import { Vector3 } from "../Math/Vector3"
 import { Camera } from "./Camera"
 
 export class OrthographicCamera extends Camera {
+    position: Vector3
+    projectionMatrix: Matrix4
+    rotationMatrix: Matrix4
     left: number
     right: number
     top: number
@@ -15,6 +18,11 @@ export class OrthographicCamera extends Camera {
     constructor(left: number, right: number, top: number, bottom: number, aspect: number, near: number, far: number) {
         super()
     
+        this.position = new Vector3()
+
+        this.projectionMatrix = new Matrix4()
+        this.rotationMatrix = new Matrix4()
+
         this.left = left
         this.right = right
         this.top = top
@@ -31,24 +39,24 @@ export class OrthographicCamera extends Camera {
     }
 
     lookAt(target: Vector3, up=Vector3.UP) {
-            const zAxis = this.position.clone().subtract(target).normalize()
-            const xAxis = up.cross(zAxis).normalize()
-            const yAxis = zAxis.cross(xAxis).normalize()
-    
-            const rotationMatrix = new Matrix4(
-                xAxis.x, xAxis.y, xAxis.z, 0,
-                yAxis.x, yAxis.y, yAxis.z, 0,
-                zAxis.x, zAxis.y, zAxis.z, 0,
-                0, 0, 0, 1
-            )
-    
-            this.target.set(target.x, target.y, target.z)
-    
-            this.rotationMatrix.setFromMatrix4(rotationMatrix)
-            this.rotation.setFromRotationMatrix(this.rotationMatrix)
-    
-            return this
-        }
+        const zAxis = this.position.clone().subtract(target).normalize()
+        const xAxis = up.cross(zAxis).normalize()
+        const yAxis = zAxis.cross(xAxis).normalize()
+
+        const rotationMatrix = new Matrix4(
+            xAxis.x, xAxis.y, xAxis.z, 0,
+            yAxis.x, yAxis.y, yAxis.z, 0,
+            zAxis.x, zAxis.y, zAxis.z, 0,
+            0, 0, 0, 1
+        )
+
+        this.target.set(target.x, target.y, target.z)
+
+        this.rotationMatrix.setFromMatrix4(rotationMatrix)
+        this.rotation.setFromRotationMatrix(this.rotationMatrix)
+
+        return this
+    }
 
     // https://github.com/mrdoob/three.js/blob/master/src/cameras/OrthographicCamera.js#L195
     // https://github.com/mrdoob/three.js/blob/master/src/math/Matrix4.js#L1169

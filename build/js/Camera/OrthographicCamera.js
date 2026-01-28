@@ -2,6 +2,9 @@ import { Matrix4 } from "../Math/Matrix4";
 import { Vector3 } from "../Math/Vector3";
 import { Camera } from "./Camera";
 class OrthographicCamera extends Camera {
+  position;
+  projectionMatrix;
+  rotationMatrix;
   left;
   right;
   top;
@@ -12,6 +15,9 @@ class OrthographicCamera extends Camera {
   zoom;
   constructor(left, right, top, bottom, aspect, near, far) {
     super();
+    this.position = new Vector3();
+    this.projectionMatrix = new Matrix4();
+    this.rotationMatrix = new Matrix4();
     this.left = left;
     this.right = right;
     this.top = top;

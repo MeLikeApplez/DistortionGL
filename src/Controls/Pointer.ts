@@ -8,6 +8,13 @@ interface PointerEvents {
     onmousescroll: Pointer
 }
 
+type ClipSpaceOptions = 'normalized-device-coordinates' | 'normalized-dom' | 'dom'
+
+interface PointerOptions {
+    devicePixelRatio?: number
+    clipSpace?: ClipSpaceOptions
+}
+
 export class Pointer extends Events<PointerEvents> {
     element: HTMLElement | null
     position: Vector2
@@ -19,8 +26,9 @@ export class Pointer extends Events<PointerEvents> {
     isPointerDown: boolean
     isPointerUp: boolean
     devicePixelRatio: number
+    clipSpace: ClipSpaceOptions
 
-    constructor(element: HTMLElement | null, devicePixelRatio=1) {
+    constructor(element: HTMLElement | null, options?: PointerOptions) {
         super(['onpointerup', 'onpointermove', 'onpointerdown', 'onmousescroll'])
 
         this.element = element
@@ -35,9 +43,43 @@ export class Pointer extends Events<PointerEvents> {
         this.isPointerDown = false
         this.isPointerUp = true
 
-        this.devicePixelRatio = devicePixelRatio
+        this.devicePixelRatio = options?.devicePixelRatio ?? 1
+        this.clipSpace = options?.clipSpace ?? 'dom'
 
         if(element) this.load(element)
+    }
+
+    private _setPosition(event: PointerEvent, rect: DOMRect, offset: Vector2) {
+        if(!this.element) return
+
+        let x = this.devicePixelRatio * (event.clientX - rect.left + offset.x)
+        let y = this.devicePixelRatio * (event.clientY - rect.top + offset.y)
+        const width = (rect.width / 2) * this.devicePixelRatio
+        const height = (rect.height / 2) * this.devicePixelRatio
+
+        switch(this.clipSpace) {
+            case 'normalized-device-coordinates': {
+                x = (x - width) / width
+                y = (height - y) / height
+
+                break
+            }
+            case 'normalized-dom': {
+                x = (x - width) / width
+                y = (y - height) / height
+                
+                break
+            }
+            case 'dom': {
+                x = x - width
+                y = y - height
+
+                break
+            }
+            default: throw Error('Clip space not defined!')
+        }
+
+        this.position.set(x, y)
     }
 
     dispose() {
@@ -73,10 +115,7 @@ export class Pointer extends Events<PointerEvents> {
 
             const rect = element.getBoundingClientRect()
 
-            this.position.set(
-                this.devicePixelRatio * (event.clientX - rect.left + this.offset.x),
-                this.devicePixelRatio * (event.clientY - rect.top + this.offset.y)
-            )
+            this._setPosition(event, rect, this.offset)
             this.drag.set(0, 0)
 
             if(!this.isPointerDragging && this.isPointerDown) {
@@ -91,10 +130,7 @@ export class Pointer extends Events<PointerEvents> {
         element.onpointermove = event => {
             const rect = element.getBoundingClientRect()
 
-            this.position.set(
-                this.devicePixelRatio * (event.clientX - rect.left + this.offset.x),
-                this.devicePixelRatio * (event.clientY - rect.top + this.offset.y)
-            )
+            this._setPosition(event, rect, this.offset)
 
             if(this.isPointerDown) {
                 this.drag.set(

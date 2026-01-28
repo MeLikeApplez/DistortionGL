@@ -1,5 +1,7 @@
 import { Euler } from '../Math/Euler'
+import type { Matrix3 } from '../Math/Matrix3'
 import { Matrix4 } from '../Math/Matrix4'
+import type { Vector2 } from '../Math/Vector2'
 import { Vector3 } from '../Math/Vector3'
 // import { WebGL2Renderer } from '../Renderers/WebGL2Renderer'
 // import type { WebGPURenderer } from '../Renderers/WebGPURenderer'
@@ -18,21 +20,21 @@ import { Vector3 } from '../Math/Vector3'
 // }
 
 export abstract class Camera {
-    position: Vector3
+    abstract position: Vector2 | Vector3
     rotation: Euler
-    projectionMatrix: Matrix4
-    rotationMatrix: Matrix4
+    abstract projectionMatrix: Matrix3 | Matrix4
+    abstract rotationMatrix: Matrix3 | Matrix4
     target: Vector3
     autoUpdate: boolean
     needsUpdate: boolean
     enabled: boolean
 
     constructor() {
-        this.position = new Vector3()
+        // this.position = new Vector3()
         this.rotation = new Euler()
 
-        this.projectionMatrix = new Matrix4()
-        this.rotationMatrix = new Matrix4()
+        // this.projectionMatrix = new Matrix4()
+        // this.rotationMatrix = new Matrix4()
 
         this.target = new Vector3()
         

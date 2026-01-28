@@ -11,7 +11,8 @@ class Pointer extends Events {
   isPointerDown;
   isPointerUp;
   devicePixelRatio;
-  constructor(element, devicePixelRatio = 1) {
+  clipSpace;
+  constructor(element, options) {
     super(["onpointerup", "onpointermove", "onpointerdown", "onmousescroll"]);
     this.element = element;
     this.position = new Vector2(0, 0);
@@ -22,8 +23,36 @@ class Pointer extends Events {
     this.isPointerDragging = false;
     this.isPointerDown = false;
     this.isPointerUp = true;
-    this.devicePixelRatio = devicePixelRatio;
+    this.devicePixelRatio = options?.devicePixelRatio ?? 1;
+    this.clipSpace = options?.clipSpace ?? "dom";
     if (element) this.load(element);
+  }
+  _setPosition(event, rect, offset) {
+    if (!this.element) return;
+    let x = this.devicePixelRatio * (event.clientX - rect.left + offset.x);
+    let y = this.devicePixelRatio * (event.clientY - rect.top + offset.y);
+    const width = rect.width / 2 * this.devicePixelRatio;
+    const height = rect.height / 2 * this.devicePixelRatio;
+    switch (this.clipSpace) {
+      case "normalized-device-coordinates": {
+        x = (x - width) / width;
+        y = (height - y) / height;
+        break;
+      }
+      case "normalized-dom": {
+        x = (x - width) / width;
+        y = (y - height) / height;
+        break;
+      }
+      case "dom": {
+        x = x - width;
+        y = y - height;
+        break;
+      }
+      default:
+        throw Error("Clip space not defined!");
+    }
+    this.position.set(x, y);
   }
   dispose() {
     if (!this.element) return false;
@@ -48,10 +77,7 @@ class Pointer extends Events {
       this.isPointerDown = true;
       this.isPointerUp = false;
       const rect = element.getBoundingClientRect();
-      this.position.set(
-        this.devicePixelRatio * (event.clientX - rect.left + this.offset.x),
-        this.devicePixelRatio * (event.clientY - rect.top + this.offset.y)
-      );
+      this._setPosition(event, rect, this.offset);
       this.drag.set(0, 0);
       if (!this.isPointerDragging && this.isPointerDown) {
         this.isPointerDragging = true;
@@ -61,10 +87,7 @@ class Pointer extends Events {
     };
     element.onpointermove = (event) => {
       const rect = element.getBoundingClientRect();
-      this.position.set(
-        this.devicePixelRatio * (event.clientX - rect.left + this.offset.x),
-        this.devicePixelRatio * (event.clientY - rect.top + this.offset.y)
-      );
+      this._setPosition(event, rect, this.offset);
       if (this.isPointerDown) {
         this.drag.set(
           this.position.x - this.down.x,

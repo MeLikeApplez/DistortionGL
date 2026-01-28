@@ -12,11 +12,11 @@ export abstract class Entity<TRenderer=Renderer> {
     readonly uuid: string
     name: string
     type: string
-    position: Vector2 | Vector3 | Vector4 | null
-    scale: Vector2 | Vector3 | Vector4 | null
-    rotation: Euler | null
-    quaternion: Quaternion | null
-    matrix: Matrix3 | Matrix4 | null
+    abstract position: Vector2 | Vector3 | Vector4 | null
+    abstract scale: Vector2 | Vector3 | Vector4 | null
+    abstract rotation: Euler | null
+    abstract quaternion: Quaternion | null
+    abstract matrix: Matrix3 | Matrix4 | null
     matrixAutoUpdate: boolean
     matrixNeedsUpdate: boolean
     autoUpdate: boolean
@@ -27,12 +27,12 @@ export abstract class Entity<TRenderer=Renderer> {
         this.name = ''
         this.type = ''
             
-        this.position = null
-        this.scale = null
-        this.rotation = null
-        this.quaternion = null
+        // this.position = null
+        // this.scale = null
+        // this.rotation = null
+        // this.quaternion = null
     
-        this.matrix = null
+        // this.matrix = null
 
         this.matrixAutoUpdate = false
         this.matrixNeedsUpdate = false

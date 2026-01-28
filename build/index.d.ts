@@ -154,10 +154,10 @@ declare class Vector3 {
 }
 
 declare abstract class Camera {
-    position: Vector3;
+    abstract position: Vector2 | Vector3;
     rotation: Euler;
-    projectionMatrix: Matrix4;
-    rotationMatrix: Matrix4;
+    abstract projectionMatrix: Matrix3 | Matrix4;
+    abstract rotationMatrix: Matrix3 | Matrix4;
     target: Vector3;
     autoUpdate: boolean;
     needsUpdate: boolean;
@@ -212,11 +212,11 @@ declare abstract class Entity<TRenderer = Renderer> {
     readonly uuid: string;
     name: string;
     type: string;
-    position: Vector2 | Vector3 | Vector4 | null;
-    scale: Vector2 | Vector3 | Vector4 | null;
-    rotation: Euler | null;
-    quaternion: Quaternion | null;
-    matrix: Matrix3 | Matrix4 | null;
+    abstract position: Vector2 | Vector3 | Vector4 | null;
+    abstract scale: Vector2 | Vector3 | Vector4 | null;
+    abstract rotation: Euler | null;
+    abstract quaternion: Quaternion | null;
+    abstract matrix: Matrix3 | Matrix4 | null;
     matrixAutoUpdate: boolean;
     matrixNeedsUpdate: boolean;
     autoUpdate: boolean;
@@ -238,12 +238,6 @@ declare abstract class Scene<TRenderer = Renderer, TCamera = Camera> {
     abstract dispose(renderer: TRenderer, camera: TCamera, ...any: any): void;
     abstract load(renderer: TRenderer, camera: TCamera, ...any: any): void;
     abstract render(renderer: TRenderer, camera: TCamera, ...any: any): void;
-}
-
-declare class WebGL2Renderer extends Renderer {
-    gl: WebGL2RenderingContext;
-    constructor(canvasElement: HTMLCanvasElement, glOptions?: WebGLContextAttributes);
-    render(scene: Scene, camera: Camera): void;
 }
 
 declare class Events<T extends Record<string, any>> {
@@ -269,14 +263,24 @@ declare class Clock extends Events<ClockEvents> {
     update(time: number): void;
 }
 
-declare class Canvas2D extends Renderer {
-    ctx: CanvasRenderingContext2D;
-    constructor(canvasElement: HTMLCanvasElement, ctxOptions?: CanvasRenderingContext2DSettings);
+declare class WebGPURenderer extends Renderer {
+    constructor(canvasElement: HTMLCanvasElement);
     render(scene: Scene, camera: Camera): void;
 }
 
-declare class WebGPURenderer extends Renderer {
-    constructor(canvasElement: HTMLCanvasElement);
+declare class WebGL2Renderer extends Renderer {
+    gl: WebGL2RenderingContext;
+    constructor(canvasElement: HTMLCanvasElement, glOptions?: WebGLContextAttributes);
+    render(scene: Scene, camera: Camera): void;
+}
+
+interface Canvas2DRendererOptions extends CanvasRenderingContext2DSettings {
+    clipSpace: 'normalized-device-coordinates' | 'normalized-dom' | 'dom';
+}
+declare class Canvas2DRenderer extends Renderer {
+    ctx: CanvasRenderingContext2D;
+    clipSpace: Canvas2DRendererOptions['clipSpace'];
+    constructor(canvasElement: HTMLCanvasElement, ctxOptions: Canvas2DRendererOptions);
     render(scene: Scene, camera: Camera): void;
 }
 
@@ -403,6 +407,11 @@ interface PointerEvents {
     onpointerup: Pointer;
     onmousescroll: Pointer;
 }
+type ClipSpaceOptions = 'normalized-device-coordinates' | 'normalized-dom' | 'dom';
+interface PointerOptions {
+    devicePixelRatio?: number;
+    clipSpace?: ClipSpaceOptions;
+}
 declare class Pointer extends Events<PointerEvents> {
     element: HTMLElement | null;
     position: Vector2;
@@ -414,12 +423,17 @@ declare class Pointer extends Events<PointerEvents> {
     isPointerDown: boolean;
     isPointerUp: boolean;
     devicePixelRatio: number;
-    constructor(element: HTMLElement | null, devicePixelRatio?: number);
+    clipSpace: ClipSpaceOptions;
+    constructor(element: HTMLElement | null, options?: PointerOptions);
+    private _setPosition;
     dispose(): boolean;
     load(element: HTMLElement): boolean;
 }
 
 declare class OrthographicCamera extends Camera {
+    position: Vector3;
+    projectionMatrix: Matrix4;
+    rotationMatrix: Matrix4;
     left: number;
     right: number;
     top: number;
@@ -434,6 +448,9 @@ declare class OrthographicCamera extends Camera {
 }
 
 declare class PerspectiveCamera extends Camera {
+    position: Vector3;
+    projectionMatrix: Matrix4;
+    rotationMatrix: Matrix4;
     fov: number;
     aspect: number;
     near: number;
@@ -479,5 +496,5 @@ declare class Keyboard extends Events<KeyboardEvents> {
     load(element: HTMLElement): boolean;
 }
 
-export { Camera, Canvas2D, Clock, Color, Entity, Euler, Events, ImageLoader, Keyboard, Loader, Matrix3, Matrix4, OrbitControls, OrthographicCamera, PerspectiveCamera, Pointer, Promisify, Quaternion, Renderer, Scene, ShaderLoader, Vector2, Vector3, Vector4, WebGL2Renderer, WebGL2ShaderLoader, WebGPURenderer, clamp, extendArray, generateUUID, lerp, randomFloat, randomInt };
+export { Camera, Canvas2DRenderer, Clock, Color, Entity, Euler, Events, ImageLoader, Keyboard, Loader, Matrix3, Matrix4, OrbitControls, OrthographicCamera, PerspectiveCamera, Pointer, Promisify, Quaternion, Renderer, Scene, ShaderLoader, Vector2, Vector3, Vector4, WebGL2Renderer, WebGL2ShaderLoader, WebGPURenderer, clamp, extendArray, generateUUID, lerp, randomFloat, randomInt };
 export type { Promisified };

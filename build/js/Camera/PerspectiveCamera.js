@@ -2,12 +2,18 @@ import { Camera } from "./Camera";
 import { Matrix4 } from "../Math/Matrix4";
 import { Vector3 } from "../Math/Vector3";
 class PerspectiveCamera extends Camera {
+  position;
+  projectionMatrix;
+  rotationMatrix;
   fov;
   aspect;
   near;
   far;
   constructor(fov, aspect, near, far) {
     super();
+    this.position = new Vector3();
+    this.projectionMatrix = new Matrix4();
+    this.rotationMatrix = new Matrix4();
     this.fov = fov;
     this.aspect = aspect;
     this.near = near;
