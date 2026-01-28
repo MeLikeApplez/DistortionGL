@@ -1,9 +1,7 @@
 class Renderer {
-  system;
   canvasElement;
   ready;
-  constructor(system, canvasElement) {
-    this.system = system;
+  constructor(canvasElement) {
     this.canvasElement = canvasElement;
     this.ready = false;
   }

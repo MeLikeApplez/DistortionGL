@@ -1,7 +1,7 @@
 {
   "name": "distortiongl",
-  "version": "1.2.0",
-  "description": "A JavaScript WebGL2 library template customizable for 3D or 2D projects.\r <!-- > API Reference [Docs](./js/Docs/API.md) -->",
+  "version": "1.3.0",
+  "description": "A JavaScript WebGL2 library template customizable for 3D or 2D projects",
   "main": "./build/index.js",
   "type": "module",
   "types": "./build/index.d.ts",

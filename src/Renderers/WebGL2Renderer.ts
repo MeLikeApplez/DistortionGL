@@ -1,13 +1,12 @@
 import { Camera } from '../Camera/Camera'
-import { WebGL2RenderingSystem } from '../Core/Constants'
 import { Scene } from '../Scenes/Scene'
 import { Renderer } from './Renderer'
 
-export class WebGL2Renderer extends Renderer<typeof WebGL2RenderingSystem> {
+export class WebGL2Renderer extends Renderer {
     gl: WebGL2RenderingContext
 
     constructor(canvasElement: HTMLCanvasElement, glOptions: WebGLContextAttributes={}) {
-        super(WebGL2RenderingSystem, canvasElement)
+        super(canvasElement)
 
         this.gl = canvasElement.getContext('webgl2', glOptions) as WebGL2RenderingContext
 

@@ -1,17 +1,11 @@
 import { Camera } from "../Camera/Camera"
 import { Scene } from "../Scenes/Scene"
-import { WebGL2RenderingSystem, WebGPURenderingSystem } from "../Core/Constants"
 
-export type RenderingSystem = typeof WebGL2RenderingSystem | typeof WebGPURenderingSystem
-
-export class Renderer<TSystem extends RenderingSystem> {
-    readonly system: TSystem
+export class Renderer {
     canvasElement: HTMLCanvasElement
     ready: boolean
 
-    constructor(system: TSystem, canvasElement: HTMLCanvasElement) {
-        this.system = system
-
+    constructor(canvasElement: HTMLCanvasElement) {
         this.canvasElement = canvasElement
 
         this.ready = false

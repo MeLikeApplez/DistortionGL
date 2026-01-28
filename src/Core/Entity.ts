@@ -1,15 +1,15 @@
 import { generateUUID } from '../Math/MathUtils'
 import { Vector3 } from '../Math/Vector3'
 import { Euler } from '../Math/Euler'
-import { Renderer, type RenderingSystem } from '../Renderers/Renderer'
+import { Renderer } from '../Renderers/Renderer'
 import { Matrix4 } from '../Math/Matrix4'
 import { Quaternion } from '../Math/Quaternion'
 import { Matrix3 } from '../Math/Matrix3'
 import { Vector2 } from '../Math/Vector2'
 import { Vector4 } from '../Math/Vector4'
 
-export class Entity<TRenderer=Renderer<RenderingSystem>> {
-    uuid: string
+export abstract class Entity<TRenderer=Renderer> {
+    readonly uuid: string
     name: string
     type: string
     position: Vector2 | Vector3 | Vector4 | null
@@ -41,15 +41,7 @@ export class Entity<TRenderer=Renderer<RenderingSystem>> {
         this.needsUpdate = false
     }
 
-    dispose(renderer: TRenderer, ...any: any) {
-        
-    }
-
-    update(renderer: TRenderer, ...any: any) {
-        
-    }
-
-    render(renderer: TRenderer, ...any: any) {
-        
-    }
+    abstract dispose(renderer: TRenderer, ...any: any): void
+    abstract update(renderer: TRenderer, ...any: any): void
+    abstract render(renderer: TRenderer, ...any: any): void
 }

@@ -26,12 +26,6 @@ class Entity {
     this.autoUpdate = false;
     this.needsUpdate = false;
   }
-  dispose(renderer, ...any) {
-  }
-  update(renderer, ...any) {
-  }
-  render(renderer, ...any) {
-  }
 }
 export {
   Entity

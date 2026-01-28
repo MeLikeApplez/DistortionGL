@@ -64,6 +64,7 @@ async function useEsBuild() {
         outfile: OUTPUT_JS,
         bundle: true,
         minifyWhitespace: true,
+        minifySyntax: true,
         treeShaking: false,
     })
 

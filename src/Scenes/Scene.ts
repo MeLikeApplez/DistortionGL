@@ -1,8 +1,8 @@
 import { Entity } from '../Core/Entity'
-import { Renderer, type RenderingSystem } from '../Renderers/Renderer'
+import { Renderer } from '../Renderers/Renderer'
 import type { Camera } from '../Camera/Camera'
 
-export class Scene<TRenderer=Renderer<RenderingSystem>, TCamera=Camera> {
+export abstract class Scene<TRenderer=Renderer, TCamera=Camera> {
     children: Entity[]
     enabled: boolean
     loaded: boolean
@@ -31,15 +31,7 @@ export class Scene<TRenderer=Renderer<RenderingSystem>, TCamera=Camera> {
         }
     }
 
-    dispose(renderer: TRenderer, camera: TCamera, ...any: any) {
-        // Write scene code here
-    }
-
-    load(renderer: TRenderer, camera: TCamera, ...any: any) {
-        // Write scene code here
-    }
-
-    render(renderer: TRenderer, camera: TCamera, ...any: any) {
-        // Write scene code here
-    }
+    abstract dispose(renderer: TRenderer, camera: TCamera, ...any: any): void
+    abstract load(renderer: TRenderer, camera: TCamera, ...any: any): void
+    abstract render(renderer: TRenderer, camera: TCamera, ...any: any): void
 }

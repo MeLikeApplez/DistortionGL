@@ -5,7 +5,7 @@ interface LoaderEvents<L, E> {
     onerror: E
 }
 
-export class Loader<L, E> extends Events<LoaderEvents<L, E>> {
+export abstract class Loader<L, E> extends Events<LoaderEvents<L, E>> {
     ready: boolean
 
     constructor() {
@@ -14,8 +14,6 @@ export class Loader<L, E> extends Events<LoaderEvents<L, E>> {
         this.ready = false
     }
 
-    load(...any: any) {
-        // Write loader code here
-    }
+    abstract load(...any: any): void
 }
 

@@ -1,4 +1,5 @@
-# DistortionGL (v1.2.0 STABLE)
+<!-- # DistortionGL (v1.2.0 STABLE) -->
+# DistortionGL (v1.3.0 EXPERIMENTAL/UNSTABLE)
 A JavaScript WebGL2 library template customizable for 3D or 2D projects.
 <!-- > API Reference [Docs](./js/Docs/API.md) -->
 

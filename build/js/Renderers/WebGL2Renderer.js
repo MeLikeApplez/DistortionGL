@@ -1,9 +1,8 @@
-import { WebGL2RenderingSystem } from "../Core/Constants";
 import { Renderer } from "./Renderer";
 class WebGL2Renderer extends Renderer {
   gl;
   constructor(canvasElement, glOptions = {}) {
-    super(WebGL2RenderingSystem, canvasElement);
+    super(canvasElement);
     this.gl = canvasElement.getContext("webgl2", glOptions);
     this.ready = this.gl instanceof WebGL2RenderingContext;
   }

@@ -1,7 +1,6 @@
 import { Euler } from "../Math/Euler";
 import { Matrix4 } from "../Math/Matrix4";
 import { Vector3 } from "../Math/Vector3";
-import { WebGL2RenderingSystem } from "../Core/Constants";
 class Camera {
   position;
   rotation;
@@ -29,20 +28,18 @@ class Camera {
     );
     return direction.normalize();
   }
-  updateProjectionMatrix() {
-  }
   // uniforms param type needs to be fixed
-  render(renderer, uniforms) {
-    if (!this.enabled) return;
-    if (renderer.system === WebGL2RenderingSystem) {
-      const { gl } = renderer;
-      gl.uniform3f(uniforms.position, this.position.x, this.position.y, this.position.z);
-      gl.uniformMatrix4fv(uniforms.projection, false, this.projectionMatrix);
-      gl.uniformMatrix4fv(uniforms.rotation, false, this.rotationMatrix);
-    } else {
-      throw new Error("WebGPU render not implemented!");
-    }
-  }
+  // render(renderer: WebGL2Renderer | WebGPURenderer, uniforms: WebGL2RenderUniforms | WebGPURenderUniforms) {
+  //     if(!this.enabled) return
+  //     if(renderer.system === WebGL2RenderingSystem) {
+  //         const { gl } = renderer
+  //         gl.uniform3f(uniforms.position, this.position.x, this.position.y, this.position.z)
+  //         gl.uniformMatrix4fv(uniforms.projection, false, this.projectionMatrix)
+  //         gl.uniformMatrix4fv(uniforms.rotation, false, this.rotationMatrix)
+  //     } else {
+  //         throw new Error('WebGPU render not implemented!')
+  //     }
+  // }
 }
 export {
   Camera

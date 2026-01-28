@@ -20,12 +20,6 @@ class Scene {
       this.children.splice(index, 1);
     }
   }
-  dispose(renderer, camera, ...any) {
-  }
-  load(renderer, camera, ...any) {
-  }
-  render(renderer, camera, ...any) {
-  }
 }
 export {
   Scene

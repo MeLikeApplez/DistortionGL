@@ -153,31 +153,7 @@ declare class Vector3 {
     copy(vector: Vector3): this;
 }
 
-declare const WebGL2RenderingSystem = "WebGL2";
-declare const WebGPURenderingSystem = "WebGPU";
-
-declare class WebGL2Renderer extends Renderer<typeof WebGL2RenderingSystem> {
-    gl: WebGL2RenderingContext;
-    constructor(canvasElement: HTMLCanvasElement, glOptions?: WebGLContextAttributes);
-    render(scene: Scene, camera: Camera): void;
-}
-
-declare class WebGPURenderer extends Renderer<typeof WebGPURenderingSystem> {
-    constructor(canvasElement: HTMLCanvasElement);
-    render(scene: Scene, camera: Camera): void;
-}
-
-interface WebGL2RenderUniforms {
-    position: WebGLUniformLocation | null;
-    projection: WebGLUniformLocation | null;
-    rotation: WebGLUniformLocation | null;
-}
-interface WebGPURenderUniforms {
-    position: null;
-    projection: null;
-    rotation: null;
-}
-declare class Camera {
+declare abstract class Camera {
     position: Vector3;
     rotation: Euler;
     projectionMatrix: Matrix4;
@@ -188,16 +164,13 @@ declare class Camera {
     enabled: boolean;
     constructor();
     getWorldDirection(): Vector3;
-    updateProjectionMatrix(): void;
-    render(renderer: WebGL2Renderer | WebGPURenderer, uniforms: WebGL2RenderUniforms | WebGPURenderUniforms): void;
+    abstract updateProjectionMatrix(): void;
 }
 
-type RenderingSystem = typeof WebGL2RenderingSystem | typeof WebGPURenderingSystem;
-declare class Renderer<TSystem extends RenderingSystem> {
-    readonly system: TSystem;
+declare class Renderer {
     canvasElement: HTMLCanvasElement;
     ready: boolean;
-    constructor(system: TSystem, canvasElement: HTMLCanvasElement);
+    constructor(canvasElement: HTMLCanvasElement);
     setSize(width: number, height: number, devicePixelRatio?: number): void;
     render(scene: Scene, camera: Camera): void;
 }
@@ -235,8 +208,8 @@ declare class Vector4 {
     copy(vector: Vector4): this;
 }
 
-declare class Entity<TRenderer = Renderer<RenderingSystem>> {
-    uuid: string;
+declare abstract class Entity<TRenderer = Renderer> {
+    readonly uuid: string;
     name: string;
     type: string;
     position: Vector2 | Vector3 | Vector4 | null;
@@ -249,12 +222,12 @@ declare class Entity<TRenderer = Renderer<RenderingSystem>> {
     autoUpdate: boolean;
     needsUpdate: boolean;
     constructor();
-    dispose(renderer: TRenderer, ...any: any): void;
-    update(renderer: TRenderer, ...any: any): void;
-    render(renderer: TRenderer, ...any: any): void;
+    abstract dispose(renderer: TRenderer, ...any: any): void;
+    abstract update(renderer: TRenderer, ...any: any): void;
+    abstract render(renderer: TRenderer, ...any: any): void;
 }
 
-declare class Scene<TRenderer = Renderer<RenderingSystem>, TCamera = Camera> {
+declare abstract class Scene<TRenderer = Renderer, TCamera = Camera> {
     children: Entity[];
     enabled: boolean;
     loaded: boolean;
@@ -262,9 +235,15 @@ declare class Scene<TRenderer = Renderer<RenderingSystem>, TCamera = Camera> {
     constructor();
     add(entities: Entity[]): void;
     remove(entities: Entity[]): void;
-    dispose(renderer: TRenderer, camera: TCamera, ...any: any): void;
-    load(renderer: TRenderer, camera: TCamera, ...any: any): void;
-    render(renderer: TRenderer, camera: TCamera, ...any: any): void;
+    abstract dispose(renderer: TRenderer, camera: TCamera, ...any: any): void;
+    abstract load(renderer: TRenderer, camera: TCamera, ...any: any): void;
+    abstract render(renderer: TRenderer, camera: TCamera, ...any: any): void;
+}
+
+declare class WebGL2Renderer extends Renderer {
+    gl: WebGL2RenderingContext;
+    constructor(canvasElement: HTMLCanvasElement, glOptions?: WebGLContextAttributes);
+    render(scene: Scene, camera: Camera): void;
 }
 
 declare class Events<T extends Record<string, any>> {
@@ -288,6 +267,17 @@ declare class Clock extends Events<ClockEvents> {
     start(): number;
     stop(): number;
     update(time: number): void;
+}
+
+declare class Canvas2D extends Renderer {
+    ctx: CanvasRenderingContext2D;
+    constructor(canvasElement: HTMLCanvasElement, ctxOptions?: CanvasRenderingContext2DSettings);
+    render(scene: Scene, camera: Camera): void;
+}
+
+declare class WebGPURenderer extends Renderer {
+    constructor(canvasElement: HTMLCanvasElement);
+    render(scene: Scene, camera: Camera): void;
 }
 
 declare function randomInt(min: number, max: number): number;
@@ -336,10 +326,10 @@ interface LoaderEvents<L, E> {
     onload: L;
     onerror: E;
 }
-declare class Loader<L, E> extends Events<LoaderEvents<L, E>> {
+declare abstract class Loader<L, E> extends Events<LoaderEvents<L, E>> {
     ready: boolean;
     constructor();
-    load(...any: any): void;
+    abstract load(...any: any): void;
 }
 
 interface BaseShaderOptions {
@@ -489,5 +479,5 @@ declare class Keyboard extends Events<KeyboardEvents> {
     load(element: HTMLElement): boolean;
 }
 
-export { Camera, Clock, Color, Entity, Euler, Events, ImageLoader, Keyboard, Loader, Matrix3, Matrix4, OrbitControls, OrthographicCamera, PerspectiveCamera, Pointer, Promisify, Quaternion, Renderer, Scene, ShaderLoader, Vector2, Vector3, Vector4, WebGL2Renderer, WebGL2RenderingSystem, WebGL2ShaderLoader, WebGPURenderer, WebGPURenderingSystem, clamp, extendArray, generateUUID, lerp, randomFloat, randomInt };
-export type { Promisified, RenderingSystem };
+export { Camera, Canvas2D, Clock, Color, Entity, Euler, Events, ImageLoader, Keyboard, Loader, Matrix3, Matrix4, OrbitControls, OrthographicCamera, PerspectiveCamera, Pointer, Promisify, Quaternion, Renderer, Scene, ShaderLoader, Vector2, Vector3, Vector4, WebGL2Renderer, WebGL2ShaderLoader, WebGPURenderer, clamp, extendArray, generateUUID, lerp, randomFloat, randomInt };
+export type { Promisified };

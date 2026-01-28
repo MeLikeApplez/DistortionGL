@@ -5,8 +5,6 @@ class Loader extends Events {
     super();
     this.ready = false;
   }
-  load(...any) {
-  }
 }
 export {
   Loader
