@@ -5,11 +5,11 @@ import { Vector2 } from '../Math/Vector2'
 import { Vector3 } from '../Math/Vector3'
 import { type Pointer}  from './Pointer'
 
-type OrbitControlsCameras = PerspectiveCamera | OrthographicCamera
+type AvailableCameras = PerspectiveCamera | OrthographicCamera
 
 export class OrbitControls {
     element: HTMLElement | null
-    camera: OrbitControlsCameras
+    camera: AvailableCameras
     _initialRotatePosition: Vector2
     rotatePosition: Vector2
     // _initialPanPosition: Vector2
@@ -25,7 +25,7 @@ export class OrbitControls {
     enableOrbit: boolean
     enableZoom: boolean
 
-    constructor(element: HTMLElement | null, camera: OrbitControlsCameras) {
+    constructor(element: HTMLElement | null, camera: AvailableCameras) {
         this.element = element
         this.camera = camera
         

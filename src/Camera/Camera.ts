@@ -53,7 +53,7 @@ export abstract class Camera {
         return direction.normalize()
     }
 
-    abstract updateProjectionMatrix(): void
+    abstract updateProjectionMatrix(): this
 
     // uniforms param type needs to be fixed
     // render(renderer: WebGL2Renderer | WebGPURenderer, uniforms: WebGL2RenderUniforms | WebGPURenderUniforms) {

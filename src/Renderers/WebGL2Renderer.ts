@@ -1,6 +1,9 @@
-import { Camera } from '../Camera/Camera'
+import type { OrthographicCamera } from '../Camera/OrthographicCamera'
+import type { PerspectiveCamera } from '../Camera/PerspectiveCamera'
 import { Scene } from '../Scenes/Scene'
 import { Renderer } from './Renderer'
+
+type AvailableCameras = PerspectiveCamera | OrthographicCamera
 
 export class WebGL2Renderer extends Renderer {
     gl: WebGL2RenderingContext
@@ -13,7 +16,7 @@ export class WebGL2Renderer extends Renderer {
         this.ready = this.gl instanceof WebGL2RenderingContext
     }
 
-    render(scene: Scene, camera: Camera) {
+    render(scene: Scene, camera: AvailableCameras) {
         if(!this.ready) throw Error('WebGL2 is unavailable for this device!')
 
         this.gl.clearColor(0, 0, 0, 1)

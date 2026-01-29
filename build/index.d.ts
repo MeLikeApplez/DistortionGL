@@ -164,7 +164,7 @@ declare abstract class Camera {
     enabled: boolean;
     constructor();
     getWorldDirection(): Vector3;
-    abstract updateProjectionMatrix(): void;
+    abstract updateProjectionMatrix(): this;
 }
 
 declare class Renderer {
@@ -240,6 +240,42 @@ declare abstract class Scene<TRenderer = Renderer, TCamera = Camera> {
     abstract render(renderer: TRenderer, camera: TCamera, ...any: any): void;
 }
 
+declare class OrthographicCamera extends Camera {
+    position: Vector3;
+    projectionMatrix: Matrix4;
+    rotationMatrix: Matrix4;
+    left: number;
+    right: number;
+    top: number;
+    bottom: number;
+    aspect: number;
+    near: number;
+    far: number;
+    zoom: number;
+    constructor(left: number, right: number, top: number, bottom: number, aspect: number, near: number, far: number);
+    lookAt(target: Vector3, up?: Vector3): this;
+    updateProjectionMatrix(reversedDepth?: boolean): this;
+}
+
+declare class PerspectiveCamera extends Camera {
+    position: Vector3;
+    projectionMatrix: Matrix4;
+    rotationMatrix: Matrix4;
+    fov: number;
+    aspect: number;
+    near: number;
+    far: number;
+    constructor(fov: number, aspect: number, near: number, far: number);
+    lookAt(target: Vector3, up?: Vector3): this;
+    updateProjectionMatrix(): this;
+}
+
+type AvailableCameras$3 = PerspectiveCamera | OrthographicCamera;
+declare class WebGPURenderer extends Renderer {
+    constructor(canvasElement: HTMLCanvasElement);
+    render(scene: Scene, camera: AvailableCameras$3): void;
+}
+
 declare class Events<T extends Record<string, any>> {
     private _listeners;
     constructor(eventNames?: Array<keyof T>);
@@ -263,17 +299,30 @@ declare class Clock extends Events<ClockEvents> {
     update(time: number): void;
 }
 
-declare class WebGPURenderer extends Renderer {
-    constructor(canvasElement: HTMLCanvasElement);
-    render(scene: Scene, camera: Camera): void;
-}
-
+type AvailableCameras$2 = PerspectiveCamera | OrthographicCamera;
 declare class WebGL2Renderer extends Renderer {
     gl: WebGL2RenderingContext;
     constructor(canvasElement: HTMLCanvasElement, glOptions?: WebGLContextAttributes);
-    render(scene: Scene, camera: Camera): void;
+    render(scene: Scene, camera: AvailableCameras$2): void;
 }
 
+declare class Camera2D extends Camera {
+    position: Vector2;
+    projectionMatrix: Matrix3;
+    rotationMatrix: Matrix3;
+    width: number;
+    height: number;
+    aspect: number;
+    zoom: number;
+    constructor(width: number, height: number, aspect: number, zoom?: number);
+    /**
+     * @description Uses the webgl clip space coordinates and updates the projection matrix
+     * @link https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_model_view_projection
+     */
+    updateProjectionMatrix(): this;
+}
+
+type AvailableCameras$1 = Camera2D;
 interface Canvas2DRendererOptions extends CanvasRenderingContext2DSettings {
     clipSpace: 'normalized-device-coordinates' | 'normalized-dom' | 'dom';
 }
@@ -281,7 +330,7 @@ declare class Canvas2DRenderer extends Renderer {
     ctx: CanvasRenderingContext2D;
     clipSpace: Canvas2DRendererOptions['clipSpace'];
     constructor(canvasElement: HTMLCanvasElement, ctxOptions: Canvas2DRendererOptions);
-    render(scene: Scene, camera: Camera): void;
+    render(scene: Scene, camera: AvailableCameras$1): void;
 }
 
 declare function randomInt(min: number, max: number): number;
@@ -430,40 +479,10 @@ declare class Pointer extends Events<PointerEvents> {
     load(element: HTMLElement): boolean;
 }
 
-declare class OrthographicCamera extends Camera {
-    position: Vector3;
-    projectionMatrix: Matrix4;
-    rotationMatrix: Matrix4;
-    left: number;
-    right: number;
-    top: number;
-    bottom: number;
-    aspect: number;
-    near: number;
-    far: number;
-    zoom: number;
-    constructor(left: number, right: number, top: number, bottom: number, aspect: number, near: number, far: number);
-    lookAt(target: Vector3, up?: Vector3): this;
-    updateProjectionMatrix(reversedDepth?: boolean): this;
-}
-
-declare class PerspectiveCamera extends Camera {
-    position: Vector3;
-    projectionMatrix: Matrix4;
-    rotationMatrix: Matrix4;
-    fov: number;
-    aspect: number;
-    near: number;
-    far: number;
-    constructor(fov: number, aspect: number, near: number, far: number);
-    lookAt(target: Vector3, up?: Vector3): this;
-    updateProjectionMatrix(): this;
-}
-
-type OrbitControlsCameras = PerspectiveCamera | OrthographicCamera;
+type AvailableCameras = PerspectiveCamera | OrthographicCamera;
 declare class OrbitControls {
     element: HTMLElement | null;
-    camera: OrbitControlsCameras;
+    camera: AvailableCameras;
     _initialRotatePosition: Vector2;
     rotatePosition: Vector2;
     _initialZoom: number;
@@ -476,7 +495,7 @@ declare class OrbitControls {
     maxZoom: number;
     enableOrbit: boolean;
     enableZoom: boolean;
-    constructor(element: HTMLElement | null, camera: OrbitControlsCameras);
+    constructor(element: HTMLElement | null, camera: AvailableCameras);
     dispose(): boolean;
     orbit(controller: Pointer): void;
     zoom(controller: Pointer): void;
@@ -496,5 +515,5 @@ declare class Keyboard extends Events<KeyboardEvents> {
     load(element: HTMLElement): boolean;
 }
 
-export { Camera, Canvas2DRenderer, Clock, Color, Entity, Euler, Events, ImageLoader, Keyboard, Loader, Matrix3, Matrix4, OrbitControls, OrthographicCamera, PerspectiveCamera, Pointer, Promisify, Quaternion, Renderer, Scene, ShaderLoader, Vector2, Vector3, Vector4, WebGL2Renderer, WebGL2ShaderLoader, WebGPURenderer, clamp, extendArray, generateUUID, lerp, randomFloat, randomInt };
+export { Camera, Camera2D, Canvas2DRenderer, Clock, Color, Entity, Euler, Events, ImageLoader, Keyboard, Loader, Matrix3, Matrix4, OrbitControls, OrthographicCamera, PerspectiveCamera, Pointer, Promisify, Quaternion, Renderer, Scene, ShaderLoader, Vector2, Vector3, Vector4, WebGL2Renderer, WebGL2ShaderLoader, WebGPURenderer, clamp, extendArray, generateUUID, lerp, randomFloat, randomInt };
 export type { Promisified };
