@@ -136,7 +136,9 @@ export class Vector2 {
         return this.x === vector.x && this.y === vector.y
     }
 
-    // https://github.com/mrdoob/three.js/blob/master/src/math/Vector2.js#L828
+    /**
+     * @see https://github.com/mrdoob/three.js/blob/a58e9ecf225b50e4a28a934442e854878bc2a959/src/math/Vector2.js#L828
+     */
     rotateAround(center: Vector2, angle: number) {
         const c = Math.cos(angle), s = Math.sin(angle)
 

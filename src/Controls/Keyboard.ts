@@ -21,6 +21,9 @@ export class Keyboard extends Events<KeyboardEvents> {
         if(element) this.load(element)
     }
 
+    /**
+     * @description Destroys keyboard event listeners
+     */
     dispose() {
         if(!this.element) return false
 
@@ -33,10 +36,16 @@ export class Keyboard extends Events<KeyboardEvents> {
         return true
     }
 
+    /**
+     * @description Checks if a key is being pressed down
+     */
     hasKey(key: string) {
         return this.keys.has(key)
     }
 
+    /**
+     * @description Attaches event listeners to an HTML Element and activates the keyboard
+     */
     load(element: HTMLElement) {
         this.element = element
         this.keys.clear()

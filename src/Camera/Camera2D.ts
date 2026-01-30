@@ -29,7 +29,7 @@ export class Camera2D extends Camera {
 
     /**
      * @description Uses the webgl clip space coordinates and updates the projection matrix
-     * @link https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_model_view_projection
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_model_view_projection
      */
     updateProjectionMatrix() {
         let a = this.width / 2

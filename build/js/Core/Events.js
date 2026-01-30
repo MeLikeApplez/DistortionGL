@@ -8,6 +8,9 @@ class Events {
       }
     }
   }
+  /**
+   * @description Dispatches data to all event listeners
+   */
   dispatchEvent(eventName, data) {
     const group = this._listeners.get(eventName);
     if (!Array.isArray(group)) {
@@ -20,6 +23,9 @@ class Events {
     }
     return true;
   }
+  /**
+   * @description Adds a function to listen to events
+   */
   addEventListener(eventName, callback) {
     const group = this._listeners.get(eventName);
     if (!group) throw Error(`Unable to find event event name: "${String(eventName)}"`);

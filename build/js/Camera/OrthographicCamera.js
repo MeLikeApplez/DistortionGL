@@ -28,6 +28,9 @@ class OrthographicCamera extends Camera {
     this.zoom = 1;
     this.updateProjectionMatrix();
   }
+  /**
+   * @description Focuses the camera at the specified target
+   */
   lookAt(target, up = Vector3.UP) {
     const zAxis = this.position.clone().subtract(target).normalize();
     const xAxis = up.cross(zAxis).normalize();
@@ -55,8 +58,10 @@ class OrthographicCamera extends Camera {
     this.rotation.setFromRotationMatrix(this.rotationMatrix);
     return this;
   }
-  // https://github.com/mrdoob/three.js/blob/master/src/cameras/OrthographicCamera.js#L195
-  // https://github.com/mrdoob/three.js/blob/master/src/math/Matrix4.js#L1169
+  /**
+   * @see https://github.com/mrdoob/three.js/blob/master/src/cameras/OrthographicCamera.js#L195
+   * @see https://github.com/mrdoob/three.js/blob/master/src/math/Matrix4.js#L1169 
+   */
   updateProjectionMatrix(reversedDepth = false) {
     const aspectRight = this.right * this.aspect;
     const aspectLeft = this.left * this.aspect;

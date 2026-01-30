@@ -13,6 +13,9 @@ class Camera {
     this.needsUpdate = false;
     this.enabled = true;
   }
+  /**
+   * @description Gets the current camera forward facing direction in 3d space
+   */
   getWorldDirection() {
     const direction = new Vector3(
       this.rotationMatrix[8],

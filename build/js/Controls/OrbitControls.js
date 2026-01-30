@@ -33,6 +33,9 @@ class OrbitControls {
     this.enableOrbit = true;
     this.enableZoom = true;
   }
+  /**
+   * @description Destroys orbit control event listeners
+   */
   dispose() {
     if (!this.element) return false;
     this.element = null;
@@ -41,6 +44,9 @@ class OrbitControls {
     this.drag = new Vector2(0, 0);
     return true;
   }
+  /**
+   * @description Updates the cameras position on orbit. Must be updated every frame
+   */
   orbit(controller) {
     if (!this.enableOrbit) return;
     this.rotatePosition.copy(controller.position);
@@ -67,6 +73,9 @@ class OrbitControls {
     this.camera.lookAt(this.camera.target);
     this._initialRotatePosition.copy(this.rotatePosition);
   }
+  /**
+   * @description Updates the camera zoom in/out. Must be updated every frame
+   */
   zoom(controller) {
     if (!this.enableZoom || !this.element || this._initialZoom === controller.mouseScroll) return;
     const zoomDirection = this._initialZoom - controller.mouseScroll > 0 ? -1 : 1;

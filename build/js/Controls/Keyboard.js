@@ -10,6 +10,9 @@ class Keyboard extends Events {
     this.lowerCase = lowerCase;
     if (element) this.load(element);
   }
+  /**
+   * @description Destroys keyboard event listeners
+   */
   dispose() {
     if (!this.element) return false;
     window.onkeydown = null;
@@ -18,9 +21,15 @@ class Keyboard extends Events {
     this.keys.clear();
     return true;
   }
+  /**
+   * @description Checks if a key is being pressed down
+   */
   hasKey(key) {
     return this.keys.has(key);
   }
+  /**
+   * @description Attaches event listeners to an HTML Element and activates the keyboard
+   */
   load(element) {
     this.element = element;
     this.keys.clear();

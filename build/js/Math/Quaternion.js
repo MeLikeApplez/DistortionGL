@@ -16,7 +16,9 @@ class Quaternion {
     this.w = w;
     return this;
   }
-  // https://stackoverflow.com/a/50012073/13159492
+  /**
+   * @see https://stackoverflow.com/a/50012073/13159492
+   */
   setFromEuler(euler) {
     const { a, b, c } = euler.getEulerByOrder();
     const s1 = Math.sin(a / 2);

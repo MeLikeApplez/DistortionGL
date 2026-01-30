@@ -13,6 +13,9 @@ export class Events<T extends Record<string, any>> {
         }
     }
 
+    /**
+     * @description Dispatches data to all event listeners
+     */
     dispatchEvent<K extends keyof T>(eventName: K, data: T[K]) {
         const group = this._listeners.get(eventName)
 
@@ -31,6 +34,9 @@ export class Events<T extends Record<string, any>> {
         return true
     }
 
+    /**
+     * @description Adds a function to listen to events
+     */
     addEventListener<K extends keyof T>(eventName: K, callback: (data: T[K]) => void) {
         const group = this._listeners.get(eventName)
 

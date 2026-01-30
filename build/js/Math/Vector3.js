@@ -144,10 +144,12 @@ class Vector3 {
       this.x * vector.y - this.y * vector.x
     );
   }
-  // https://mathworld.wolfram.com/SphericalCoordinates.html
-  // rho = distance from origin
-  // theta = angle in x-y plane
-  // phi = angle in z axis
+  /**
+   * rho = distance from origin
+   * theta = angle in x-y plane
+   * phi = angle in z axis
+   * @see https://mathworld.wolfram.com/SphericalCoordinates.html
+   */
   setFromCylindricalCoordinates(rho, theta, phi) {
     this.x = rho * Math.sin(phi) * Math.cos(theta);
     this.y = rho * Math.sin(phi) * Math.sin(theta);

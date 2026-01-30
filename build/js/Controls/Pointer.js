@@ -54,6 +54,9 @@ class Pointer extends Events {
     }
     this.position.set(x, y);
   }
+  /**
+   * @description Destroys pointer event listeners
+   */
   dispose() {
     if (!this.element) return false;
     this.position.set(0, 0);
@@ -67,6 +70,9 @@ class Pointer extends Events {
     this.element = null;
     return true;
   }
+  /**
+   * @description Attaches event listeners to an HTML Element and activates the pointer
+   */
   load(element) {
     this.element = element;
     element.onwheel = (event) => {

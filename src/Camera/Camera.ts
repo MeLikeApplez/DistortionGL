@@ -43,6 +43,9 @@ export abstract class Camera {
         this.enabled = true
     }
 
+    /**
+     * @description Gets the current camera forward facing direction in 3d space
+     */
     getWorldDirection() {
         const direction = new Vector3(
             this.rotationMatrix[8],
@@ -53,6 +56,9 @@ export abstract class Camera {
         return direction.normalize()
     }
 
+    /**
+     * @description Updates the projection matrix
+     */
     abstract updateProjectionMatrix(): this
 
     // uniforms param type needs to be fixed

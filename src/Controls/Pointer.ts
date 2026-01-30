@@ -82,6 +82,9 @@ export class Pointer extends Events<PointerEvents> {
         this.position.set(x, y)
     }
 
+    /**
+     * @description Destroys pointer event listeners
+     */
     dispose() {
         if(!this.element) return false
 
@@ -100,6 +103,9 @@ export class Pointer extends Events<PointerEvents> {
         return true
     }
 
+    /**
+     * @description Attaches event listeners to an HTML Element and activates the pointer
+     */
     load(element: HTMLElement) {
         this.element = element
 

@@ -41,7 +41,18 @@ export abstract class Entity<TRenderer=Renderer> {
         this.needsUpdate = false
     }
 
+    /**
+     * @description Destroys any data/buffers for clean up 
+     */
     abstract dispose(renderer: TRenderer, ...any: any): void
+
+    /**
+     * @description Updates/Initializes the entity data. Use for scene updates only
+     */
     abstract update(renderer: TRenderer, ...any: any): void
+    
+    /**
+     * @description Renders the entity. Use for scene renders
+     */
     abstract render(renderer: TRenderer, ...any: any): void
 }

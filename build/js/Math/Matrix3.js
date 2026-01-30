@@ -111,7 +111,9 @@ class Matrix3 extends Array {
     this.multiplyMatrices(this, matrix);
     return this;
   }
-  // https://github.com/mrdoob/three.js/blob/0af9729d0c143a86a1d725d6e2c3ad83301f3f34/src/math/Matrix3.js#L215
+  /**
+   * @see https://github.com/mrdoob/three.js/blob/0af9729d0c143a86a1d725d6e2c3ad83301f3f34/src/math/Matrix3.js#L215
+   */
   multiplyMatrices(a, b) {
     const ae = a;
     const be = b;
@@ -139,7 +141,9 @@ class Matrix3 extends Array {
     }
     return this;
   }
-  // source: https://stackoverflow.com/a/72596891/13159492
+  /**
+   * @see https://stackoverflow.com/a/72596891/13159492
+   */
   inverse() {
     const [a, b, c, d, e, f, g, h, i] = this;
     const x = e * i - h * f;

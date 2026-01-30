@@ -51,6 +51,9 @@ export class OrbitControls {
         this.enableZoom = true
     }
 
+    /**
+     * @description Destroys orbit control event listeners
+     */
     dispose() {
         if(!this.element) return false
 
@@ -67,6 +70,9 @@ export class OrbitControls {
         return true
     }
 
+    /**
+     * @description Updates the cameras position on orbit. Must be updated every frame
+     */
     orbit(controller: Pointer) {
         if(!this.enableOrbit) return
 
@@ -106,6 +112,9 @@ export class OrbitControls {
         this._initialRotatePosition.copy(this.rotatePosition)
     }
 
+    /**
+     * @description Updates the camera zoom in/out. Must be updated every frame
+     */
     zoom(controller: Pointer) {
         if(!this.enableZoom || !this.element || this._initialZoom === controller.mouseScroll) return
 

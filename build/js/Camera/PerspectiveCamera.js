@@ -20,6 +20,9 @@ class PerspectiveCamera extends Camera {
     this.far = far;
     this.updateProjectionMatrix();
   }
+  /**
+   * @description Focuses the camera at the specified target
+   */
   lookAt(target, up = Vector3.UP) {
     const zAxis = this.position.clone().subtract(target).normalize();
     const xAxis = up.cross(zAxis).normalize();

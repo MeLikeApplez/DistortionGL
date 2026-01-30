@@ -152,7 +152,9 @@ export class Matrix4 extends Array {
         return this
     }
 
-    // https://en.wikipedia.org/wiki/Euler_angles#Rotation_matrix
+    /**
+     * @see https://en.wikipedia.org/wiki/Euler_angles#Rotation_matrix
+     */
     makeRotationFromEuler(euler: Euler) {
         const { s1, s2, s3, c1, c2, c3 } = euler.getEulerByOrderTrig()
         
@@ -285,7 +287,9 @@ export class Matrix4 extends Array {
         return this
     }
 
-    // https://github.com/mrdoob/three.js/blob/0af9729d0c143a86a1d725d6e2c3ad83301f3f34/src/math/Matrix4.js#L542
+    /**
+     * @see https://github.com/mrdoob/three.js/blob/0af9729d0c143a86a1d725d6e2c3ad83301f3f34/src/math/Matrix4.js#L542
+     */
     multiplyMatrices(a: Matrix4, b: Matrix4) {
         const ae = a;
 		const be = b;
@@ -332,7 +336,9 @@ export class Matrix4 extends Array {
         return this
     }
 
-    // source: https://evanw.github.io/lightgl.js/docs/matrix.html
+    /**
+     * @see https://evanw.github.io/lightgl.js/docs/matrix.html
+     */
     inverse() {
         const result = new Matrix4()
 
@@ -375,7 +381,9 @@ export class Matrix4 extends Array {
         return this
     }
 
-    // source: https://github.com/mrdoob/three.js/blob/3b1ff7661884f26e6d9af1d94c293129aaba885c/src/math/Matrix4.js#L1001
+    /**
+     * @see https://github.com/mrdoob/three.js/blob/3b1ff7661884f26e6d9af1d94c293129aaba885c/src/math/Matrix4.js#L1001
+     */
     compose(position: Vector3, quaternion: Quaternion, scale: Vector3) {
         const te = this;
 
