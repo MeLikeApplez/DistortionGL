@@ -129,7 +129,7 @@ export class OrbitControls {
 
         this.zoomDistance += zoomQuantity
         // const cameraDirection = new Vector3(this.camera.position.x, this.camera.position.y, this.camera.position.z).subtract(this.camera.target).normalize().multiplyScalar(zoomQuantity)
-        const cameraDirection = this.camera.getWorldDirection().multiplyScalar(zoomQuantity)
+        const cameraDirection = this.camera.getViewDirection().multiplyScalar(zoomQuantity)
 
         this.camera.position.add(cameraDirection)
 

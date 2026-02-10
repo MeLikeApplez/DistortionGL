@@ -40,8 +40,8 @@ export class Events<T extends Record<string, any>> {
     addEventListener<K extends keyof T>(eventName: K, callback: (data: T[K]) => void) {
         const group = this._listeners.get(eventName)
 
-        if(!group) throw Error(`Unable to find event event name: "${String(eventName)}"`)
-        if(typeof callback !== 'function') throw Error('Callback function is required!')
+        if(!group) return console.error(`Unable to find event event name: "${String(eventName)}"`)
+        if(typeof callback !== 'function') return console.error('Callback function is required!')
 
         group.push(callback)
     }

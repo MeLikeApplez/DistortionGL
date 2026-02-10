@@ -3,18 +3,24 @@ class Entity {
   uuid;
   name;
   type;
-  matrixAutoUpdate;
-  matrixNeedsUpdate;
-  autoUpdate;
-  needsUpdate;
-  constructor() {
+  position;
+  scale;
+  rotation;
+  quaternion;
+  matrix;
+  visible;
+  loaded;
+  constructor(options) {
     this.uuid = generateUUID();
-    this.name = "";
-    this.type = "";
-    this.matrixAutoUpdate = false;
-    this.matrixNeedsUpdate = false;
-    this.autoUpdate = false;
-    this.needsUpdate = false;
+    this.name = options?.name ?? "";
+    this.type = options?.type ?? "Entity";
+    this.position = null;
+    this.scale = null;
+    this.rotation = null;
+    this.quaternion = null;
+    this.matrix = null;
+    this.visible = true;
+    this.loaded = false;
   }
 }
 export {

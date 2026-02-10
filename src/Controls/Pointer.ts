@@ -76,7 +76,7 @@ export class Pointer extends Events<PointerEvents> {
 
                 break
             }
-            default: throw Error('Clip space not defined!')
+            default: console.error('Clip space not defined!')
         }
 
         this.position.set(x, y)

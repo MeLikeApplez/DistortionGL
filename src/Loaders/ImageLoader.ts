@@ -9,7 +9,7 @@ export class ImageLoader extends Loader<HTMLImageElement, string | Event> {
         this.img = new Image()
     }
 
-    load(src: string, onload: (img: HTMLImageElement) => void, onerror: (error: string | Event) => void) {
+    load(src: string, onload?: (img: HTMLImageElement) => void, onerror?: (error: string | Event) => void) {
         this.img.src = src
         this.img.onload = () => {
             if(onload) onload(this.img)

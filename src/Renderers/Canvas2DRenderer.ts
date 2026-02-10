@@ -1,28 +1,26 @@
-import type { Camera2D } from '../Camera/Camera2D'
+import { OrthographicCamera } from '../Camera/OrthographicCamera'
 import { Scene } from '../Scenes/Scene'
 import { Renderer } from './Renderer'
 
-type AvailableCameras = Camera2D
+type AvailableCameras = OrthographicCamera
 
 interface Canvas2DRendererOptions extends CanvasRenderingContext2DSettings {
-    clipSpace: 'normalized-device-coordinates' | 'normalized-dom' | 'dom'
+
 }
 
 export class Canvas2DRenderer extends Renderer {
     ctx: CanvasRenderingContext2D
-    clipSpace: Canvas2DRendererOptions['clipSpace']
 
-    constructor(canvasElement: HTMLCanvasElement, ctxOptions: Canvas2DRendererOptions) {
+    constructor(canvasElement: HTMLCanvasElement, ctxOptions?: Canvas2DRendererOptions) {
         super(canvasElement)
 
         this.ctx = canvasElement.getContext('2d', ctxOptions) as CanvasRenderingContext2D
-        this.clipSpace = ctxOptions.clipSpace
 
         this.ready = this.ctx instanceof CanvasRenderingContext2D
     }
 
     render(scene: Scene, camera: AvailableCameras) {
-        if(!this.ready) throw Error('Canvas 2D is unavailable for this device!')
+        if(!this.ready) return console.error('Canvas 2D is unavailable for this device!')
 
         // this.ctx.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height)
         // this.ctx.save()
@@ -66,7 +64,7 @@ export class Canvas2DRenderer extends Renderer {
                 
                 break
             }
-            default: throw Error('Clip space is not defined!')
+            default: console.error('Clip space is not defined!')
         }
         */
          
@@ -76,14 +74,14 @@ export class Canvas2DRenderer extends Renderer {
         this.ctx.setTransform(1, 0, 0, 1, 0, 0)
         this.ctx.clearRect(
             0, 0,
-            camera.width,
-            camera.height
+            camera.left + camera.right,
+            camera.top + camera.bottom
         )
 
         // project matrix
-        const m = camera.projectionMatrix
+        // const m = camera.projectionMatrix
 
-        this.ctx.setTransform(m[0], m[3], m[1], m[4], m[2], m[5])
+        // this.ctx.setTransform(m[0], m[3], m[1], m[4], m[2], m[5])
         
         super.render(scene, camera)
         // this.ctx.restore()

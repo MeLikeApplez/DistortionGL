@@ -85,7 +85,7 @@ class OrbitControls {
       return;
     }
     this.zoomDistance += zoomQuantity;
-    const cameraDirection = this.camera.getWorldDirection().multiplyScalar(zoomQuantity);
+    const cameraDirection = this.camera.getViewDirection().multiplyScalar(zoomQuantity);
     this.camera.position.add(cameraDirection);
     this._initialZoom = controller.mouseScroll;
   }

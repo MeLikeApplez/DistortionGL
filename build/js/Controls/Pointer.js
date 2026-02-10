@@ -50,7 +50,7 @@ class Pointer extends Events {
         break;
       }
       default:
-        throw Error("Clip space not defined!");
+        console.error("Clip space not defined!");
     }
     this.position.set(x, y);
   }

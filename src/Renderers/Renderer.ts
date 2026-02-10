@@ -16,7 +16,7 @@ export class Renderer {
         this.canvasElement.height = height * devicePixelRatio
     }
 
-    render(scene: Scene, camera: Camera) {
+    render(scene: Scene, camera: Camera, ...any: any) {
         if(!scene.ready) {
             if(scene.loaded) return
 

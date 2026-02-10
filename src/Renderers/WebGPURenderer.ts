@@ -8,10 +8,12 @@ type AvailableCameras = PerspectiveCamera | OrthographicCamera
 export class WebGPURenderer extends Renderer {
     constructor(canvasElement: HTMLCanvasElement) {
         super(canvasElement)
+    
+        console.error('WebGPU Renderer has not been implemented!')
     }
 
     render(scene: Scene, camera: AvailableCameras) {
-        throw Error('WebGPU Renderer has not been implemented!')
+        return console.error('WebGPU Renderer has not been implemented!')
 
         // super.render(scene, camera)
     }

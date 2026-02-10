@@ -28,8 +28,8 @@ class Events {
    */
   addEventListener(eventName, callback) {
     const group = this._listeners.get(eventName);
-    if (!group) throw Error(`Unable to find event event name: "${String(eventName)}"`);
-    if (typeof callback !== "function") throw Error("Callback function is required!");
+    if (!group) return console.error(`Unable to find event event name: "${String(eventName)}"`);
+    if (typeof callback !== "function") return console.error("Callback function is required!");
     group.push(callback);
   }
 }

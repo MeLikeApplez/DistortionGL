@@ -28,7 +28,15 @@ function extendArray(array, size) {
   }
   return arrayCopy;
 }
+function bezierCurve4pt(a, b, c, d, t) {
+  const s1 = (1 - t) ** 3 * a;
+  const s2 = 3 * (1 - t) ** 2 * t * b;
+  const s3 = 3 * (1 - t) * t ** 2 * c;
+  const s4 = t ** 3 * d;
+  return s1 + s2 + s3 + s4;
+}
 export {
+  bezierCurve4pt,
   clamp,
   extendArray,
   generateUUID,

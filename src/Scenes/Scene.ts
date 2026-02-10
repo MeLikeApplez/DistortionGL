@@ -3,35 +3,46 @@ import { Renderer } from '../Renderers/Renderer'
 import type { Camera } from '../Camera/Camera'
 
 export abstract class Scene<TRenderer=Renderer, TCamera=Camera> {
-    children: Entity[]
+    entities: Entity[]
     enabled: boolean
     loaded: boolean
     ready: boolean
 
     constructor() {
-        this.children = []
+        this.entities = []
 
         this.enabled = true
         this.loaded = false
         this.ready = false
     }
 
-    add(entities: Entity[]) {
-        this.children.push(...entities)
+    add(...entities: Entity[]) {
+        this.entities.push(...entities)
     }
 
-    remove(entities: Entity[]) {
+    remove(...entities: Entity[]) {
         for(let i = 0; i < entities.length; i++) {
             const entity = entities[i]
-            const index = this.children.findIndex(e => e.uuid === entity.uuid)
+            const index = this.entities.findIndex(e => e.uuid === entity.uuid)
 
             if(index === -1) continue
 
-            this.children.splice(index, 1)
+            this.entities.splice(index, 1)
         }
     }
 
+    /**
+     * @description Iterates and destroys all entities
+     */
     abstract dispose(renderer: TRenderer, camera: TCamera, ...any: any): void
+
+    /**
+     * @description Initializes scene and entity data. Use it once to setup the scene. 
+     */
     abstract load(renderer: TRenderer, camera: TCamera, ...any: any): void
+
+    /**
+     * @description Renders entities per frame
+     */
     abstract render(renderer: TRenderer, camera: TCamera, ...any: any): void
 }

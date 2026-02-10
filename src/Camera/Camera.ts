@@ -20,21 +20,21 @@ import { Vector3 } from '../Math/Vector3'
 // }
 
 export abstract class Camera {
-    abstract position: Vector2 | Vector3
+    position: Vector3
     rotation: Euler
-    abstract projectionMatrix: Matrix3 | Matrix4
-    abstract rotationMatrix: Matrix3 | Matrix4
+    projectionMatrix: Matrix4
+    rotationMatrix: Matrix4
     target: Vector3
     autoUpdate: boolean
     needsUpdate: boolean
     enabled: boolean
 
     constructor() {
-        // this.position = new Vector3()
+        this.position = new Vector3()
         this.rotation = new Euler()
 
-        // this.projectionMatrix = new Matrix4()
-        // this.rotationMatrix = new Matrix4()
+        this.projectionMatrix = new Matrix4()
+        this.rotationMatrix = new Matrix4()
 
         this.target = new Vector3()
         
@@ -46,7 +46,7 @@ export abstract class Camera {
     /**
      * @description Gets the current camera forward facing direction in 3d space
      */
-    getWorldDirection() {
+    getViewDirection() {
         const direction = new Vector3(
             this.rotationMatrix[8],
             this.rotationMatrix[9],

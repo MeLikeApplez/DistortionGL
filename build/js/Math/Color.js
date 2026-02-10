@@ -6,30 +6,6 @@ class Color extends Array {
     this[2] = b;
     this[3] = a;
   }
-  get r() {
-    return this[0];
-  }
-  get g() {
-    return this[1];
-  }
-  get b() {
-    return this[2];
-  }
-  get a() {
-    return this[3];
-  }
-  set r(value) {
-    this[0] = value;
-  }
-  set g(value) {
-    this[1] = value;
-  }
-  set b(value) {
-    this[2] = value;
-  }
-  set a(value) {
-    this[3] = value;
-  }
   set(r, g, b, a = 1) {
     this[0] = r;
     this[1] = g;

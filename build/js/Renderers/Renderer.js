@@ -9,7 +9,7 @@ class Renderer {
     this.canvasElement.width = width * devicePixelRatio;
     this.canvasElement.height = height * devicePixelRatio;
   }
-  render(scene, camera) {
+  render(scene, camera, ...any) {
     if (!scene.ready) {
       if (scene.loaded) return;
       scene.load(this, camera);

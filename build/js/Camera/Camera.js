@@ -1,13 +1,20 @@
 import { Euler } from "../Math/Euler";
+import { Matrix4 } from "../Math/Matrix4";
 import { Vector3 } from "../Math/Vector3";
 class Camera {
+  position;
   rotation;
+  projectionMatrix;
+  rotationMatrix;
   target;
   autoUpdate;
   needsUpdate;
   enabled;
   constructor() {
+    this.position = new Vector3();
     this.rotation = new Euler();
+    this.projectionMatrix = new Matrix4();
+    this.rotationMatrix = new Matrix4();
     this.target = new Vector3();
     this.autoUpdate = false;
     this.needsUpdate = false;
@@ -16,7 +23,7 @@ class Camera {
   /**
    * @description Gets the current camera forward facing direction in 3d space
    */
-  getWorldDirection() {
+  getViewDirection() {
     const direction = new Vector3(
       this.rotationMatrix[8],
       this.rotationMatrix[9],

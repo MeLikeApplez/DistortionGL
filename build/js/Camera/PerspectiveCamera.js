@@ -50,26 +50,41 @@ class PerspectiveCamera extends Camera {
     this.rotation.setFromRotationMatrix(this.rotationMatrix);
     return this;
   }
-  updateProjectionMatrix() {
+  /**
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_model_view_projection#perspective_projection_matrix
+   * @see https://github.com/mrdoob/three.js/blob/a58e9ecf225b50e4a28a934442e854878bc2a959/src/math/Matrix4.js#L1109
+   */
+  updateProjectionMatrix(reversedDepth = false) {
     const fovRadian = this.fov * (Math.PI / 180);
-    const f = 1 / Math.tan(fovRadian / 2);
     const rangeInv = 1 / (this.near - this.far);
+    const y = 1 / Math.tan(fovRadian / 2);
+    const x = y / this.aspect;
+    let c = 0;
+    let d = 0;
+    const e = this.near * this.far * rangeInv * 2;
+    if (reversedDepth) {
+      c = this.near / (this.far - this.near);
+      d = this.far * this.near / (this.far - this.near);
+    } else {
+      c = -(this.far - this.near) / (this.far - this.near);
+      d = -2 * this.far * this.near / (this.far - this.near);
+    }
     this.projectionMatrix.set(
-      f / this.aspect,
+      x,
       0,
       0,
       0,
       0,
-      f,
+      y,
       0,
       0,
       0,
       0,
-      (this.near + this.far) * rangeInv,
-      -1,
+      c,
+      d,
       0,
       0,
-      this.near * this.far * rangeInv * 2,
+      e,
       0
     );
     this.rotationMatrix.makeRotationFromEuler(this.rotation);

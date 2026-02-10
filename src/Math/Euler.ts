@@ -1,11 +1,14 @@
 import { Matrix4 } from "./Matrix4"
 import { Quaternion } from "./Quaternion"
 
+type LetterOrders = 'X' | 'Y' | 'Z'
+type EulerOrder = `${LetterOrders}${LetterOrders}${LetterOrders}`
+
 export class Euler {
     x: number
     y: number
     z: number
-    order: string
+    order: EulerOrder
 
     constructor(x=0, y=0, z=0) {
         this.x = x
@@ -14,7 +17,7 @@ export class Euler {
         this.order = 'XYZ'
     }
 
-    set(x: number, y: number, z: number, order?: string) {
+    set(x: number, y: number, z: number, order?: EulerOrder) {
         this.x = x
         this.y = y
         this.z = z
@@ -73,7 +76,7 @@ export class Euler {
         return this
     }
 
-    reorder(order: string) {
+    reorder(order: EulerOrder) {
         this.order = order
 
         return this

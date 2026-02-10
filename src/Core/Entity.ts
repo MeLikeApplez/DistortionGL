@@ -4,55 +4,61 @@ import { Euler } from '../Math/Euler'
 import { Renderer } from '../Renderers/Renderer'
 import { Matrix4 } from '../Math/Matrix4'
 import { Quaternion } from '../Math/Quaternion'
-import { Matrix3 } from '../Math/Matrix3'
 import { Vector2 } from '../Math/Vector2'
 import { Vector4 } from '../Math/Vector4'
+import { Matrix3 } from '../Math/Matrix3'
+
+interface EntityOptions {
+    name?: string
+    type?: string
+}
 
 export abstract class Entity<TRenderer=Renderer> {
     readonly uuid: string
-    name: string
-    type: string
-    abstract position: Vector2 | Vector3 | Vector4 | null
-    abstract scale: Vector2 | Vector3 | Vector4 | null
-    abstract rotation: Euler | null
-    abstract quaternion: Quaternion | null
-    abstract matrix: Matrix3 | Matrix4 | null
-    matrixAutoUpdate: boolean
-    matrixNeedsUpdate: boolean
-    autoUpdate: boolean
-    needsUpdate: boolean
+    readonly name: string
+    readonly type: string
+    position: Vector2 | Vector3 | Vector4 | null
+    scale: Vector2 | Vector3 | Vector4 | null
+    rotation: Euler | null
+    quaternion: Quaternion | null
+    matrix: Matrix3 | Matrix4 | null
+    visible: boolean
+    loaded: boolean
 
-    constructor() {
+    constructor(options?: EntityOptions) {
         this.uuid = generateUUID()
-        this.name = ''
-        this.type = ''
+        this.name = options?.name ?? ''
+        this.type = options?.type ?? 'Entity'
             
-        // this.position = null
-        // this.scale = null
-        // this.rotation = null
-        // this.quaternion = null
+        this.position = null
+        this.scale = null
+        this.rotation = null
+        this.quaternion = null
     
-        // this.matrix = null
+        this.matrix = null
 
-        this.matrixAutoUpdate = false
-        this.matrixNeedsUpdate = false
+        this.visible = true
 
-        this.autoUpdate = false
-        this.needsUpdate = false
+        this.loaded = false
     }
 
     /**
-     * @description Destroys any data/buffers for clean up 
+     * @description Destroys any data/buffers for clean up .
      */
     abstract dispose(renderer: TRenderer, ...any: any): void
 
     /**
-     * @description Updates/Initializes the entity data. Use for scene updates only
+     * @description Initializes entity data. Use it once to setup the entity.
+     */
+    abstract load(renderer: TRenderer, ...any: any): void
+
+    /**
+     * @description Updates entity data. Use for scene updates only.
      */
     abstract update(renderer: TRenderer, ...any: any): void
     
     /**
-     * @description Renders the entity. Use for scene renders
+     * @description Renders the entity. Use for scene renders.
      */
     abstract render(renderer: TRenderer, ...any: any): void
 }

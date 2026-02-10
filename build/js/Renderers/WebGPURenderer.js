@@ -2,9 +2,10 @@ import { Renderer } from "./Renderer";
 class WebGPURenderer extends Renderer {
   constructor(canvasElement) {
     super(canvasElement);
+    console.error("WebGPU Renderer has not been implemented!");
   }
   render(scene, camera) {
-    throw Error("WebGPU Renderer has not been implemented!");
+    return console.error("WebGPU Renderer has not been implemented!");
   }
 }
 export {

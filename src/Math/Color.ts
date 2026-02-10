@@ -11,38 +11,6 @@ export class Color extends Array {
         this[3] = a
     }
 
-    get r() {
-        return this[0]
-    }
-
-    get g() {
-        return this[1]
-    }
-
-    get b() {
-        return this[2]
-    }
-
-    get a() {
-        return this[3]
-    }
-
-    set r(value: number) {
-        this[0] = value
-    }
-
-    set g(value: number) {
-        this[1] = value
-    }
-
-    set b(value: number) {
-        this[2] = value
-    }
-
-    set a(value: number) {
-        this[3] = value
-    }
-
     set(r: number, g: number, b: number, a: number=1) {
         this[0] = r
         this[1] = g
