@@ -32,7 +32,8 @@ export function generateUUID() {
 
 export function extendArray<T>(array: ArrayLike<T>, size: number): ArrayLike<T> {
     const ArrayConstructor = array.constructor
-    const arrayCopy = ArrayConstructor(array.length * size)
+    // @ts-ignore
+    const arrayCopy = new ArrayConstructor(array.length * size)
 
     for(let i = 0; i < size; i++) {
         for(let j = 0; j < array.length; j++) {

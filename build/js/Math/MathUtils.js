@@ -20,7 +20,7 @@ function generateUUID() {
 }
 function extendArray(array, size) {
   const ArrayConstructor = array.constructor;
-  const arrayCopy = ArrayConstructor(array.length * size);
+  const arrayCopy = new ArrayConstructor(array.length * size);
   for (let i = 0; i < size; i++) {
     for (let j = 0; j < array.length; j++) {
       arrayCopy[array.length * i + j] = array[j];
