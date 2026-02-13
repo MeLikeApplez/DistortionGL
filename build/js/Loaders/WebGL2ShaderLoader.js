@@ -24,7 +24,8 @@ class WebGL2ShaderLoader extends Loader {
   load(gl, onload, onerror) {
     const vertexShader = gl.createShader(gl.VERTEX_SHADER);
     if (!vertexShader) {
-      return console.error("Failed to create vertex shader!");
+      console.error("Failed to create vertex shader!");
+      return this;
     }
     gl.shaderSource(vertexShader, this.vertexShader);
     gl.compileShader(vertexShader);
@@ -35,11 +36,13 @@ class WebGL2ShaderLoader extends Loader {
       this.ready = false;
       if (onerror) onerror(compileError);
       this.dispatchEvent("onerror", compileError);
-      return console.error(compileError);
+      console.error(compileError);
+      return this;
     }
     const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
     if (!fragmentShader) {
-      return console.error("Failed to create fragment shader!");
+      console.error("Failed to create fragment shader!");
+      return this;
     }
     gl.shaderSource(fragmentShader, this.fragmentShader);
     gl.compileShader(fragmentShader);
@@ -50,7 +53,8 @@ class WebGL2ShaderLoader extends Loader {
       this.ready = false;
       if (onerror) onerror(compileError);
       this.dispatchEvent("onerror", compileError);
-      return console.error(compileError);
+      console.error(compileError);
+      return this;
     }
     const program = gl.createProgram();
     gl.attachShader(program, vertexShader);
@@ -63,13 +67,15 @@ class WebGL2ShaderLoader extends Loader {
       this.ready = false;
       if (onerror) onerror(compileError);
       this.dispatchEvent("onerror", compileError);
-      return console.error(compileError);
+      console.error(compileError);
+      return this;
     }
     this.program = program;
     if (onload) onload(program);
     this.dispatchEvent("onload", program);
     this.gl = gl;
     this.ready = true;
+    return this;
   }
 }
 export {

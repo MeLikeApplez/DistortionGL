@@ -39,7 +39,9 @@ export class WebGL2ShaderLoader extends Loader<WebGLProgram, Error> {
         const vertexShader = gl.createShader(gl.VERTEX_SHADER)
 
         if(!vertexShader) {
-            return console.error('Failed to create vertex shader!')
+            console.error('Failed to create vertex shader!')
+        
+            return this
         }
 
         gl.shaderSource(vertexShader, this.vertexShader)
@@ -56,14 +58,18 @@ export class WebGL2ShaderLoader extends Loader<WebGLProgram, Error> {
 
             this.dispatchEvent('onerror', compileError)
 
-            return console.error(compileError)
+            console.error(compileError)
+            
+            return this
         }
 
         // setup and compile fragment shader
         const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER)
 
          if(!fragmentShader) {
-            return console.error('Failed to create fragment shader!')
+            console.error('Failed to create fragment shader!')
+        
+            return this
         }
 
         gl.shaderSource(fragmentShader, this.fragmentShader)
@@ -80,7 +86,9 @@ export class WebGL2ShaderLoader extends Loader<WebGLProgram, Error> {
 
             this.dispatchEvent('onerror', compileError)
 
-            return console.error(compileError)
+            console.error(compileError)
+            
+            return this
         }
 
         // create and attach program
@@ -100,7 +108,9 @@ export class WebGL2ShaderLoader extends Loader<WebGLProgram, Error> {
 
             this.dispatchEvent('onerror', compileError)
 
-            return console.error(compileError)
+            console.error(compileError)
+        
+            return this
         }
 
         this.program = program
@@ -111,5 +121,7 @@ export class WebGL2ShaderLoader extends Loader<WebGLProgram, Error> {
 
         this.gl = gl
         this.ready = true
+
+        return this
     }
 }

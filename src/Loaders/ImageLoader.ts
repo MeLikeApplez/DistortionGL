@@ -26,5 +26,7 @@ export class ImageLoader extends Loader<HTMLImageElement, string | Event> {
         
             this.ready = false
         }
+
+        return this
     }
 }

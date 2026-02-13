@@ -27,6 +27,89 @@ declare class Clock extends Events<ClockEvents> {
     update(time: number): void;
 }
 
+declare class Quaternion {
+    x: number;
+    y: number;
+    z: number;
+    w: number;
+    constructor(x?: number, y?: number, z?: number, w?: number);
+    set(x: number, y: number, z: number, w: number): this;
+    /**
+     * @see https://stackoverflow.com/a/50012073/13159492
+     */
+    setFromEuler(euler: Euler): this;
+    setFromAxisAngle(axis: Vector3, angle: number): Quaternion;
+    identity(): this;
+    normalize(): this;
+    conjugate(): this;
+    multiply(quaternion: Quaternion): this;
+    clone(): Quaternion;
+    copy(quaternion: Quaternion): this;
+}
+
+declare class Matrix4 extends Array {
+    constructor(n11?: number, n12?: number, n13?: number, n14?: number, n21?: number, n22?: number, n23?: number, n24?: number, n31?: number, n32?: number, n33?: number, n34?: number, n41?: number, n42?: number, n43?: number, n44?: number);
+    set(n11: number, n12: number, n13: number, n14: number, n21: number, n22: number, n23: number, n24: number, n31: number, n32: number, n33: number, n34: number, n41: number, n42: number, n43: number, n44: number): this;
+    setFromMatrix4(matrix: Matrix4): this;
+    identity(): this;
+    makeTranslation(x: number, y: number, z: number): this;
+    translate(x: number, y: number, z: number): this;
+    makeScale(x: number, y: number, z: number): this;
+    makeRotationX(theta: number): this;
+    makeRotationY(theta: number): this;
+    makeRotationZ(theta: number): this;
+    /**
+     * @see https://en.wikipedia.org/wiki/Euler_angles#Rotation_matrix
+     */
+    makeRotationFromEuler(euler: Euler): this;
+    makeRotationFromQuaternion(quaternion: Quaternion): this;
+    multiply(matrix: Matrix4): this;
+    /**
+     * @see https://github.com/mrdoob/three.js/blob/0af9729d0c143a86a1d725d6e2c3ad83301f3f34/src/math/Matrix4.js#L542
+     */
+    multiplyMatrices(a: Matrix4, b: Matrix4): this;
+    multiplyScalar(scale: number): this;
+    /**
+     * @see https://evanw.github.io/lightgl.js/docs/matrix.html
+     */
+    inverse(): this;
+    /**
+     * @see https://github.com/mrdoob/three.js/blob/3b1ff7661884f26e6d9af1d94c293129aaba885c/src/math/Matrix4.js#L1001
+     */
+    compose(position: Vector3, quaternion: Quaternion, scale: Vector3): this;
+    clone(): Matrix4;
+    copy(matrix: Matrix4): this;
+}
+
+type LetterOrders = 'X' | 'Y' | 'Z';
+type EulerOrder = `${LetterOrders}${LetterOrders}${LetterOrders}`;
+declare class Euler {
+    x: number;
+    y: number;
+    z: number;
+    order: EulerOrder;
+    constructor(x?: number, y?: number, z?: number);
+    set(x: number, y: number, z: number, order?: EulerOrder): this;
+    setFromQuaternion(quaternion: Quaternion): this;
+    getEulerByOrder(): {
+        a: number;
+        b: number;
+        c: number;
+    };
+    getEulerByOrderTrig(): {
+        s1: number;
+        s2: number;
+        s3: number;
+        c1: number;
+        c2: number;
+        c3: number;
+    };
+    setFromRotationMatrix(matrix4: Matrix4): this;
+    reorder(order: EulerOrder): this;
+    clone(): Euler;
+    copy(euler: Euler): this;
+}
+
 declare class Vector2 {
     x: number;
     y: number;
@@ -128,89 +211,6 @@ declare class Vector3 {
     copy(vector: Vector3): this;
 }
 
-declare class Quaternion {
-    x: number;
-    y: number;
-    z: number;
-    w: number;
-    constructor(x?: number, y?: number, z?: number, w?: number);
-    set(x: number, y: number, z: number, w: number): this;
-    /**
-     * @see https://stackoverflow.com/a/50012073/13159492
-     */
-    setFromEuler(euler: Euler): this;
-    setFromAxisAngle(axis: Vector3, angle: number): Quaternion;
-    identity(): this;
-    normalize(): this;
-    conjugate(): this;
-    multiply(quaternion: Quaternion): this;
-    clone(): Quaternion;
-    copy(quaternion: Quaternion): this;
-}
-
-type LetterOrders = 'X' | 'Y' | 'Z';
-type EulerOrder = `${LetterOrders}${LetterOrders}${LetterOrders}`;
-declare class Euler {
-    x: number;
-    y: number;
-    z: number;
-    order: EulerOrder;
-    constructor(x?: number, y?: number, z?: number);
-    set(x: number, y: number, z: number, order?: EulerOrder): this;
-    setFromQuaternion(quaternion: Quaternion): this;
-    getEulerByOrder(): {
-        a: number;
-        b: number;
-        c: number;
-    };
-    getEulerByOrderTrig(): {
-        s1: number;
-        s2: number;
-        s3: number;
-        c1: number;
-        c2: number;
-        c3: number;
-    };
-    setFromRotationMatrix(matrix4: Matrix4): this;
-    reorder(order: EulerOrder): this;
-    clone(): Euler;
-    copy(euler: Euler): this;
-}
-
-declare class Matrix4 extends Array {
-    constructor(n11?: number, n12?: number, n13?: number, n14?: number, n21?: number, n22?: number, n23?: number, n24?: number, n31?: number, n32?: number, n33?: number, n34?: number, n41?: number, n42?: number, n43?: number, n44?: number);
-    set(n11: number, n12: number, n13: number, n14: number, n21: number, n22: number, n23: number, n24: number, n31: number, n32: number, n33: number, n34: number, n41: number, n42: number, n43: number, n44: number): this;
-    setFromMatrix4(matrix: Matrix4): this;
-    identity(): this;
-    makeTranslation(x: number, y: number, z: number): this;
-    translate(x: number, y: number, z: number): this;
-    makeScale(x: number, y: number, z: number): this;
-    makeRotationX(theta: number): this;
-    makeRotationY(theta: number): this;
-    makeRotationZ(theta: number): this;
-    /**
-     * @see https://en.wikipedia.org/wiki/Euler_angles#Rotation_matrix
-     */
-    makeRotationFromEuler(euler: Euler): this;
-    makeRotationFromQuaternion(quaternion: Quaternion): this;
-    multiply(matrix: Matrix4): this;
-    /**
-     * @see https://github.com/mrdoob/three.js/blob/0af9729d0c143a86a1d725d6e2c3ad83301f3f34/src/math/Matrix4.js#L542
-     */
-    multiplyMatrices(a: Matrix4, b: Matrix4): this;
-    multiplyScalar(scale: number): this;
-    /**
-     * @see https://evanw.github.io/lightgl.js/docs/matrix.html
-     */
-    inverse(): this;
-    /**
-     * @see https://github.com/mrdoob/three.js/blob/3b1ff7661884f26e6d9af1d94c293129aaba885c/src/math/Matrix4.js#L1001
-     */
-    compose(position: Vector3, quaternion: Quaternion, scale: Vector3): this;
-    clone(): Matrix4;
-    copy(matrix: Matrix4): this;
-}
-
 declare abstract class Camera {
     position: Vector3;
     rotation: Euler;
@@ -229,50 +229,6 @@ declare abstract class Camera {
      * @description Updates the projection matrix
      */
     abstract updateProjectionMatrix(): this;
-}
-
-declare class OrthographicCamera extends Camera {
-    position: Vector3;
-    projectionMatrix: Matrix4;
-    rotationMatrix: Matrix4;
-    left: number;
-    right: number;
-    top: number;
-    bottom: number;
-    aspect: number;
-    near: number;
-    far: number;
-    zoom: number;
-    constructor(left: number, right: number, top: number, bottom: number, aspect: number, near: number, far: number);
-    /**
-     * @description Focuses the camera at the specified target
-     */
-    lookAt(target: Vector3, up?: Vector3): this;
-    /**
-     * @see https://github.com/mrdoob/three.js/blob/master/src/cameras/OrthographicCamera.js#L195
-     * @see https://github.com/mrdoob/three.js/blob/master/src/math/Matrix4.js#L1169
-     */
-    updateProjectionMatrix(reversedDepth?: boolean): this;
-}
-
-declare class PerspectiveCamera extends Camera {
-    position: Vector3;
-    projectionMatrix: Matrix4;
-    rotationMatrix: Matrix4;
-    fov: number;
-    aspect: number;
-    near: number;
-    far: number;
-    constructor(fov: number, aspect: number, near: number, far: number);
-    /**
-     * @description Focuses the camera at the specified target
-     */
-    lookAt(target: Vector3, up?: Vector3): this;
-    /**
-     * @see https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_model_view_projection#perspective_projection_matrix
-     * @see https://github.com/mrdoob/three.js/blob/a58e9ecf225b50e4a28a934442e854878bc2a959/src/math/Matrix4.js#L1109
-     */
-    updateProjectionMatrix(reversedDepth?: boolean): this;
 }
 
 declare class Renderer {
@@ -372,25 +328,69 @@ declare abstract class Scene<TRenderer = Renderer, TCamera = Camera> {
     abstract render(renderer: TRenderer, camera: TCamera, ...any: any): void;
 }
 
-type AvailableCameras$3 = PerspectiveCamera | OrthographicCamera;
-declare class WebGPURenderer extends Renderer {
-    constructor(canvasElement: HTMLCanvasElement);
-    render(scene: Scene, camera: AvailableCameras$3): void;
+declare class OrthographicCamera extends Camera {
+    position: Vector3;
+    projectionMatrix: Matrix4;
+    rotationMatrix: Matrix4;
+    left: number;
+    right: number;
+    top: number;
+    bottom: number;
+    aspect: number;
+    near: number;
+    far: number;
+    zoom: number;
+    constructor(left: number, right: number, top: number, bottom: number, aspect: number, near: number, far: number);
+    /**
+     * @description Focuses the camera at the specified target
+     */
+    lookAt(target: Vector3, up?: Vector3): this;
+    /**
+     * @see https://github.com/mrdoob/three.js/blob/master/src/cameras/OrthographicCamera.js#L195
+     * @see https://github.com/mrdoob/three.js/blob/master/src/math/Matrix4.js#L1169
+     */
+    updateProjectionMatrix(reversedDepth?: boolean): this;
 }
 
-type AvailableCameras$2 = PerspectiveCamera | OrthographicCamera;
+declare class PerspectiveCamera extends Camera {
+    position: Vector3;
+    projectionMatrix: Matrix4;
+    rotationMatrix: Matrix4;
+    fov: number;
+    aspect: number;
+    near: number;
+    far: number;
+    constructor(fov: number, aspect: number, near: number, far: number);
+    /**
+     * @description Focuses the camera at the specified target
+     */
+    lookAt(target: Vector3, up?: Vector3): this;
+    /**
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_model_view_projection#perspective_projection_matrix
+     * @see https://github.com/mrdoob/three.js/blob/a58e9ecf225b50e4a28a934442e854878bc2a959/src/math/Matrix4.js#L1109
+     */
+    updateProjectionMatrix(reversedDepth?: boolean): this;
+}
+
+type AvailableCameras$3 = PerspectiveCamera | OrthographicCamera;
 declare class WebGL2Renderer extends Renderer {
     gl: WebGL2RenderingContext;
     constructor(canvasElement: HTMLCanvasElement, glOptions?: WebGLContextAttributes);
-    render(scene: Scene, camera: AvailableCameras$2): void;
+    render(scene: Scene, camera: AvailableCameras$3): void;
 }
 
-type AvailableCameras$1 = OrthographicCamera;
+type AvailableCameras$2 = OrthographicCamera;
 interface Canvas2DRendererOptions extends CanvasRenderingContext2DSettings {
 }
 declare class Canvas2DRenderer extends Renderer {
     ctx: CanvasRenderingContext2D;
     constructor(canvasElement: HTMLCanvasElement, ctxOptions?: Canvas2DRendererOptions);
+    render(scene: Scene, camera: AvailableCameras$2): void;
+}
+
+type AvailableCameras$1 = PerspectiveCamera | OrthographicCamera;
+declare class WebGPURenderer extends Renderer {
+    constructor(canvasElement: HTMLCanvasElement);
     render(scene: Scene, camera: AvailableCameras$1): void;
 }
 
@@ -436,7 +436,7 @@ interface LoaderEvents<L, E> {
 declare abstract class Loader<L, E> extends Events<LoaderEvents<L, E>> {
     ready: boolean;
     constructor();
-    abstract load(...any: any): void;
+    abstract load(...any: any): this;
 }
 
 interface ShaderOptions {
@@ -453,13 +453,13 @@ declare class WebGL2ShaderLoader extends Loader<WebGLProgram, Error> {
     constructor(option: ShaderOptions);
     getUniform(name: string): WebGLUniformLocation;
     getAttribute(name: string): number;
-    load(gl: WebGL2RenderingContext, onload?: (program: WebGLProgram) => void, onerror?: (error: Error) => void): void;
+    load(gl: WebGL2RenderingContext, onload?: (program: WebGLProgram) => void, onerror?: (error: Error) => void): this;
 }
 
 declare class ImageLoader extends Loader<HTMLImageElement, string | Event> {
     img: HTMLImageElement;
     constructor();
-    load(src: string, onload?: (img: HTMLImageElement) => void, onerror?: (error: string | Event) => void): void;
+    load(src: string, onload?: (img: HTMLImageElement) => void, onerror?: (error: string | Event) => void): this;
 }
 
 interface PointerEvents {

@@ -14,6 +14,6 @@ export abstract class Loader<L, E> extends Events<LoaderEvents<L, E>> {
         this.ready = false
     }
 
-    abstract load(...any: any): void
+    abstract load(...any: any): this
 }
 

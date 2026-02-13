@@ -17,6 +17,7 @@ class ImageLoader extends Loader {
       this.dispatchEvent("onerror", error);
       this.ready = false;
     };
+    return this;
   }
 }
 export {
