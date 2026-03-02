@@ -1,4 +1,4 @@
-# DistortionGL (v0.4.1 EXPERIMENTAL/UNSTABLE)
+# DistortionGL (v0.4.2 EXPERIMENTAL/UNSTABLE)
 A JavaScript WebGL2 library template customizable for 3D or 2D projects.
 <!-- > API Reference [Docs](./js/Docs/API.md) -->
 
@@ -32,6 +32,8 @@ npm i distortiongl
 ## Usage Example (Typescript)
 ```typescript
 import { Clock, Keyboard, OrbitControls, PerspectiveCamera, Pointer, Scene, Vector3, WebGL2Renderer } from 'distortiongl'
+import Chunk from '../../Engine/Chunks/Chunk'
+import OverworldScene from './OverworldScene'
 
 export default function main(canvas: HTMLCanvasElement) {
     const camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000)
