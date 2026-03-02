@@ -1,4 +1,4 @@
-# DistortionGL (v0.4.0 EXPERIMENTAL/UNSTABLE)
+# DistortionGL (v0.4.1 EXPERIMENTAL/UNSTABLE)
 A JavaScript WebGL2 library template customizable for 3D or 2D projects.
 <!-- > API Reference [Docs](./js/Docs/API.md) -->
 
@@ -22,3 +22,55 @@ A JavaScript WebGL2 library template customizable for 3D or 2D projects.
 - Event handlers & Entity class template
 - Math utilities including vectors, matrices, quaternions, euler and other math utils
 - Typescript now supported including a separate index.d.ts for type annotations, a minified index.js barrel file and a non-minified js library
+
+
+## Installation
+```
+npm i distortiongl
+```
+
+## Usage Example (Typescript)
+```typescript
+import { Clock, Keyboard, OrbitControls, PerspectiveCamera, Pointer, Scene, Vector3, WebGL2Renderer } from 'distortiongl'
+
+export default function main(canvas: HTMLCanvasElement) {
+    const camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000)
+    const scene = new OverworldScene()
+    const renderer = new WebGL2Renderer(canvas, {
+        antialias: true,
+        powerPreference: 'high-performance'
+    })
+
+    const clock = new Clock()
+    const pointer = new Pointer(canvas)
+    const controls = new OrbitControls(canvas, camera)
+    const keyboard = new Keyboard(canvas)
+
+    window.addEventListener('resize', resize)
+    clock.addEventListener('onupdate', animate)
+    
+    resize()
+    clock.start()
+
+    const chunk = new Chunk()
+    
+    scene.add(chunk)
+
+    camera.position.set(1, 1, 1).normalize().multiplyScalar(2.5)
+    camera.lookAt(new Vector3(0.5, 0.5, 0.5))
+
+    controls.rotateSpeed = 2.5
+
+    function animate() {
+        controls.orbit(pointer)
+        renderer.render(scene, camera)
+    }
+
+    function resize() {
+         renderer.setSize(window.innerWidth, window.innerHeight, window.devicePixelRatio)
+
+        camera.aspect = window.innerWidth / window.innerHeight
+        camera.updateProjectionMatrix()
+    }
+}
+```

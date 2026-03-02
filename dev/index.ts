@@ -70,11 +70,13 @@ async function useEsBuild() {
         treeShaking: false,
     })
 
+    /*
     await esbuild.build({
         entryPoints: [ENTRY_PATH],
         format: 'esm',
         outdir: OUTPUT_PATH_JS,
     })
+    */
 }
 
 async function main() {

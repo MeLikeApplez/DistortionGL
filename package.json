@@ -1,12 +1,14 @@
 {
   "name": "distortiongl",
   "author": "melikeapplez",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "A JavaScript WebGL2 library template customizable for 3D or 2D projects",
   "main": "./build/index.js",
   "type": "module",
   "types": "./build/index.d.ts",
-  "files": ["./build"],
+  "files": [
+    "./build"
+  ],
   "scripts": {},
   "exports": {
     ".": {
@@ -17,10 +19,16 @@
     "type": "git",
     "url": "git+https://github.com/MeLikeApplez/DistortionGL.git"
   },
-  "keywords": ["distortiongl", "DistortionGL"],
+  "keywords": [
+    "distortiongl",
+    "DistortionGL"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/MeLikeApplez/DistortionGL/issues"
   },
-  "homepage": "https://github.com/MeLikeApplez/DistortionGL#readme"
+  "homepage": "https://github.com/MeLikeApplez/DistortionGL#readme",
+  "dependencies": {
+    "distortiongl": "^0.4.0"
+  }
 }
