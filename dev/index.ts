@@ -49,6 +49,7 @@ async function useEsBuild() {
 
     await createBarrelFile(ENTRY_BARREL_DIR, ENTRY_BARREL_FILE, ENTRY_PATH_GLOB)
 
+    /*
     await esbuild.build({
         entryPoints: [ENTRY_BARREL_PATH],
         format: 'esm',
@@ -57,6 +58,7 @@ async function useEsBuild() {
         treeShaking: false,
         minify: true,
     })
+    */
 
     await esbuild.build({
         entryPoints: [ENTRY_BARREL_PATH],

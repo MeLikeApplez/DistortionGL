@@ -352,15 +352,6 @@ declare class OrthographicCamera extends Camera {
     updateProjectionMatrix(reversedDepth?: boolean): this;
 }
 
-type AvailableCameras$3 = OrthographicCamera;
-interface Canvas2DRendererOptions extends CanvasRenderingContext2DSettings {
-}
-declare class Canvas2DRenderer extends Renderer {
-    ctx: CanvasRenderingContext2D;
-    constructor(canvasElement: HTMLCanvasElement, ctxOptions?: Canvas2DRendererOptions);
-    render(scene: Scene, camera: AvailableCameras$3): void;
-}
-
 declare class PerspectiveCamera extends Camera {
     position: Vector3;
     projectionMatrix: Matrix4;
@@ -381,16 +372,31 @@ declare class PerspectiveCamera extends Camera {
     updateProjectionMatrix(reversedDepth?: boolean): this;
 }
 
-type AvailableCameras$2 = PerspectiveCamera | OrthographicCamera;
+type AvailableCameras$3 = PerspectiveCamera | OrthographicCamera;
 declare class WebGL2Renderer extends Renderer {
     gl: WebGL2RenderingContext;
     constructor(canvasElement: HTMLCanvasElement, glOptions?: WebGLContextAttributes);
+    render(scene: Scene, camera: AvailableCameras$3): void;
+}
+
+type AvailableCameras$2 = PerspectiveCamera | OrthographicCamera;
+declare class WebGPURenderer extends Renderer {
+    static init(canvas: HTMLCanvasElement): Promise<{
+        adapter: any;
+        device: any;
+        context: RenderingContext;
+        format: any;
+    }>;
+    constructor(canvasElement: HTMLCanvasElement);
     render(scene: Scene, camera: AvailableCameras$2): void;
 }
 
-type AvailableCameras$1 = PerspectiveCamera | OrthographicCamera;
-declare class WebGPURenderer extends Renderer {
-    constructor(canvasElement: HTMLCanvasElement);
+type AvailableCameras$1 = OrthographicCamera;
+interface Canvas2DRendererOptions extends CanvasRenderingContext2DSettings {
+}
+declare class Canvas2DRenderer extends Renderer {
+    ctx: CanvasRenderingContext2D;
+    constructor(canvasElement: HTMLCanvasElement, ctxOptions?: Canvas2DRendererOptions);
     render(scene: Scene, camera: AvailableCameras$1): void;
 }
 

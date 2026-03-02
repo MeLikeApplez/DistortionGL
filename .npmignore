@@ -1,0 +1,10 @@
+/src
+/dev
+/Playground
+__test__.ts
+
+.env
+.DS_Store
+/node_modules
+
+tsconfig.json
