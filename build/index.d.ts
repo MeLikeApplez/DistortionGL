@@ -35,7 +35,7 @@ declare class Quaternion {
     constructor(x?: number, y?: number, z?: number, w?: number);
     set(x: number, y: number, z: number, w: number): this;
     /**
-     * @see https://stackoverflow.com/a/50012073/13159492
+     * @link https://stackoverflow.com/a/50012073/13159492
      */
     setFromEuler(euler: Euler): this;
     setFromAxisAngle(axis: Vector3, angle: number): Quaternion;
@@ -59,22 +59,22 @@ declare class Matrix4 extends Array {
     makeRotationY(theta: number): this;
     makeRotationZ(theta: number): this;
     /**
-     * @see https://en.wikipedia.org/wiki/Euler_angles#Rotation_matrix
+     * @link https://en.wikipedia.org/wiki/Euler_angles#Rotation_matrix
      */
     makeRotationFromEuler(euler: Euler): this;
     makeRotationFromQuaternion(quaternion: Quaternion): this;
     multiply(matrix: Matrix4): this;
     /**
-     * @see https://github.com/mrdoob/three.js/blob/0af9729d0c143a86a1d725d6e2c3ad83301f3f34/src/math/Matrix4.js#L542
+     * @link https://github.com/mrdoob/three.js/blob/0af9729d0c143a86a1d725d6e2c3ad83301f3f34/src/math/Matrix4.js#L542
      */
     multiplyMatrices(a: Matrix4, b: Matrix4): this;
     multiplyScalar(scale: number): this;
     /**
-     * @see https://evanw.github.io/lightgl.js/docs/matrix.html
+     * @link https://evanw.github.io/lightgl.js/docs/matrix.html
      */
     inverse(): this;
     /**
-     * @see https://github.com/mrdoob/three.js/blob/3b1ff7661884f26e6d9af1d94c293129aaba885c/src/math/Matrix4.js#L1001
+     * @link https://github.com/mrdoob/three.js/blob/3b1ff7661884f26e6d9af1d94c293129aaba885c/src/math/Matrix4.js#L1001
      */
     compose(position: Vector3, quaternion: Quaternion, scale: Vector3): this;
     clone(): Matrix4;
@@ -90,6 +90,9 @@ declare class Euler {
     order: EulerOrder;
     constructor(x?: number, y?: number, z?: number);
     set(x: number, y: number, z: number, order?: EulerOrder): this;
+    /**
+     * @link https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
+     */
     setFromQuaternion(quaternion: Quaternion): this;
     getEulerByOrder(): {
         a: number;
@@ -133,7 +136,7 @@ declare class Vector2 {
     dot(vector: Vector2): number;
     equals(vector: Vector2): boolean;
     /**
-     * @see https://github.com/mrdoob/three.js/blob/a58e9ecf225b50e4a28a934442e854878bc2a959/src/math/Vector2.js#L828
+     * @link https://github.com/mrdoob/three.js/blob/a58e9ecf225b50e4a28a934442e854878bc2a959/src/math/Vector2.js#L828
      */
     rotateAround(center: Vector2, angle: number): this;
     toArray(): number[];
@@ -155,12 +158,12 @@ declare class Matrix3 extends Array {
     makeScale(x: number, y: number): this;
     multiply(matrix: Matrix3): this;
     /**
-     * @see https://github.com/mrdoob/three.js/blob/0af9729d0c143a86a1d725d6e2c3ad83301f3f34/src/math/Matrix3.js#L215
+     * @link https://github.com/mrdoob/three.js/blob/0af9729d0c143a86a1d725d6e2c3ad83301f3f34/src/math/Matrix3.js#L215
      */
     multiplyMatrices(a: Matrix3, b: Matrix3): this;
     multiplyScalar(scale: number): this;
     /**
-     * @see https://stackoverflow.com/a/72596891/13159492
+     * @link https://stackoverflow.com/a/72596891/13159492
      */
     inverse(): this;
     compose(position: Vector2, theta: number, scale: Vector2): this;
@@ -199,7 +202,7 @@ declare class Vector3 {
      * rho = distance from origin
      * theta = angle in x-y plane
      * phi = angle in z axis
-     * @see https://mathworld.wolfram.com/SphericalCoordinates.html
+     * @link https://mathworld.wolfram.com/SphericalCoordinates.html
      */
     setFromCylindricalCoordinates(rho: number, theta: number, phi: number): this;
     equals(vector: Vector3): boolean;
@@ -235,7 +238,13 @@ declare class Renderer {
     canvasElement: HTMLCanvasElement;
     ready: boolean;
     constructor(canvasElement: HTMLCanvasElement);
+    /**
+     * @description
+     */
     setSize(width: number, height: number, devicePixelRatio?: number): void;
+    /**
+     * @description
+     */
     render(scene: Scene, camera: Camera, ...any: any): void;
 }
 
@@ -312,7 +321,13 @@ declare abstract class Scene<TRenderer = Renderer, TCamera = Camera> {
     loaded: boolean;
     ready: boolean;
     constructor();
+    /**
+     * @description
+     */
     add(...entities: Entity[]): void;
+    /**
+     * @description
+     */
     remove(...entities: Entity[]): void;
     /**
      * @description Iterates and destroys all entities
@@ -346,19 +361,10 @@ declare class OrthographicCamera extends Camera {
      */
     lookAt(target: Vector3, up?: Vector3): this;
     /**
-     * @see https://github.com/mrdoob/three.js/blob/master/src/cameras/OrthographicCamera.js#L195
-     * @see https://github.com/mrdoob/three.js/blob/master/src/math/Matrix4.js#L1169
+     * @link https://github.com/mrdoob/three.js/blob/master/src/cameras/OrthographicCamera.js#L195
+     * @link https://github.com/mrdoob/three.js/blob/master/src/math/Matrix4.js#L1169
      */
     updateProjectionMatrix(reversedDepth?: boolean): this;
-}
-
-type AvailableCameras$3 = OrthographicCamera;
-interface Canvas2DRendererOptions extends CanvasRenderingContext2DSettings {
-}
-declare class Canvas2DRenderer extends Renderer {
-    ctx: CanvasRenderingContext2D;
-    constructor(canvasElement: HTMLCanvasElement, ctxOptions?: Canvas2DRendererOptions);
-    render(scene: Scene, camera: AvailableCameras$3): void;
 }
 
 declare class PerspectiveCamera extends Camera {
@@ -375,28 +381,37 @@ declare class PerspectiveCamera extends Camera {
      */
     lookAt(target: Vector3, up?: Vector3): this;
     /**
-     * @see https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_model_view_projection#perspective_projection_matrix
-     * @see https://github.com/mrdoob/three.js/blob/a58e9ecf225b50e4a28a934442e854878bc2a959/src/math/Matrix4.js#L1109
+     * @link https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_model_view_projection#perspective_projection_matrix
+     * @link https://github.com/mrdoob/three.js/blob/a58e9ecf225b50e4a28a934442e854878bc2a959/src/math/Matrix4.js#L1109
      */
     updateProjectionMatrix(reversedDepth?: boolean): this;
 }
 
-type AvailableCameras$2 = PerspectiveCamera | OrthographicCamera;
+type AvailableCameras$3 = PerspectiveCamera | OrthographicCamera;
 declare class WebGPURenderer extends Renderer {
-    static init(canvas: HTMLCanvasElement): Promise<{
+    static getGPUDetails(canvas: HTMLCanvasElement): Promise<{
         adapter: any;
         device: any;
         context: RenderingContext;
         format: any;
     }>;
     constructor(canvasElement: HTMLCanvasElement);
-    render(scene: Scene, camera: AvailableCameras$2): void;
+    render(scene: Scene, camera: AvailableCameras$3): void;
 }
 
-type AvailableCameras$1 = PerspectiveCamera | OrthographicCamera;
+type AvailableCameras$2 = PerspectiveCamera | OrthographicCamera;
 declare class WebGL2Renderer extends Renderer {
     gl: WebGL2RenderingContext;
     constructor(canvasElement: HTMLCanvasElement, glOptions?: WebGLContextAttributes);
+    render(scene: Scene, camera: AvailableCameras$2): void;
+}
+
+type AvailableCameras$1 = OrthographicCamera;
+interface Canvas2DRendererOptions extends CanvasRenderingContext2DSettings {
+}
+declare class Canvas2DRenderer extends Renderer {
+    ctx: CanvasRenderingContext2D;
+    constructor(canvasElement: HTMLCanvasElement, ctxOptions?: Canvas2DRendererOptions);
     render(scene: Scene, camera: AvailableCameras$1): void;
 }
 
@@ -404,6 +419,12 @@ declare function randomInt(min: number, max: number): number;
 declare function randomFloat(min: number, max: number): number;
 declare function clamp(min: number, value: number, max: number): number;
 declare function lerp(a: number, b: number, t: number): number;
+/**
+ * Fast UUID generator, RFC4122 version 4 compliant.
+ * @author Jeff Ward (jcward.com).
+ * @license MIT license
+ * @link http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript/21963136#21963136
+ **/
 declare function generateUUID(): string;
 declare function extendArray<T>(array: ArrayLike<T>, size: number): ArrayLike<T>;
 declare function bezierCurve4pt(a: number, b: number, c: number, d: number, t: number): number;
@@ -430,6 +451,9 @@ declare class Color extends Array {
     round(): this;
     clamp(min: Vector4, max: Vector4): this;
     equals(color: Color): boolean;
+    /**
+     * @link https://github.com/mrdoob/three.js/blob/1939c35f2d92a4c870568da011aab54dabdfdd30/src/math/Color.js#L778
+     */
     lerp(color: Color, alpha: number): this;
     clone(): Color;
     copy(color: Color): this;

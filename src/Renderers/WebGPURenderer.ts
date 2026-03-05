@@ -6,9 +6,10 @@ import { Renderer } from "./Renderer";
 type AvailableCameras = PerspectiveCamera | OrthographicCamera
 
 export class WebGPURenderer extends Renderer {
-    static async init(canvas: HTMLCanvasElement) {
+    static async getGPUDetails(canvas: HTMLCanvasElement) {
         try {
             const context = canvas.getContext('webgpu')
+            // @ts-ignore
             const adapter = await navigator.gpu.requestAdapter()
 
             if(!context) {
@@ -30,6 +31,7 @@ export class WebGPURenderer extends Renderer {
                 return null
             }
 
+            // @ts-ignore
             const format = navigator.gpu.getPreferredCanvasFormat()
 
             return { adapter, device, context, format }

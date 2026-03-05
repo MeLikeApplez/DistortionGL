@@ -197,7 +197,7 @@ export class Vector3 {
      * rho = distance from origin
      * theta = angle in x-y plane
      * phi = angle in z axis
-     * @see https://mathworld.wolfram.com/SphericalCoordinates.html
+     * @link https://mathworld.wolfram.com/SphericalCoordinates.html
      */
     setFromCylindricalCoordinates(rho: number, theta: number, phi: number) {
         // rho = clamp(0, rho, Infinity)

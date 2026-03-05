@@ -62,8 +62,8 @@ export class OrthographicCamera extends Camera {
     }
 
     /**
-     * @see https://github.com/mrdoob/three.js/blob/master/src/cameras/OrthographicCamera.js#L195
-     * @see https://github.com/mrdoob/three.js/blob/master/src/math/Matrix4.js#L1169 
+     * @link https://github.com/mrdoob/three.js/blob/master/src/cameras/OrthographicCamera.js#L195
+     * @link https://github.com/mrdoob/three.js/blob/master/src/math/Matrix4.js#L1169 
      */
     updateProjectionMatrix(reversedDepth=false) {
         const aspectRight = this.right * this.aspect

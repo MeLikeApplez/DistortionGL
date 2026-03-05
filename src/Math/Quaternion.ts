@@ -24,7 +24,7 @@ export class Quaternion {
     }
 
     /**
-     * @see https://stackoverflow.com/a/50012073/13159492
+     * @link https://stackoverflow.com/a/50012073/13159492
      */
     setFromEuler(euler: Euler) {
         const { a, b, c } = euler.getEulerByOrder()

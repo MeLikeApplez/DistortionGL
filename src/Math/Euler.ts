@@ -26,7 +26,9 @@ export class Euler {
         return this
     }
 
-    // https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
+    /**
+     * @link https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
+     */
     setFromQuaternion(quaternion: Quaternion) {
         const ry = 2 * ((quaternion.w * quaternion.x) + (quaternion.y * quaternion.z))
         const rx = 1 - (2 * ((quaternion.x * quaternion.x) + (quaternion.y * quaternion.y)))

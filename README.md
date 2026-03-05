@@ -1,6 +1,5 @@
 # DistortionGL (v0.4.2 EXPERIMENTAL/UNSTABLE)
 A JavaScript WebGL2 library template customizable for 3D or 2D projects.
-<!-- > API Reference [Docs](./js/Docs/API.md) -->
 
 ## Why?
 - I know libraries like [ThreeJS](https://threejs.org/) exist but I want to understand the underlying mechanics of how the math and graphics work.
@@ -22,6 +21,9 @@ A JavaScript WebGL2 library template customizable for 3D or 2D projects.
 - Event handlers & Entity class template
 - Math utilities including vectors, matrices, quaternions, euler and other math utils
 - Typescript now supported including a separate index.d.ts for type annotations, a minified index.js barrel file and a non-minified js library
+
+## Docs
+Table of contents -> [Docs](./docs/reference)
 
 
 ## Installation

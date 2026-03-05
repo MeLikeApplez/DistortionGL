@@ -6,12 +6,13 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch index.ts",
-    "build": "tsx index.ts && rollup -c"
+    "build": "tsx index.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@suchipi/dtsmd": "^1.4.0",
     "chalk": "^5.6.2",
     "glob": "^13.0.0",
     "rollup": "^4.55.1",
@@ -21,7 +22,6 @@
   "devDependencies": {
     "@types/node": "^24.0.10",
     "esbuild": "^0.25.11",
-    "tsc": "^2.0.4",
     "tsx": "^4.20.3"
   }
 }

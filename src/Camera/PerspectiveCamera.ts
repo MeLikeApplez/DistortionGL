@@ -51,8 +51,8 @@ export class PerspectiveCamera extends Camera {
     }
 
     /**
-     * @see https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_model_view_projection#perspective_projection_matrix
-     * @see https://github.com/mrdoob/three.js/blob/a58e9ecf225b50e4a28a934442e854878bc2a959/src/math/Matrix4.js#L1109
+     * @link https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_model_view_projection#perspective_projection_matrix
+     * @link https://github.com/mrdoob/three.js/blob/a58e9ecf225b50e4a28a934442e854878bc2a959/src/math/Matrix4.js#L1109
      */
     updateProjectionMatrix(reversedDepth=false) {
         const fovRadian = this.fov * (Math.PI / 180)

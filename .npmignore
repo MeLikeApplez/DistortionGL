@@ -1,6 +1,7 @@
 /src
 /dev
 /Playground
+/docs
 __test__.ts
 
 .env

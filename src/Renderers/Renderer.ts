@@ -11,11 +11,17 @@ export class Renderer {
         this.ready = false
     }
 
+    /**
+     * @description
+     */
     setSize(width: number, height: number, devicePixelRatio=1) {
         this.canvasElement.width = width * devicePixelRatio
         this.canvasElement.height = height * devicePixelRatio
     }
 
+    /**
+     * @description
+     */
     render(scene: Scene, camera: Camera, ...any: any) {
         if(!scene.ready) {
             if(scene.loaded) return

@@ -16,10 +16,16 @@ export abstract class Scene<TRenderer=Renderer, TCamera=Camera> {
         this.ready = false
     }
 
+    /**
+     * @description
+     */
     add(...entities: Entity[]) {
         this.entities.push(...entities)
     }
 
+    /**
+     * @description
+     */
     remove(...entities: Entity[]) {
         for(let i = 0; i < entities.length; i++) {
             const entity = entities[i]

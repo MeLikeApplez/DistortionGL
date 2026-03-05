@@ -192,7 +192,9 @@ export class Color extends Array {
         return this[0] === color[0] && this[1] === color[1] && this[2] === color[2] && this[3] === color[3]
     }
 
-    // https://github.com/mrdoob/three.js/blob/master/src/math/Color.js#L777
+    /**
+     * @link https://github.com/mrdoob/three.js/blob/1939c35f2d92a4c870568da011aab54dabdfdd30/src/math/Color.js#L778
+     */
     lerp(color: Color, alpha: number) {
 		this[0] += (color[0] - this[0]) * alpha
 		this[1] += (color[1] - this[1]) * alpha

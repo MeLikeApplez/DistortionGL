@@ -103,7 +103,7 @@ export class Matrix3 extends Array {
     }
 
     /**
-     * @see https://github.com/mrdoob/three.js/blob/0af9729d0c143a86a1d725d6e2c3ad83301f3f34/src/math/Matrix3.js#L215
+     * @link https://github.com/mrdoob/three.js/blob/0af9729d0c143a86a1d725d6e2c3ad83301f3f34/src/math/Matrix3.js#L215
      */
     multiplyMatrices(a: Matrix3, b: Matrix3) {
         const ae = a;
@@ -142,7 +142,7 @@ export class Matrix3 extends Array {
     }
 
     /**
-     * @see https://stackoverflow.com/a/72596891/13159492
+     * @link https://stackoverflow.com/a/72596891/13159492
      */
     inverse() {
         const [ a, b, c, d, e, f, g, h, i ] = this
