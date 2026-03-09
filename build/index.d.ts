@@ -299,18 +299,55 @@ declare abstract class Entity<TRenderer = Renderer> {
     constructor(options?: EntityOptions);
     /**
      * @description Destroys any data/buffers for clean up .
+     * @example
+     * gl.deleteBuffer(vertexBuffer)
+     * gl.deleteBuffer(transformBuffer)
      */
     abstract dispose(renderer: TRenderer, ...any: any): void;
     /**
      * @description Initializes entity data. Use it once to setup the entity.
+     * @example
+     * this._vertexData = gl.createBuffer()
+     *
+     * const transformData = new Float32Array([
+     *      0, 0, 0,
+     *      0, 0, 1,
+     *      0, 1, 0
+     *      0, 0, 1,
+     *      0, 1, 1,
+     *      0, 1, 0,
+     * ])
+     *
+     * gl.bindBuffer(gl.ARRAY_BUFFER, this._vertexData)
+     * gl.bufferData(gl.ARRAY_BUFFER, this._vertexData, gl.STATIC_DRAW)
+     *
+     * this.loaded = true
      */
     abstract load(renderer: TRenderer, ...any: any): void;
     /**
      * @description Updates entity data. Use for scene updates only.
+     * @example
+     *
+     * for(let i = 0; i < this.count; i++) {
+     *      const transformDataIndex = rowSize * i
+     *      const matrix = this.instanceMatrices[i]
+     *
+     *      transformData.set(matrix.elements, transformDataIndex)
+     *      transformData.set(this.instanceColor[i], transformDataIndex + matrix.elements.length)
+     * }
+     *
+     * gl.bindBuffer(gl.ARRAY_BUFFER, this._transformBuffer)
+     * gl.bufferData(gl.ARRAY_BUFFER, transformData, gl.STATIC_DRAW)
      */
     abstract update(renderer: TRenderer, ...any: any): void;
     /**
      * @description Renders the entity. Use for scene renders.
+     * @example
+     * gl.bindBuffer(gl.ARRAY_BUFFER, transformBuffer)
+     *
+     * gl.enableVertexAttribArray(data)
+     *
+     * gl.drawArraysInstanced(gl.TRIANGLES, 0, verticesLength, instanceCount)
      */
     abstract render(renderer: TRenderer, ...any: any): void;
 }
@@ -331,14 +368,37 @@ declare abstract class Scene<TRenderer = Renderer, TCamera = Camera> {
     remove(...entities: Entity[]): void;
     /**
      * @description Iterates and destroys all entities
+     * @example
+     * for(let i = 0; i < this.entities.length; i++) {
+     *      const entity = this.entities[i]
+     *
+     *      entity.dispose(renderer)
+     * }
      */
     abstract dispose(renderer: TRenderer, camera: TCamera, ...any: any): void;
     /**
      * @description Initializes scene and entity data. Use it once to setup the scene.
+     * @example
+     * // Load other stuff here...
+     *  for(let i = 0; i < this.entities.length; i++) {
+     *      const entity = this.entities[i]
+     *
+     *      entity.load(renderer)
+     * }
+     *
+     * // "Set this.ready = true" to allow the render function to loop
+     * this.ready = true
      */
     abstract load(renderer: TRenderer, camera: TCamera, ...any: any): void;
     /**
      * @description Renders entities per frame
+     * @example
+     * // Render other stuff here...
+     *  for(let i = 0; i < this.entities.length; i++) {
+     *      const entity = this.entities[i]
+     *
+     *      entity.render(renderer)
+     * }
      */
     abstract render(renderer: TRenderer, camera: TCamera, ...any: any): void;
 }
@@ -367,6 +427,15 @@ declare class OrthographicCamera extends Camera {
     updateProjectionMatrix(reversedDepth?: boolean): this;
 }
 
+type AvailableCameras$3 = OrthographicCamera;
+interface Canvas2DRendererOptions extends CanvasRenderingContext2DSettings {
+}
+declare class Canvas2DRenderer extends Renderer {
+    ctx: CanvasRenderingContext2D;
+    constructor(canvasElement: HTMLCanvasElement, ctxOptions?: Canvas2DRendererOptions);
+    render(scene: Scene, camera: AvailableCameras$3): void;
+}
+
 declare class PerspectiveCamera extends Camera {
     position: Vector3;
     projectionMatrix: Matrix4;
@@ -387,7 +456,7 @@ declare class PerspectiveCamera extends Camera {
     updateProjectionMatrix(reversedDepth?: boolean): this;
 }
 
-type AvailableCameras$3 = PerspectiveCamera | OrthographicCamera;
+type AvailableCameras$2 = PerspectiveCamera | OrthographicCamera;
 declare class WebGPURenderer extends Renderer {
     static getGPUDetails(canvas: HTMLCanvasElement): Promise<{
         adapter: any;
@@ -396,22 +465,13 @@ declare class WebGPURenderer extends Renderer {
         format: any;
     }>;
     constructor(canvasElement: HTMLCanvasElement);
-    render(scene: Scene, camera: AvailableCameras$3): void;
-}
-
-type AvailableCameras$2 = PerspectiveCamera | OrthographicCamera;
-declare class WebGL2Renderer extends Renderer {
-    gl: WebGL2RenderingContext;
-    constructor(canvasElement: HTMLCanvasElement, glOptions?: WebGLContextAttributes);
     render(scene: Scene, camera: AvailableCameras$2): void;
 }
 
-type AvailableCameras$1 = OrthographicCamera;
-interface Canvas2DRendererOptions extends CanvasRenderingContext2DSettings {
-}
-declare class Canvas2DRenderer extends Renderer {
-    ctx: CanvasRenderingContext2D;
-    constructor(canvasElement: HTMLCanvasElement, ctxOptions?: Canvas2DRendererOptions);
+type AvailableCameras$1 = PerspectiveCamera | OrthographicCamera;
+declare class WebGL2Renderer extends Renderer {
+    gl: WebGL2RenderingContext;
+    constructor(canvasElement: HTMLCanvasElement, glOptions?: WebGLContextAttributes);
     render(scene: Scene, camera: AvailableCameras$1): void;
 }
 
@@ -419,6 +479,8 @@ declare function randomInt(min: number, max: number): number;
 declare function randomFloat(min: number, max: number): number;
 declare function clamp(min: number, value: number, max: number): number;
 declare function lerp(a: number, b: number, t: number): number;
+declare function radToDeg(rad: number): number;
+declare function degToRad(deg: number): number;
 /**
  * Fast UUID generator, RFC4122 version 4 compliant.
  * @author Jeff Ward (jcward.com).
@@ -426,7 +488,7 @@ declare function lerp(a: number, b: number, t: number): number;
  * @link http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript/21963136#21963136
  **/
 declare function generateUUID(): string;
-declare function extendArray<T>(array: ArrayLike<T>, size: number): ArrayLike<T>;
+declare function extendArray<T extends ArrayLike<any>>(array: T, size: number): T;
 declare function bezierCurve4pt(a: number, b: number, c: number, d: number, t: number): number;
 
 declare class Color extends Array {
@@ -581,4 +643,4 @@ declare class Keyboard extends Events<KeyboardEvents> {
     load(element: HTMLElement): boolean;
 }
 
-export { Camera, Canvas2DRenderer, Clock, Color, Entity, Euler, Events, ImageLoader, Keyboard, Loader, Matrix3, Matrix4, OrbitControls, OrthographicCamera, PerspectiveCamera, Pointer, Quaternion, Renderer, Scene, Vector2, Vector3, Vector4, WebGL2Renderer, WebGL2ShaderLoader, WebGPURenderer, bezierCurve4pt, clamp, extendArray, generateUUID, lerp, randomFloat, randomInt };
+export { Camera, Canvas2DRenderer, Clock, Color, Entity, Euler, Events, ImageLoader, Keyboard, Loader, Matrix3, Matrix4, OrbitControls, OrthographicCamera, PerspectiveCamera, Pointer, Quaternion, Renderer, Scene, Vector2, Vector3, Vector4, WebGL2Renderer, WebGL2ShaderLoader, WebGPURenderer, bezierCurve4pt, clamp, degToRad, extendArray, generateUUID, lerp, radToDeg, randomFloat, randomInt };

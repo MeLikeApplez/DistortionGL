@@ -6,7 +6,7 @@ import path from 'path'
 import * as esbuild from 'esbuild'
 import { glob } from 'glob'
 
-import { rollup } from 'rollup'
+import { rollup, type RollupBuild } from 'rollup'
 import { dts } from 'rollup-plugin-dts'
 
 import dtsmd from '@suchipi/dtsmd' 
@@ -68,7 +68,7 @@ async function createMarkdownDocs(tempDirectory: string, globs: string[]) {
         format: 'es'
     }
 
-    const rollupQueue = []
+    const rollupQueue: Promise<RollupBuild>[] = []
     const dtsOutputs: RollupDTSOutput[] = []
 
     console.log(
@@ -85,6 +85,8 @@ async function createMarkdownDocs(tempDirectory: string, globs: string[]) {
         const dtsFilename = path.basename(globFilepath).replace(/\.\w+/g, '') + '.d.ts'
         const dtsFilepath = path.join(tempDirectory, dtsFilename)
 
+        // console.log(globFilepath, dtsFilepath, '\n')
+
         rollupQueue.push(
             rollup({
                 input: globFilepath,
@@ -96,6 +98,8 @@ async function createMarkdownDocs(tempDirectory: string, globs: string[]) {
             file: dtsFilepath,
             format: 'es'
         })
+
+        // break
     }
 
     const rollupBundles = await Promise.allSettled(rollupQueue)
@@ -123,11 +127,12 @@ async function createMarkdownDocs(tempDirectory: string, globs: string[]) {
         const dtsFilename = path.basename(output.file).replace(/\.\w+/g, '') + '.md'
         const referenceFilepath = path.join(DOCS_REFERENCE_PATH, dtsFilename)
 
-        fsPromise.readFile(output.file, 'utf-8').then(code => {
-            dtsmd.processSource(code).then(md => {
-                fsPromise.appendFile(referenceFilepath, md.markdown, 'utf-8')
-            })
-        })
+        continue
+        // fsPromise.readFile(output.file, 'utf-8').then(code => {
+        //     dtsmd.processSource(code).then(md => {
+        //         fsPromise.appendFile(referenceFilepath, md.markdown, 'utf-8')
+        //     })
+        // })
     }
 
     // await rollup({
@@ -143,8 +148,8 @@ async function buildProject() {
     console.log(chalk.yellowBright('Building javascript with esbuild...'))
     await createBarrelFile(ENTRY_BARREL_DIR, ENTRY_BARREL_FILE, ENTRY_PATH_GLOB)
 
-    console.log(chalk.yellowBright('Building markdown docs...'))
-    await createMarkdownDocs(DOCS_TEMP_DIR, ENTRY_PATH_GLOB)
+    // console.log(chalk.yellowBright('Building markdown docs...'))
+    // await createMarkdownDocs(DOCS_TEMP_DIR, ENTRY_PATH_GLOB)
 
     /*
     await esbuild.build({

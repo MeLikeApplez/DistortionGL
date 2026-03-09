@@ -39,16 +39,39 @@ export abstract class Scene<TRenderer=Renderer, TCamera=Camera> {
 
     /**
      * @description Iterates and destroys all entities
+     * @example
+     * for(let i = 0; i < this.entities.length; i++) {
+     *      const entity = this.entities[i]
+     * 
+     *      entity.dispose(renderer)
+     * }
      */
     abstract dispose(renderer: TRenderer, camera: TCamera, ...any: any): void
 
     /**
      * @description Initializes scene and entity data. Use it once to setup the scene. 
+     * @example
+     * // Load other stuff here...
+     *  for(let i = 0; i < this.entities.length; i++) {
+     *      const entity = this.entities[i]
+     * 
+     *      entity.load(renderer)
+     * }
+     * 
+     * // "Set this.ready = true" to allow the render function to loop
+     * this.ready = true
      */
     abstract load(renderer: TRenderer, camera: TCamera, ...any: any): void
 
     /**
      * @description Renders entities per frame
+     * @example
+     * // Render other stuff here...
+     *  for(let i = 0; i < this.entities.length; i++) {
+     *      const entity = this.entities[i]
+     * 
+     *      entity.render(renderer)
+     * }
      */
     abstract render(renderer: TRenderer, camera: TCamera, ...any: any): void
 }

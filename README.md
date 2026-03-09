@@ -1,4 +1,4 @@
-# DistortionGL (v0.4.2 EXPERIMENTAL/UNSTABLE)
+# DistortionGL (v0.4.3 EXPERIMENTAL/UNSTABLE)
 A JavaScript WebGL2 library template customizable for 3D or 2D projects.
 
 ## Why?
