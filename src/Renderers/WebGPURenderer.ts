@@ -1,3 +1,4 @@
+import { Camera } from '../Camera/Camera';
 import type { OrthographicCamera } from '../Camera/OrthographicCamera'
 import type { PerspectiveCamera } from '../Camera/PerspectiveCamera'
 import { Scene } from "../Scenes/Scene";

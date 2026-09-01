@@ -2,7 +2,7 @@ import { Entity } from '../Core/Entity'
 import { Renderer } from '../Renderers/Renderer'
 import type { Camera } from '../Camera/Camera'
 
-export abstract class Scene<TRenderer=Renderer, TCamera=Camera> {
+export abstract class Scene<TRenderer extends Renderer = Renderer, TCamera extends Camera = Camera> {
     entities: Entity[]
     enabled: boolean
     loaded: boolean
@@ -46,7 +46,15 @@ export abstract class Scene<TRenderer=Renderer, TCamera=Camera> {
      *      entity.dispose(renderer)
      * }
      */
-    abstract dispose(renderer: TRenderer, camera: TCamera, ...any: any): void
+    dispose(renderer: TRenderer, camera: TCamera, ...any: any): void {
+        for(let i = 0; i < this.entities.length; i++) {
+            const entity = this.entities[i]
+
+            if(!entity.dispose) continue
+
+            entity.dispose(renderer)
+        }
+    }
 
     /**
      * @description Initializes scene and entity data. Use it once to setup the scene. 
@@ -61,7 +69,15 @@ export abstract class Scene<TRenderer=Renderer, TCamera=Camera> {
      * // "Set this.ready = true" to allow the render function to loop
      * this.ready = true
      */
-    abstract load(renderer: TRenderer, camera: TCamera, ...any: any): void
+    load(renderer: TRenderer, camera: TCamera, ...any: any): void {
+        for(let i = 0; i < this.entities.length; i++) {
+            const entity = this.entities[i]
+
+            if(entity.loaded || !entity.load) continue
+
+            entity.load(renderer)
+        }
+    }
 
     /**
      * @description Renders entities per frame
@@ -73,5 +89,13 @@ export abstract class Scene<TRenderer=Renderer, TCamera=Camera> {
      *      entity.render(renderer)
      * }
      */
-    abstract render(renderer: TRenderer, camera: TCamera, ...any: any): void
+    render(renderer: TRenderer, camera: TCamera, ...any: any): void {
+        for(let i = 0; i < this.entities.length; i++) {
+            const entity = this.entities[i]
+
+            if(entity.visible || !entity.render) continue
+
+            entity.render(renderer)
+        }
+    }
 }

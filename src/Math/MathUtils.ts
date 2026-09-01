@@ -55,6 +55,31 @@ export function extendArray<T extends ArrayLike<any>>(array: T, size: number): T
     return arrayCopy
 }
 
+export function factorial(n: number) {
+    let result = 1
+
+    for(let i = 1; i <= n; i++) {
+        result *= i
+    }
+
+    return result
+}
+
+export function combination(n: number, r: number) {
+    const f_n = factorial(n)
+    const f_nr = factorial(n - r)
+    const f_r = factorial(r)
+
+    return f_n / (f_r * f_nr)
+}
+
+export function permutation(n: number, r: number) {
+    const f_n = factorial(n)
+    const f_nr = factorial(n - r)
+
+    return f_n / f_nr
+}
+
 export function bezierCurve4pt(a: number, b: number, c: number, d: number, t: number) {
     const s1 = ((1 - t) ** 3) * a
     const s2 = 3 * ((1 - t) ** 2) * t * b

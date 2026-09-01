@@ -12,6 +12,10 @@ export class WebGL2ShaderLoader extends Loader<WebGLProgram, Error> {
     gl: WebGL2RenderingContext | null
     program: WebGLProgram | null
 
+    static isAvailable(canvas: HTMLCanvasElement) {
+        return !!canvas.getContext('webgl2')
+    }
+
     constructor(option: ShaderOptions) {
         super()
 
@@ -34,6 +38,18 @@ export class WebGL2ShaderLoader extends Loader<WebGLProgram, Error> {
 
         return this.gl.getAttribLocation(this.program, name)
     }
+
+    // setBuffer() {
+    //     if(!this.gl) return
+    // }
+
+    // setUniforms() {
+    //     if(!this.gl) return
+    // }
+
+    // setAttributes() {
+    //     if(!this.gl) return
+    // }
 
     load(gl: WebGL2RenderingContext, onload?: (program: WebGLProgram) => void, onerror?: (error: Error) => void) {
         const vertexShader = gl.createShader(gl.VERTEX_SHADER)

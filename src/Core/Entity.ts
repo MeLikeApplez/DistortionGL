@@ -12,8 +12,7 @@ interface EntityOptions {
     name?: string
     type?: string
 }
-
-export abstract class Entity<TRenderer=Renderer> {
+export class Entity<TRenderer extends Renderer = Renderer> {
     readonly uuid: string
     readonly name: string
     readonly type: string
@@ -24,6 +23,11 @@ export abstract class Entity<TRenderer=Renderer> {
     matrix: Matrix3 | Matrix4 | null
     visible: boolean
     loaded: boolean
+
+    dispose?(renderer: TRenderer, ...any: any): void
+    load?(renderer: TRenderer, ...any: any): void
+    update?(renderer: TRenderer, ...any: any): void
+    render?(renderer: TRenderer, ...any: any): void
 
     constructor(options?: EntityOptions) {
         this.uuid = generateUUID()
@@ -48,7 +52,7 @@ export abstract class Entity<TRenderer=Renderer> {
      * gl.deleteBuffer(vertexBuffer)
      * gl.deleteBuffer(transformBuffer)
      */
-    abstract dispose(renderer: TRenderer, ...any: any): void
+    // abstract dispose(renderer: TRenderer, ...any: any): void
 
     /**
      * @description Initializes entity data. Use it once to setup the entity.
@@ -69,7 +73,7 @@ export abstract class Entity<TRenderer=Renderer> {
      * 
      * this.loaded = true
      */
-    abstract load(renderer: TRenderer, ...any: any): void
+    // abstract load(renderer: TRenderer, ...any: any): void
 
     /**
      * @description Updates entity data. Use for scene updates only.
@@ -86,7 +90,7 @@ export abstract class Entity<TRenderer=Renderer> {
      * gl.bindBuffer(gl.ARRAY_BUFFER, this._transformBuffer)
      * gl.bufferData(gl.ARRAY_BUFFER, transformData, gl.STATIC_DRAW)
      */
-    abstract update(renderer: TRenderer, ...any: any): void
+    // abstract update(renderer: TRenderer, ...any: any): void
     
     /**
      * @description Renders the entity. Use for scene renders.
@@ -97,5 +101,5 @@ export abstract class Entity<TRenderer=Renderer> {
      * 
      * gl.drawArraysInstanced(gl.TRIANGLES, 0, verticesLength, instanceCount)
      */
-    abstract render(renderer: TRenderer, ...any: any): void
+    // abstract render(renderer: TRenderer, ...any: any): void
 }

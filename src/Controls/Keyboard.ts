@@ -1,17 +1,16 @@
-import { Events } from "../Core/Events"
+import { Controls } from "./Controls"
 
 interface KeyboardEvents {
     onkeydown: Keyboard
     onkeyup: Keyboard
 }
 
-export class Keyboard extends Events<KeyboardEvents> {
-    element: HTMLElement | null
+export class Keyboard extends Controls<KeyboardEvents> {
     keys: Set<string>
     lowerCase: boolean
 
     constructor(element: HTMLElement, lowerCase=false) {
-        super(['onkeyup', 'onkeydown'])
+        super(element, ['onkeyup', 'onkeydown'])
 
         this.element = element
 

@@ -20,6 +20,8 @@ export class Events<T extends Record<string, any>> {
         const group = this._listeners.get(eventName)
 
         if(!Array.isArray(group)) {
+            console.error(`Unable to find event event name: "${String(eventName)}"`)
+            
             this._listeners.set(eventName, [])
         
             return false

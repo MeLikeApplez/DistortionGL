@@ -1,5 +1,5 @@
-import { Events } from '../Core/Events'
 import { Vector2 } from '../Math/Vector2'
+import { Controls } from './Controls'
 
 interface PointerEvents {
     onpointerdown: Pointer
@@ -15,8 +15,7 @@ interface PointerOptions {
     clipSpace?: ClipSpaceOptions
 }
 
-export class Pointer extends Events<PointerEvents> {
-    element: HTMLElement | null
+export class Pointer extends Controls<PointerEvents> {
     position: Vector2
     down: Vector2
     drag: Vector2
@@ -29,7 +28,7 @@ export class Pointer extends Events<PointerEvents> {
     clipSpace: ClipSpaceOptions
 
     constructor(element: HTMLElement | null, options?: PointerOptions) {
-        super(['onpointerup', 'onpointermove', 'onpointerdown', 'onmousescroll'])
+        super(element, ['onpointerup', 'onpointermove', 'onpointerdown', 'onmousescroll'])
 
         this.element = element
 

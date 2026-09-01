@@ -1,7 +1,5 @@
 import { Euler } from '../Math/Euler'
-import type { Matrix3 } from '../Math/Matrix3'
 import { Matrix4 } from '../Math/Matrix4'
-import type { Vector2 } from '../Math/Vector2'
 import { Vector3 } from '../Math/Vector3'
 // import { WebGL2Renderer } from '../Renderers/WebGL2Renderer'
 // import type { WebGPURenderer } from '../Renderers/WebGPURenderer'
@@ -25,8 +23,6 @@ export abstract class Camera {
     projectionMatrix: Matrix4
     rotationMatrix: Matrix4
     target: Vector3
-    autoUpdate: boolean
-    needsUpdate: boolean
     enabled: boolean
 
     constructor() {
@@ -38,8 +34,6 @@ export abstract class Camera {
 
         this.target = new Vector3()
         
-        this.autoUpdate = false
-        this.needsUpdate = false
         this.enabled = true
     }
 
@@ -51,6 +45,16 @@ export abstract class Camera {
             this.rotationMatrix[8],
             this.rotationMatrix[9],
             this.rotationMatrix[10],
+        )
+
+        return direction.normalize()
+    }
+
+    getPerpendicularViewDirection() {
+        const direction = new Vector3(
+            this.rotationMatrix[0],
+            this.rotationMatrix[1],
+            this.rotationMatrix[2],
         )
 
         return direction.normalize()

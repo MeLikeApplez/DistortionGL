@@ -3,12 +3,14 @@ import { PerspectiveCamera } from '../Camera/PerspectiveCamera'
 
 import { Vector2 } from '../Math/Vector2'
 import { Vector3 } from '../Math/Vector3'
+import { Controls } from './Controls'
 import { type Pointer}  from './Pointer'
 
 type AvailableCameras = PerspectiveCamera | OrthographicCamera
 
-export class OrbitControls {
-    element: HTMLElement | null
+interface OrbitControlsEvents {}
+
+export class OrbitControls extends Controls<OrbitControlsEvents> {
     camera: AvailableCameras
     _initialRotatePosition: Vector2
     rotatePosition: Vector2
@@ -26,6 +28,8 @@ export class OrbitControls {
     enableZoom: boolean
 
     constructor(element: HTMLElement | null, camera: AvailableCameras) {
+        super(element, [])
+
         this.element = element
         this.camera = camera
         
@@ -70,10 +74,14 @@ export class OrbitControls {
         return true
     }
 
+    load() {
+        
+    }
+
     /**
      * @description Updates the cameras position on orbit. Must be updated every frame
      */
-    orbit(controller: Pointer) {
+    updateOrbit(controller: Pointer) {
         if(!this.enableOrbit) return
 
         this.rotatePosition.copy(controller.position)
@@ -115,7 +123,7 @@ export class OrbitControls {
     /**
      * @description Updates the camera zoom in/out. Must be updated every frame
      */
-    zoom(controller: Pointer) {
+    updateZoom(controller: Pointer) {
         if(!this.enableZoom || !this.element || this._initialZoom === controller.mouseScroll) return
 
         const zoomDirection = (this._initialZoom - controller.mouseScroll) > 0 ? -1 : 1

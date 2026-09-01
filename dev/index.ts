@@ -198,6 +198,7 @@ async function main() {
         console.clear()
         await buildProject()
 
+        console.log(chalk.bgGreenBright(' Done! '))
     } catch(error: any) {
         console.error(chalk.redBright(error))
     }

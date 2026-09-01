@@ -29,6 +29,7 @@ export class PerspectiveCamera extends Camera {
 
     /**
      * @description Focuses the camera at the specified target
+     * @link https://webgl2fundamentals.org/webgl/lessons/webgl-3d-camera.html
      */
     lookAt(target: Vector3, up=Vector3.UP) {
         const zAxis = this.position.clone().subtract(target).normalize()
@@ -89,8 +90,6 @@ export class PerspectiveCamera extends Camera {
         )
 
         this.rotationMatrix.makeRotationFromEuler(this.rotation)
-
-        this.needsUpdate = false
 
         return this
     }

@@ -1,12 +1,11 @@
+import { Camera } from '../Camera/Camera'
 import { OrthographicCamera } from '../Camera/OrthographicCamera'
 import { Scene } from '../Scenes/Scene'
 import { Renderer } from './Renderer'
 
 type AvailableCameras = OrthographicCamera
 
-interface Canvas2DRendererOptions extends CanvasRenderingContext2DSettings {
-
-}
+interface Canvas2DRendererOptions extends CanvasRenderingContext2DSettings {}
 
 export class Canvas2DRenderer extends Renderer {
     ctx: CanvasRenderingContext2D
