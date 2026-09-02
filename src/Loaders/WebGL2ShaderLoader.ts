@@ -27,16 +27,36 @@ export class WebGL2ShaderLoader extends Loader<WebGLProgram, Error> {
         this.program = null
     }
 
-    getUniform(name: string) {
-        if(!this.gl || !this.program || !this.ready) return null
+    getUniforms(...names: string[]): ReturnType<WebGL2RenderingContext['getUniformLocation']>[] {
+        if(!this.gl || !this.program || !this.ready) {
+            return Array(names.length).fill(null)
+        }
 
-        return this.gl.getUniformLocation(this.program, name)
+        const locations = []
+
+        for(let i = 0; i < names.length; i++) {
+            locations.push(
+                this.gl.getUniformLocation(this.program, names[i])
+            )
+        }
+
+        return locations
     }
 
-    getAttribute(name: string) {
-        if(!this.gl || !this.program || !this.ready) return -1
+    getAttributes(...names: string[]): ReturnType<WebGL2RenderingContext['getAttribLocation']>[] {
+        if(!this.gl || !this.program || !this.ready) {
+            return Array(names.length).fill(-1)
+        }
 
-        return this.gl.getAttribLocation(this.program, name)
+        const locations = []
+
+        for(let i = 0; i < names.length; i++) {
+            locations.push(
+                this.gl.getAttribLocation(this.program, names[i])
+            )
+        }
+
+        return locations
     }
 
     // setBuffer() {

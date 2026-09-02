@@ -18,8 +18,7 @@ export class Entity<TRenderer extends Renderer = Renderer> {
     readonly type: string
     position: Vector2 | Vector3 | Vector4 | null
     scale: Vector2 | Vector3 | Vector4 | null
-    rotation: Euler | null
-    quaternion: Quaternion | null
+    rotation: Euler | Quaternion | null
     matrix: Matrix3 | Matrix4 | null
     visible: boolean
     loaded: boolean
@@ -32,7 +31,6 @@ export class Entity<TRenderer extends Renderer = Renderer> {
         this.position = null
         this.scale = null
         this.rotation = null
-        this.quaternion = null
     
         this.matrix = null
 

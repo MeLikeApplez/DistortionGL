@@ -284,14 +284,13 @@ interface EntityOptions {
     name?: string;
     type?: string;
 }
-declare abstract class Entity<TRenderer extends Renderer = Renderer> {
+declare class Entity<TRenderer extends Renderer = Renderer> {
     readonly uuid: string;
     readonly name: string;
     readonly type: string;
     position: Vector2 | Vector3 | Vector4 | null;
     scale: Vector2 | Vector3 | Vector4 | null;
-    rotation: Euler | null;
-    quaternion: Quaternion | null;
+    rotation: Euler | Quaternion | null;
     matrix: Matrix3 | Matrix4 | null;
     visible: boolean;
     loaded: boolean;
@@ -302,7 +301,7 @@ declare abstract class Entity<TRenderer extends Renderer = Renderer> {
      * gl.deleteBuffer(vertexBuffer)
      * gl.deleteBuffer(transformBuffer)
      */
-    abstract dispose(renderer: TRenderer, ...any: any): void;
+    dispose?(renderer: TRenderer, ...any: any): void;
     /**
      * @description Initializes entity data. Use it once to setup the entity.
      * @example
@@ -322,7 +321,7 @@ declare abstract class Entity<TRenderer extends Renderer = Renderer> {
      *
      * this.loaded = true
      */
-    abstract load(renderer: TRenderer, ...any: any): void;
+    load?(renderer: TRenderer, ...any: any): void;
     /**
      * @description Updates entity data. Use for scene updates only.
      * @example
@@ -338,7 +337,7 @@ declare abstract class Entity<TRenderer extends Renderer = Renderer> {
      * gl.bindBuffer(gl.ARRAY_BUFFER, this._transformBuffer)
      * gl.bufferData(gl.ARRAY_BUFFER, transformData, gl.STATIC_DRAW)
      */
-    abstract update(renderer: TRenderer, ...any: any): void;
+    update?(renderer: TRenderer, ...any: any): void;
     /**
      * @description Renders the entity. Use for scene renders.
      * @example
@@ -348,7 +347,7 @@ declare abstract class Entity<TRenderer extends Renderer = Renderer> {
      *
      * gl.drawArraysInstanced(gl.TRIANGLES, 0, verticesLength, instanceCount)
      */
-    abstract render(renderer: TRenderer, ...any: any): void;
+    render?(renderer: TRenderer, ...any: any): void;
 }
 
 declare abstract class Scene<TRenderer extends Renderer = Renderer, TCamera extends Camera = Camera> {
@@ -454,47 +453,7 @@ declare class WebGL2Renderer extends Renderer {
     render(scene: Scene, camera: AvailableCameras$3): void;
 }
 
-type AvailableCameras$2 = OrthographicCamera;
-interface Canvas2DRendererOptions extends CanvasRenderingContext2DSettings {
-}
-declare class Canvas2DRenderer extends Renderer {
-    ctx: CanvasRenderingContext2D;
-    constructor(canvasElement: HTMLCanvasElement, ctxOptions?: Canvas2DRendererOptions);
-    render(scene: Scene, camera: AvailableCameras$2): void;
-}
-
-interface LoaderEvents<L, E> {
-    onload: L;
-    onerror: E;
-}
-declare abstract class Loader<L, E> extends Events<LoaderEvents<L, E>> {
-    ready: boolean;
-    constructor();
-    abstract load(...any: any): this;
-}
-
-interface ShaderOptions {
-    name?: string;
-    vertexShader: string;
-    fragmentShader: string;
-}
-declare class WebGL2ShaderLoader extends Loader<WebGLProgram, Error> {
-    name: string;
-    vertexShader: string;
-    fragmentShader: string;
-    gl: WebGL2RenderingContext | null;
-    program: WebGLProgram | null;
-    static isAvailable(canvas: HTMLCanvasElement): boolean;
-    constructor(option: ShaderOptions);
-    getUniform(name: string): WebGLUniformLocation;
-    getAttribute(name: string): number;
-    setBuffer(): void;
-    setUniforms(): void;
-    setAttributes(): void;
-    load(gl: WebGL2RenderingContext, onload?: (program: WebGLProgram) => void, onerror?: (error: Error) => void): this;
-}
-
-type AvailableCameras$1 = PerspectiveCamera | OrthographicCamera;
+type AvailableCameras$2 = PerspectiveCamera | OrthographicCamera;
 declare class WebGPURenderer extends Renderer {
     static getGPUDetails(canvas: HTMLCanvasElement): Promise<{
         adapter: any;
@@ -503,13 +462,16 @@ declare class WebGPURenderer extends Renderer {
         format: any;
     }>;
     constructor(canvasElement: HTMLCanvasElement);
-    render(scene: Scene, camera: AvailableCameras$1): void;
+    render(scene: Scene, camera: AvailableCameras$2): void;
 }
 
-declare class ImageLoader extends Loader<HTMLImageElement, string | Event> {
-    img: HTMLImageElement;
-    constructor();
-    load(src: string, onload?: (img: HTMLImageElement) => void, onerror?: (error: string | Event) => void): this;
+type AvailableCameras$1 = OrthographicCamera;
+interface Canvas2DRendererOptions extends CanvasRenderingContext2DSettings {
+}
+declare class Canvas2DRenderer extends Renderer {
+    ctx: CanvasRenderingContext2D;
+    constructor(canvasElement: HTMLCanvasElement, ctxOptions?: Canvas2DRendererOptions);
+    render(scene: Scene, camera: AvailableCameras$1): void;
 }
 
 declare function randomInt(min: number, max: number): number;
@@ -559,6 +521,40 @@ declare class Color extends Array {
     lerp(color: Color, alpha: number): this;
     clone(): Color;
     copy(color: Color): this;
+}
+
+interface LoaderEvents<L, E> {
+    onload: L;
+    onerror: E;
+}
+declare abstract class Loader<L, E> extends Events<LoaderEvents<L, E>> {
+    ready: boolean;
+    constructor();
+    abstract load(...any: any): this;
+}
+
+interface ShaderOptions {
+    name?: string;
+    vertexShader: string;
+    fragmentShader: string;
+}
+declare class WebGL2ShaderLoader extends Loader<WebGLProgram, Error> {
+    name: string;
+    vertexShader: string;
+    fragmentShader: string;
+    gl: WebGL2RenderingContext | null;
+    program: WebGLProgram | null;
+    static isAvailable(canvas: HTMLCanvasElement): boolean;
+    constructor(option: ShaderOptions);
+    getUniforms(...names: string[]): ReturnType<WebGL2RenderingContext['getUniformLocation']>[];
+    getAttributes(...names: string[]): ReturnType<WebGL2RenderingContext['getAttribLocation']>[];
+    load(gl: WebGL2RenderingContext, onload?: (program: WebGLProgram) => void, onerror?: (error: Error) => void): this;
+}
+
+declare class ImageLoader extends Loader<HTMLImageElement, string | Event> {
+    img: HTMLImageElement;
+    constructor();
+    load(src: string, onload?: (img: HTMLImageElement) => void, onerror?: (error: string | Event) => void): this;
 }
 
 declare abstract class Controls<T extends Record<string, any>> extends Events<T> {
@@ -634,11 +630,11 @@ declare class OrbitControls extends Controls<OrbitControlsEvents> {
     /**
      * @description Updates the cameras position on orbit. Must be updated every frame
      */
-    orbit(controller: Pointer): void;
+    updateOrbit(controller: Pointer): void;
     /**
      * @description Updates the camera zoom in/out. Must be updated every frame
      */
-    zoom(controller: Pointer): void;
+    updateZoom(controller: Pointer): void;
 }
 
 interface KeyboardEvents {
