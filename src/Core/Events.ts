@@ -1,6 +1,6 @@
 type EventCallback = (...data: any) => void
 
-export class Events<T extends Record<string, any>> {
+export class Events<const T extends Record<string, any>> {
     private _listeners: Map<keyof T, Array<EventCallback>>
 
     constructor(eventNames?: Array<keyof T>) {
@@ -22,8 +22,6 @@ export class Events<T extends Record<string, any>> {
         if(!Array.isArray(group)) {
             console.error(`Unable to find event event name: "${String(eventName)}"`)
             
-            this._listeners.set(eventName, [])
-        
             return false
         }
 

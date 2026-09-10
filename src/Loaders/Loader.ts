@@ -9,7 +9,7 @@ export abstract class Loader<L, E> extends Events<LoaderEvents<L, E>> {
     ready: boolean
 
     constructor() {
-        super()
+        super(['onload', 'onerror'])
 
         this.ready = false
     }
