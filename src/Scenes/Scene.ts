@@ -1,9 +1,9 @@
-import { Entity } from '../Core/Entity'
 import { Renderer } from '../Renderers/Renderer'
 import type { Camera } from '../Camera/Camera'
+import { Node } from '../Core/Node'
 
 export abstract class Scene<TRenderer extends Renderer = Renderer, TCamera extends Camera = Camera> {
-    entities: Entity[]
+    entities: Node[]
     enabled: boolean
     loaded: boolean
     ready: boolean
@@ -19,14 +19,14 @@ export abstract class Scene<TRenderer extends Renderer = Renderer, TCamera exten
     /**
      * @description
      */
-    add(...entities: Entity[]) {
+    add(...entities: Node[]) {
         this.entities.push(...entities)
     }
 
     /**
      * @description
      */
-    remove(...entities: Entity[]) {
+    remove(...entities: Node[]) {
         for(let i = 0; i < entities.length; i++) {
             const entity = entities[i]
             const index = this.entities.findIndex(e => e.uuid === entity.uuid)
